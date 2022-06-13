@@ -13,6 +13,7 @@ namespace money_problem.Tests
             double? result = MoneyCalculator.Add(5, USD, 10);
             result.Should()
                 .NotBeNull();
+            result.Should().Be(15);
         }
         
         [Fact(DisplayName = "10 EUR x 2 = 20 EUR")]
