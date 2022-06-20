@@ -15,7 +15,14 @@ namespace money_problem.Tests
 
         public void Add(Currency currency, double amount)
         {
-            _moneys.Add(currency, amount);
+            if (!_moneys.ContainsKey(currency))
+            {
+                _moneys.Add(currency, amount);
+            }
+            else
+            {
+                _moneys[currency] += amount;
+            }
         }
 
         public double Evaluate(Currency currency)
