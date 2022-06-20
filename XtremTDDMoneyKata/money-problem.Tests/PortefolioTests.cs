@@ -1,4 +1,5 @@
-﻿using money_problem.Domain;
+﻿using FluentAssertions;
+using money_problem.Domain;
 using Xunit;
 using static money_problem.Domain.Currency;
 
@@ -44,6 +45,15 @@ namespace money_problem.Tests
             portfolio.Add(EUR, 1);
             portfolio.Add(KRW, 1100);
             Assert.Throws<MissingExchangeRateException>(() => portfolio.Evaluate(KRW));
+        }
+
+        [Fact(DisplayName = "5 USD + 10 USD = 15 USD")]
+        public void AddInUsd()
+        {
+            Portfolio portfolio = new(Bank.WithExchangeRate(USD, KRW, 1100));
+            portfolio.Add(USD, 5);
+            portfolio.Add(USD, 10);
+            portfolio.Evaluate(USD).Should().Be(15);
         }
     }
 }
