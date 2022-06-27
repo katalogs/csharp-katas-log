@@ -11,8 +11,8 @@ namespace money_problem.Tests
         public void AddEurosToUSD()
         {
             Portfolio portfolio = new(Bank.WithExchangeRate(EUR, USD, 1.2));
-            portfolio.Add(USD, 5);
-            portfolio.Add(EUR, 10);
+            portfolio.Add(new Money(5, USD));
+            portfolio.Add(new Money(10, EUR));
             double expectedAmount = portfolio.Evaluate(USD);
             Assert.Equal(17, expectedAmount);
         }
@@ -21,8 +21,8 @@ namespace money_problem.Tests
         public void AddUSDToKRW()
         {
             Portfolio portfolio = new(Bank.WithExchangeRate(USD, KRW, 1100));
-            portfolio.Add(USD, 1);
-            portfolio.Add(KRW, 1100);
+            portfolio.Add(new Money(1, USD));
+            portfolio.Add(new Money(1100, KRW));
             double expectedAmount = portfolio.Evaluate(KRW);
             Assert.Equal(2200, expectedAmount);
         }
@@ -31,9 +31,9 @@ namespace money_problem.Tests
         public void AddTwoUSDMoneyToKRW()
         {
             Portfolio portfolio = new(Bank.WithExchangeRate(USD, KRW, 1100));
-            portfolio.Add(USD, 1);
-            portfolio.Add(USD, 2);
-            portfolio.Add(KRW, 1100);
+            portfolio.Add(new Money(1, USD));
+            portfolio.Add(new Money(2, USD));
+            portfolio.Add(new Money(1100, KRW));
             double expectedAmount = portfolio.Evaluate(KRW);
             Assert.Equal(4400, expectedAmount);
         }
@@ -42,8 +42,8 @@ namespace money_problem.Tests
         public void should_throw_when_currency_exchange_rate_is_missing()
         {
             Portfolio portfolio = new(Bank.WithExchangeRate(USD, KRW, 1100));
-            portfolio.Add(EUR, 1);
-            portfolio.Add(KRW, 1100);
+            portfolio.Add(new Money(1, EUR));
+            portfolio.Add(new Money(1100, KRW));
             Assert.Throws<MissingExchangeRateException>(() => portfolio.Evaluate(KRW));
         }
 
@@ -51,8 +51,8 @@ namespace money_problem.Tests
         public void AddInUsd()
         {
             Portfolio portfolio = new(Bank.WithExchangeRate(USD, KRW, 1100));
-            portfolio.Add(USD, 5);
-            portfolio.Add(USD, 10);
+            portfolio.Add(new Money(5, USD));
+            portfolio.Add(new Money(10, USD));
             portfolio.Evaluate(USD).Should().Be(15);
         }
     }

@@ -4,7 +4,7 @@ namespace money_problem.Tests
 {
     public class Portfolio
     {
-        private IDictionary<Currency, double> _moneys = new Dictionary<Currency, double>();
+        private List<Money> _moneys = new();
 
         private readonly Bank _bank;
 
@@ -13,16 +13,9 @@ namespace money_problem.Tests
             _bank = bank;
         }
 
-        public void Add(Currency currency, double amount)
+        public void Add(Money money)
         {
-            if (!_moneys.ContainsKey(currency))
-            {
-                _moneys.Add(currency, amount);
-            }
-            else
-            {
-                _moneys[currency] += amount;
-            }
+            _moneys.Add(money);
         }
 
         public double Evaluate(Currency currency)
@@ -31,7 +24,7 @@ namespace money_problem.Tests
 
             foreach (var money in _moneys )
             {
-                totalAmount += _bank.Convert(money.Value, money.Key, currency);
+                totalAmount += _bank.Convert(money.Amount, money.Currency, currency);
             }
             return totalAmount;
         }
