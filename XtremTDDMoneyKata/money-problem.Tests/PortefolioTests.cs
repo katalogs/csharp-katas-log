@@ -13,8 +13,8 @@ namespace money_problem.Tests
             Portfolio portfolio = new(Bank.WithExchangeRate(EUR, USD, 1.2));
             portfolio.Add(new Money(5, USD));
             portfolio.Add(new Money(10, EUR));
-            double expectedAmount = portfolio.Evaluate(USD);
-            Assert.Equal(17, expectedAmount);
+            Money expectedMoney = portfolio.Evaluate(USD);
+            Assert.Equal(new Money(17, USD), expectedMoney);
         }
 
         [Fact(DisplayName = "1 USD + 1100 KRW = 2200 KRW")]
@@ -23,8 +23,8 @@ namespace money_problem.Tests
             Portfolio portfolio = new(Bank.WithExchangeRate(USD, KRW, 1100));
             portfolio.Add(new Money(1, USD));
             portfolio.Add(new Money(1100, KRW));
-            double expectedAmount = portfolio.Evaluate(KRW);
-            Assert.Equal(2200, expectedAmount);
+            var expectedAmount = portfolio.Evaluate(KRW);
+            Assert.Equal(new Money(2200, KRW), expectedAmount);
         }
 
         [Fact(DisplayName = "1 USD + 2 USD + 1100 KRW = 4400 KRW")]
@@ -34,8 +34,8 @@ namespace money_problem.Tests
             portfolio.Add(new Money(1, USD));
             portfolio.Add(new Money(2, USD));
             portfolio.Add(new Money(1100, KRW));
-            double expectedAmount = portfolio.Evaluate(KRW);
-            Assert.Equal(4400, expectedAmount);
+            var expectedAmount = portfolio.Evaluate(KRW);
+            Assert.Equal(new Money(4400, KRW), expectedAmount);
         }
 
         [Fact(DisplayName = "Cannot convert unknown currency exchange rate")]
@@ -53,7 +53,7 @@ namespace money_problem.Tests
             Portfolio portfolio = new(Bank.WithExchangeRate(USD, KRW, 1100));
             portfolio.Add(new Money(5, USD));
             portfolio.Add(new Money(10, USD));
-            portfolio.Evaluate(USD).Should().Be(15);
+            portfolio.Evaluate(USD).Should().Be(new Money(15, USD));
         }
     }
 }

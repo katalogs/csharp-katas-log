@@ -18,7 +18,7 @@ namespace money_problem.Tests
             _moneys.Add(money);
         }
 
-        public double Evaluate(Currency currency)
+        public Money Evaluate(Currency currency)
         {
             double totalAmount = 0;
 
@@ -26,7 +26,7 @@ namespace money_problem.Tests
             {
                 totalAmount += _bank.Convert(money.Amount, money.Currency, currency);
             }
-            return totalAmount;
+            return new Money(totalAmount, currency);
         }
     }
 }
