@@ -11,10 +11,10 @@ namespace money_problem.Tests
         public void AddEurosToUSD()
         {
             Portfolio portfolio = new(Bank.WithExchangeRate(EUR, USD, 1.2));
-            portfolio.Add(new Money(5, USD));
-            portfolio.Add(new Money(10, EUR));
+            portfolio.Add(5d.Dollars());
+            portfolio.Add(10d.Euros());
             Money expectedMoney = portfolio.Evaluate(USD);
-            Assert.Equal(new Money(17, USD), expectedMoney);
+            Assert.Equal(17d.Dollars(), expectedMoney);
         }
 
         [Fact(DisplayName = "1 USD + 1100 KRW = 2200 KRW")]

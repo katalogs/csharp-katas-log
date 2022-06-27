@@ -33,5 +33,10 @@ namespace money_problem.Domain
 
         private bool CanConvert(Currency from, Currency to) =>
             from == to || _exchangeRates.ContainsKey(KeyFor(from, to));
+
+        public Money Convert(Money amount, Currency currency)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
