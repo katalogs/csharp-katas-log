@@ -4,10 +4,10 @@ namespace Elections
 {
     public class Elections
     {
-        private readonly List<string> _candidates = new List<string>();
+        protected readonly List<string> _candidates = new List<string>();
         private readonly Dictionary<string, List<string>> _list;
         private readonly List<string> _officialCandidates = new List<string>();
-        private readonly Dictionary<string, List<int>> _votesWithDistricts;
+        protected readonly Dictionary<string, List<int>> _votesWithDistricts;
         private readonly List<int> _votesWithoutDistricts = new List<int>();
         private readonly bool _withDistrict;
 
@@ -34,35 +34,9 @@ namespace Elections
             _votesWithDistricts["District 3"].Add(0);
         }
 
-        public void VoteFor(string elector, string candidate, string electorDistrict)
+        public virtual void VoteFor(string elector, string candidate, string electorDistrict)
         {
-            if (!_withDistrict)
-            {
-                VoteWithoutDistrict(candidate);
-            }
-            else
-            {
-                VoteWithDistrict(candidate, electorDistrict);
-            }
-        }
-
-        private void VoteWithDistrict(string candidate, string electorDistrict)
-        {
-            if (_votesWithDistricts.ContainsKey(electorDistrict))
-            {
-                var districtVotes = _votesWithDistricts[electorDistrict];
-                if (_candidates.Contains(candidate))
-                {
-                    var index = _candidates.IndexOf(candidate);
-                    districtVotes[index] = districtVotes[index] + 1;
-                }
-                else
-                {
-                    _candidates.Add(candidate);
-                    foreach (var (_, votes) in _votesWithDistricts) votes.Add(0);
-                    districtVotes[_candidates.Count - 1] = districtVotes[_candidates.Count - 1] + 1;
-                }
-            }
+            VoteWithoutDistrict(candidate);            
         }
 
         private void VoteWithoutDistrict(string candidate)
