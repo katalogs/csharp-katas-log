@@ -21,8 +21,6 @@ namespace money_problem.Domain
 
         private static string KeyFor(Currency from, Currency to) => $"{from}->{to}";
 
-        public double Convert(double amount, Currency from, Currency to) => Convert(new Money(amount, from), to).Amount;
-
         private double ConvertSafely(double amount, Currency from, Currency to) =>
             to == from
                 ? amount

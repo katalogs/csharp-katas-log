@@ -24,7 +24,7 @@ namespace money_problem.Tests
 
             foreach (var money in _moneys )
             {
-                totalAmount += _bank.Convert(money.Amount, money.Currency, currency);
+                totalAmount += _bank.Convert(new Money(money.Amount, money.Currency), currency).Amount;
             }
             return new Money(totalAmount, currency);
         }
