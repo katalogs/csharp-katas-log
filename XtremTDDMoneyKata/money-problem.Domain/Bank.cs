@@ -34,9 +34,17 @@ namespace money_problem.Domain
         private bool CanConvert(Currency from, Currency to) =>
             from == to || _exchangeRates.ContainsKey(KeyFor(from, to));
 
-        public Money Convert(Money amount, Currency currency)
+        public Money Convert(Money money, Currency currency)
         {
-            throw new NotImplementedException();
+           if(CanConvert(money.Currency, currency))
+            {
+                return new Money(ConvertSafely(money.Amount, money.Currency, currency), currency);
+            }
+            else
+            {
+                throw new MissingExchangeRateException(money.Currency, currency);
+            }
+
         }
     }
 }

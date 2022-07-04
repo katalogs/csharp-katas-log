@@ -14,7 +14,7 @@ namespace money_problem.Tests
         {
             _bank.Convert(new Money(10, EUR), USD)
                 .Should()
-                .Be(12);
+                .BeEquivalentTo(new Money(12, USD));
         }
 
         [Fact(DisplayName = "10 EUR -> EUR = 10 EUR")]
