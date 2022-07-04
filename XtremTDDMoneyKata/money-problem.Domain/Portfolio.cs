@@ -4,7 +4,7 @@ namespace money_problem.Tests
 {
     public class Portfolio
     {
-        private List<Money> _moneys = new();
+        private readonly List<Money> _moneys = new();
 
         private readonly Bank _bank;
 
