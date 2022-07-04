@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions;
 using money_problem.Domain;
 using Xunit;
@@ -25,7 +26,7 @@ namespace money_problem.Tests
                 .Be(new Money(1000.5d, KRW));
         }
 
-         [Fact]
+        [Fact]
         public void AddAnyEuros()
         {
             new Money(10, EUR)
@@ -33,5 +34,17 @@ namespace money_problem.Tests
                 .Should()
                 .Be(new Money(15, EUR));
         }
+        
+        [Fact]
+        public void DoNotAddAnOtherCurrency()
+        {
+            Money money = new Money(10, EUR);
+            var task = () => money
+                .Add(new Money(5, USD));
+            task
+                .Should()
+                .Throw<InvalidMoneyOperationException>();
+        }
     }
+
 }
