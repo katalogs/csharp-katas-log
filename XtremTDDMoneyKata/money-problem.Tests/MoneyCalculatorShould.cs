@@ -24,5 +24,14 @@ namespace money_problem.Tests
                 .Should()
                 .Be(new Money(1000.5d, KRW));
         }
+
+         [Fact]
+        public void AddAnyEuros()
+        {
+            new Money(10, EUR)
+                .Add(new Money(5, EUR))
+                .Should()
+                .Be(new Money(15, EUR));
+        }
     }
 }

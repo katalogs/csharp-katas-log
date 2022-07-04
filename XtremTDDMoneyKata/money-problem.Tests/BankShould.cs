@@ -47,5 +47,6 @@ namespace money_problem.Tests
                 .Should()
                 .BeEquivalentTo(new Money(13, USD));
         }
+        
     }
 }
