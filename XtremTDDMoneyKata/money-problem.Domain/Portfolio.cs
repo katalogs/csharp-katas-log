@@ -13,20 +13,15 @@ namespace money_problem.Tests
             _bank = bank;
         }
 
-        public void Add(Money money)
+        public Portfolio Add(Money money)
         {
-            _moneys.Add(money);
+           _moneys.Add(money);
+           return this;
         }
 
         public Money Evaluate(Currency currency)
         {
-            double totalAmount = 0;
-
-            foreach (var money in _moneys )
-            {
-                totalAmount += _bank.Convert(new Money(money.Amount, money.Currency), currency).Amount;
-            }
-            return new Money(totalAmount, currency);
+            return _moneys.Select(m => _bank.Convert(m, currency)).Aggregate((money1, money2) => money1 + money2);
         }
     }
 }

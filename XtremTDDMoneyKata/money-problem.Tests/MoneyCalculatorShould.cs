@@ -45,6 +45,14 @@ namespace money_problem.Tests
                 .Should()
                 .Throw<InvalidMoneyOperationException>();
         }
+
+        [Fact]
+        public void AddMoneys()
+        {
+            var somme = new Money(10, EUR) + new Money(20, EUR);
+                somme.Should()
+                .Be(new Money(30, EUR));
+        }
     }
 
 }

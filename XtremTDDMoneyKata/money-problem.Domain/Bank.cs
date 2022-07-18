@@ -16,8 +16,8 @@ namespace money_problem.Domain
             return bank;
         }
 
-        public void AddExchangeRate(Currency from, Currency to, double rate) 
-            => _exchangeRates[KeyFor(from, to)] =  rate;
+        public void AddExchangeRate(Currency from, Currency to, double rate)
+            => _exchangeRates[KeyFor(from, to)] = rate;
 
         private static string KeyFor(Currency from, Currency to) => $"{from}->{to}";
 
@@ -31,14 +31,12 @@ namespace money_problem.Domain
 
         public Money Convert(Money money, Currency currency)
         {
-           if(CanConvert(money.Currency, currency))
+            if (CanConvert(money.Currency, currency))
             {
                 return new Money(ConvertSafely(money.Amount, money.Currency, currency), currency);
             }
-            else
-            {
-                throw new MissingExchangeRateException(money.Currency, currency);
-            }
+
+            throw new MissingExchangeRateException(money.Currency, currency);
 
         }
     }
