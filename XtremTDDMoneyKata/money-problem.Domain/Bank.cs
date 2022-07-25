@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-
 namespace money_problem.Domain
 {
     public sealed class Bank
@@ -11,13 +9,15 @@ namespace money_problem.Domain
         public static Bank WithExchangeRate(Currency from, Currency to, double rate)
         {
             var bank = new Bank(new Dictionary<string, double>());
-            bank.AddExchangeRate(from, to, rate);
 
-            return bank;
+            return bank.AddExchangeRate(from, to, rate);
         }
 
-        public void AddExchangeRate(Currency from, Currency to, double rate)
-            => _exchangeRates[KeyFor(from, to)] = rate;
+        public Bank AddExchangeRate(Currency from, Currency to, double rate)
+        {
+            return new Bank(_exchangeRates.Concat(new Dictionary<string, double> { { KeyFor(from, to), rate } })
+                .ToDictionary(x => x.Key, x => x.Value));
+        }
 
         private static string KeyFor(Currency from, Currency to) => $"{from}->{to}";
 

@@ -7,7 +7,7 @@ namespace money_problem.Tests
 {
     public class BankShould
     {
-        private readonly Bank _bank = Bank.WithExchangeRate(EUR, USD, 1.2);
+        private Bank _bank = Bank.WithExchangeRate(EUR, USD, 1.2);
 
         [Fact(DisplayName = "10 EUR -> USD = 12 USD")]
         public void ConvertEuroToUsd()
@@ -33,20 +33,5 @@ namespace money_problem.Tests
                 .ThrowExactly<MissingExchangeRateException>()
                 .WithMessage("EUR->KRW");
         }
-
-        [Fact(DisplayName = "Conversion with different exchange rates EUR -> USD")]
-        public void ConvertWithDifferentExchangeRates()
-        {
-            _bank.Convert(new Money(10, EUR), USD)
-                .Should()
-                .BeEquivalentTo(new Money(12, USD));
-
-            _bank.AddExchangeRate(EUR, USD, 1.3);
-            
-            _bank.Convert(new Money(10, EUR), USD)
-                .Should()
-                .BeEquivalentTo(new Money(13, USD));
-        }
-        
     }
 }

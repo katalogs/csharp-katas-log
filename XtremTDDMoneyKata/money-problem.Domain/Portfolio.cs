@@ -1,4 +1,5 @@
-﻿using money_problem.Domain;
+﻿using System.Runtime.CompilerServices;
+using money_problem.Domain;
 
 namespace money_problem.Tests
 {
@@ -13,10 +14,15 @@ namespace money_problem.Tests
             _bank = bank;
         }
 
+        private Portfolio(Bank bank, IEnumerable<Money> moneys)
+        {
+            _bank = bank;
+            _moneys = moneys.ToList();
+        }
+
         public Portfolio Add(Money money)
         {
-           _moneys.Add(money);
-           return this;
+            return new Portfolio(_bank, _moneys.Concat(new List<Money>{money}));
         }
 
         public Money Evaluate(Currency currency)
