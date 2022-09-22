@@ -22,7 +22,8 @@
                 13 => "treize",
                 14 => "quatorze",
                 15 => "quinze",
-                _ => "seize"
+                16 => "seize",
+                _ => ConvertToString((number/10)*10) + "-" + ConvertToString((number % 10))
             };
         }
     }

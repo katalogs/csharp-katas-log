@@ -37,5 +37,18 @@ namespace Converter.Tests
             Assert.Equal(expected, result);
         }
 
+        [Theory]
+        [InlineData(17, "dix-sept")]
+        [InlineData(18, "dix-huit")]
+        [InlineData(19, "dix-neuf")]
+        [InlineData(22, "vingt-deux")]
+        public void When_NumberBetween16_22_Success(int number, string expected)
+        {
+            NumberConverter converter = new NumberConverter();
+            var result = converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
+
+
     }
 }
