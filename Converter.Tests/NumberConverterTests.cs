@@ -14,8 +14,7 @@ namespace Converter.Tests
         [Fact]
         public void When_0_Returns_Zero()
         {
-            NumberConverter converter = new NumberConverter();
-            var result = converter.ConvertToString(0);
+            var result = _converter.ConvertToString(0);
             Assert.Equal("Zéro", result);
         }
 
@@ -39,8 +38,7 @@ namespace Converter.Tests
 
         public void When_NumberBetween1_16_Success(int number, string expected)
         {
-            var converter = new NumberConverter();
-            var result = converter.ConvertToString(number);
+            var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);
         }
 
@@ -53,8 +51,7 @@ namespace Converter.Tests
         [InlineData(46, "Quarante-six")]
         public void When_NumberBetween16_46_Success(int number, string expected)
         {
-            var converter = new NumberConverter();
-            var result = converter.ConvertToString(number);
+            var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);
         }
 
@@ -67,8 +64,7 @@ namespace Converter.Tests
         [InlineData(60, "Soixante")]
         public void When_NumberIsTens_Success(int number, string expected)
         {
-            var converter = new NumberConverter();
-            var result = converter.ConvertToString(number);
+            var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);
         }
     }
