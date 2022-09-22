@@ -6,24 +6,29 @@
         {
             return number switch
             {
-                0 => "zero",
-                1 => "un",
-                2 => "deux",
-                3 => "trois",
-                4 => "quatre",
-                5 => "cinq",
-                6 => "six",
-                7 => "sept",
-                8 => "huit",
-                9 => "neuf",
-                10 => "dix",
-                11 => "onze",
-                12 => "douze",
-                13 => "treize",
-                14 => "quatorze",
-                15 => "quinze",
-                16 => "seize",
-                _ => ConvertToString((number/10)*10) + "-" + ConvertToString((number % 10))
+                0 => "Zéro",
+                1 => "Un",
+                2 => "Deux",
+                3 => "Trois",
+                4 => "Quatre",
+                5 => "Cinq",
+                6 => "Six",
+                7 => "Sept",
+                8 => "Huit",
+                9 => "Neuf",
+                10 => "Dix",
+                11 => "Onze",
+                12 => "Douze",
+                13 => "Treize",
+                14 => "Quatorze",
+                15 => "Quinze",
+                16 => "Seize",
+                20 => "Vingt",
+                30 => "Trente",
+                40 => "Quarante",
+                50 => "Cinquante",
+                60 => "Soixante",
+                _ => ConvertToString(number / 10 * 10) + "-" + ConvertToString(number % 10).ToLower()
             };
         }
     }
