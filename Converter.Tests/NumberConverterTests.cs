@@ -49,7 +49,17 @@ namespace Converter.Tests
         [InlineData(22, "Vingt-deux")]
         [InlineData(35, "Trente-cinq")]
         [InlineData(46, "Quarante-six")]
-        public void When_NumberBetween16_46_Success(int number, string expected)
+        public void When_NumberBetween16_69_Success(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(21, "Vingt-et-un")]
+        [InlineData(31, "Trente-et-un")]
+        [InlineData(41, "Quarante-et-un")]
+        public void When_Number_is_21_Success(int number, string expected)
         {
             var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);
