@@ -81,6 +81,8 @@ namespace Converter.Tests
         [Theory]
         [InlineData(70, "Soixante-dix")]
         [InlineData(72, "Soixante-douze")]
+        [InlineData(77, "Soixante-dix-sept")]
+        [InlineData(71, "Soixante-et-onze")]
         public void When_NumberIs70_ReturnsSoixante_dix(int number, string expected)
         {
             var result = _converter.ConvertToString(number);
