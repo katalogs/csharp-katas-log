@@ -59,7 +59,7 @@ namespace Converter.Tests
         [InlineData(21, "Vingt-et-un")]
         [InlineData(31, "Trente-et-un")]
         [InlineData(41, "Quarante-et-un")]
-        public void When_Number_is_21_Success(int number, string expected)
+        public void When_Number_is_TensAndOne_Returns_Tens_And_One(int number, string expected)
         {
             var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);
@@ -72,7 +72,16 @@ namespace Converter.Tests
         [InlineData(40, "Quarante")]
         [InlineData(50, "Cinquante")]
         [InlineData(60, "Soixante")]
-        public void When_NumberIsTens_Success(int number, string expected)
+        public void When_NumberIsTens_ReturnsTens(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(70, "Soixante-dix")]
+        [InlineData(72, "Soixante-douze")]
+        public void When_NumberIs70_ReturnsSoixante_dix(int number, string expected)
         {
             var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);

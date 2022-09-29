@@ -28,11 +28,17 @@
                 40 => "Quarante",
                 50 => "Cinquante",
                 60 => "Soixante",
-                _ => ConvertToString(number / 10 * 10) + GetSeparator(number) + ConvertToString(number % 10).ToLower()
+                _ => ConvertToString(GetTens(number)) + GetSeparator(number) + ConvertToString(number - GetTens(number)).ToLower()
             };
         }
 
-        private static string GetSeparator(int number)
+        private static int GetTens(int number)
+            => number / 10 * 10 == 70 
+                ? number / 10 * 10 - 10 
+                : number / 10 * 10;
+
+
+        private static string GetSeparator(int number)  
             => number % 10 == 1 ? "-et-" : "-";
     }
 }
