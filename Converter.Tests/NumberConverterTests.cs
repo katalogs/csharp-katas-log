@@ -125,8 +125,8 @@ namespace Converter.Tests
 
         [Theory]
         [InlineData(92, "Quatre-vingt-douze")]
-        //[InlineData(83, "Quatre-vingt-trois")]
-        //[InlineData(84, "Quatre-vingt-quatre")]
+        [InlineData(93, "Quatre-vingt-treize")]
+        [InlineData(99, "Quatre-vingt-dix-neuf")]
         public void When_NumberIs9x_Returns_Quatre_vingt_x(int number, string expected)
         {
             var result = _converter.ConvertToString(number);
