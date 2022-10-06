@@ -88,5 +88,23 @@ namespace Converter.Tests
             var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(82, "Quatre-vingt-deux")]
+        [InlineData(83, "Quatre-vingt-trois")]
+        [InlineData(84, "Quatre-vingt-quatre")]
+        public void When_NumberIs8x_Returns_Quatre_vingt_x(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(80, "Quatre-vingts")]
+        public void When_NumberIs80_Returns_Quatre_vingts_with_s(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
     }
 }
