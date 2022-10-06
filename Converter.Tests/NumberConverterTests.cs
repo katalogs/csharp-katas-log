@@ -106,5 +106,32 @@ namespace Converter.Tests
             var result = _converter.ConvertToString(number);
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(81, "Quatre-vingt-un")]
+        public void When_NumberIs81_Returns_Quatre_vingt_un(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(90, "Quatre-vingt-dix")]
+        public void When_NumberIs90_Returns_Quatre_vingt_dix(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(92, "Quatre-vingt-douze")]
+        //[InlineData(83, "Quatre-vingt-trois")]
+        //[InlineData(84, "Quatre-vingt-quatre")]
+        public void When_NumberIs9x_Returns_Quatre_vingt_x(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
+
     }
 }
