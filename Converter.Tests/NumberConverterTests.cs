@@ -133,5 +133,12 @@ namespace Converter.Tests
             Assert.Equal(expected, result);
         }
 
+        [Theory]
+        [InlineData(91, "Quatre-vingt-onze")]
+        public void When_NumberIs91_Returns_Quatre_vingt_onze(int number, string expected)
+        {
+            var result = _converter.ConvertToString(number);
+            Assert.Equal(expected, result);
+        }
     }
 }

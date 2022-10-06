@@ -29,8 +29,7 @@
                 50 => "Cinquante",
                 60 => "Soixante",
                 80 => "Quatre-vingts",
-                81 => "Quatre-vingt-un",
-                > 81 and <= 99 => ConvertToString(GetTens(number))[..^1] + GetSeparator(number) +
+                > 80 and <= 99 => ConvertToString(GetTens(number))[..^1] + GetSeparator(number) +
                                   ConvertToString(number - GetTens(number))
                                       .ToLower(),
                 _ => ConvertToString(GetTens(number)) + GetSeparator(number) + ConvertToString(number - GetTens(number))
@@ -44,6 +43,6 @@
                 : number / 10 * 10;
 
         private static string GetSeparator(int number)  
-            => number % 10 == 1 ? "-et-" : "-";
+            => number % 10 == 1 && number is not (81 or 91) ? "-et-" : "-";
     }
 }
