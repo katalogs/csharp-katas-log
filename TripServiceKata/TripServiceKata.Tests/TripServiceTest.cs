@@ -1,8 +1,9 @@
-using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using TripServiceKata.Exception;
 using TripServiceKata.Trip;
+using TripServiceKata.User;
 
 namespace TripServiceKata.Tests
 {
@@ -12,7 +13,7 @@ namespace TripServiceKata.Tests
         [TestMethod]
         public void UserNotLoggedInThrowAnException()
         {
-            var user = new User.User();
+            var user = UserBuilder.AUser().Build();
             TripService tripServiceWithoutLoggedInUser = new TestableTripService(default);
 
             Assert.ThrowsException<UserNotLoggedInException>(() =>
@@ -22,8 +23,8 @@ namespace TripServiceKata.Tests
         [TestMethod]
         public void UserWithoutFriends()
         {
-            var userWithoutFriends = new User.User();
-            TripService tripServiceLoggedInUser = new TestableTripService(new User.User());
+            var userWithoutFriends = UserBuilder.AUser().Build();
+            TripService tripServiceLoggedInUser = new TestableTripService(UserBuilder.AUser().Build());
 
             var result =
                 tripServiceLoggedInUser.GetTripsByUser(userWithoutFriends);
@@ -34,10 +35,17 @@ namespace TripServiceKata.Tests
         [TestMethod]
         public void UserWithFriendsButWihtNotLoggedInUser()
         {
-            var userWithFriends = new User.User();
-            User.User aFriend = new User.User();
-            userWithFriends.AddFriend(aFriend);
-            User.User loggedInUser = new User.User();
+
+            User.User aFriend = UserBuilder.AUser().Build();
+            User.User loggedInUser = UserBuilder.AUser().Build();
+            Trip.Trip trip = new Trip.Trip();
+
+            var userWithFriends = UserBuilder.AUser()
+                .FriendWith(aFriend)
+                .WithTrips(trip)
+                .Build();
+
+
             TripService tripServiceLoggedInUser = new TestableTripService(loggedInUser);
 
             var result =
@@ -49,11 +57,15 @@ namespace TripServiceKata.Tests
         [TestMethod]
         public void UserWithFriendsWihtLoggedInUser()
         {
-            var userWithFriends = new User.User();
-            User.User loggedInUser = new User.User();
-            userWithFriends.AddFriend(loggedInUser);
+            User.User loggedInUser = UserBuilder.AUser().Build();
             Trip.Trip trip = new Trip.Trip();
-            userWithFriends.AddTrip(trip);
+
+            var userWithFriends = UserBuilder.AUser()
+                .FriendWith(loggedInUser)
+                .WithTrips(trip)
+                .Build();
+
+
             TripService tripServiceLoggedInUser = new TestableTripService(loggedInUser);
 
             var result =
