@@ -10,18 +10,9 @@ namespace TripServiceKata.Trip
         {
             List<Trip> tripList = new List<Trip>();
             User.User loggedUser = GetLoggedUser();
-            bool isFriend = false;
             if (loggedUser != null)
             {
-                foreach(User.User friend in user.GetFriends())
-                {
-                    if (friend.Equals(loggedUser))
-                    {
-                        isFriend = true;
-                        break;
-                    }
-                }
-                if (isFriend)
+                if(user.IsFriend(loggedUser))
                 {
                     tripList = FindTripsByUser(user);
                 }
