@@ -23,7 +23,7 @@ namespace TripServiceKata.Tests
         [TestMethod]
         public void Should_return_false_when_users_are_not_friends()
         {
-            var user1 = UserBuilder.AUser().Build();
+            var user1 = UserBuilder.AUser();
             var user2 = UserBuilder.AUser().FriendWith(user1).Build();
             var user3 = UserBuilder.AUser().Build();
 

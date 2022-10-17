@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace TripServiceKata.User
 {
@@ -50,6 +51,12 @@ namespace TripServiceKata.User
         public UserBuilder FriendWith(params User[] friends)
         {
             this._friends = friends;
+            return this;
+        }
+        
+        public UserBuilder FriendWith(params UserBuilder[] friends)
+        {
+            this._friends = friends.Select(f=>f.Build()).ToArray();
             return this;
         }
 
