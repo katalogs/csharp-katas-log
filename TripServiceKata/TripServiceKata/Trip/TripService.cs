@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TripServiceKata.Exception;
-using TripServiceKata.User;
 
 namespace TripServiceKata.Trip
 {
@@ -8,25 +7,19 @@ namespace TripServiceKata.Trip
     {
         private readonly TripDAO _tripDao;
 
-        protected TripService(TripDAO tripDao)
+        public TripService(TripDAO tripDao)
         {
             _tripDao = tripDao;
         }
 
-        public List<Trip> GetTripsByUser(User.User user)
+        public List<Trip> GetTripsByUser(User.User user, User.User loggedUser)
         {
-            User.User loggedUser = GetLoggedUser();
             if (loggedUser == null)
             {
                 throw new UserNotLoggedInException();
             }
 
             return user.IsFriend(loggedUser) ? _tripDao.FindTripsByUserNonStatic(user) : new List<Trip>();
-        }
-
-        protected virtual User.User GetLoggedUser()
-        {
-            return UserSession.GetInstance().GetLoggedUser();
         }
     }
 }

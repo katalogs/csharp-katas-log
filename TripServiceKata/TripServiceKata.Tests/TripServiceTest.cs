@@ -18,20 +18,20 @@ namespace TripServiceKata.Tests
         {
             var user = UserBuilder.AUser().Build();
             
-            TripService tripServiceWithoutLoggedInUser = new TestableTripService(default, _tripDaoMock.Object);
+            TripService tripServiceWithoutLoggedInUser = new TripService(_tripDaoMock.Object);
 
             Assert.ThrowsException<UserNotLoggedInException>(() =>
-                tripServiceWithoutLoggedInUser.GetTripsByUser(user));
+                tripServiceWithoutLoggedInUser.GetTripsByUser(user, default));
         }
         
         [TestMethod]
         public void UserWithoutFriends()
         {
             var userWithoutFriends = UserBuilder.AUser().Build();
-            TripService tripServiceLoggedInUser = new TestableTripService(UserBuilder.AUser().Build(), _tripDaoMock.Object);
+            TripService tripServiceLoggedInUser = new TripService(_tripDaoMock.Object);
 
             var result =
-                tripServiceLoggedInUser.GetTripsByUser(userWithoutFriends);
+                tripServiceLoggedInUser.GetTripsByUser(userWithoutFriends, UserBuilder.AUser().Build());
 
             result.Should().BeEmpty();
         }
@@ -50,10 +50,10 @@ namespace TripServiceKata.Tests
                 .Build();
 
 
-            TripService tripServiceLoggedInUser = new TestableTripService(loggedInUser, _tripDaoMock.Object);
+            TripService tripServiceLoggedInUser = new TripService(_tripDaoMock.Object);
 
             var result =
-                tripServiceLoggedInUser.GetTripsByUser(userWithFriends);
+                tripServiceLoggedInUser.GetTripsByUser(userWithFriends, loggedInUser);
 
             result.Should().BeEmpty();
         }
@@ -73,28 +73,13 @@ namespace TripServiceKata.Tests
                 .Setup(t => t.FindTripsByUserNonStatic(It.IsAny<User.User>()))
                 .Returns(new List<Trip.Trip>{trip});
 
-            TripService tripServiceLoggedInUser = new TestableTripService(loggedInUser, _tripDaoMock.Object);
+            TripService tripServiceLoggedInUser = new TripService(_tripDaoMock.Object);
 
             var result =
-                tripServiceLoggedInUser.GetTripsByUser(userWithFriends);
+                tripServiceLoggedInUser.GetTripsByUser(userWithFriends, loggedInUser);
 
             result.Should().NotBeEmpty();
             result.Should().Contain(trip);
-        }
-
-        public class TestableTripService : TripService
-        {
-            private User.User loggedInUser;
-
-            public TestableTripService(User.User inUser, TripDAO tripDao) : base(tripDao)
-            {
-                loggedInUser = inUser;
-            }
-
-            protected override User.User GetLoggedUser()
-            {
-                return loggedInUser;
-            }
         }
     }
 }
