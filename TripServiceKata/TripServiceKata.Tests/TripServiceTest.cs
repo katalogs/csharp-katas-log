@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TripServiceKata.Exception;
 using TripServiceKata.Trip;
-using TripServiceKata.User;
 
 namespace TripServiceKata.Tests
 {
