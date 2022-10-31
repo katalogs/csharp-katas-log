@@ -2,6 +2,7 @@
 using Argon;
 
 using GildedRoseKata;
+using System.Text;
 
 namespace GildedRoseTests
 {
@@ -24,6 +25,18 @@ namespace GildedRoseTests
             /*Assert.Equal("foo", Items[0].Name);
             Assert.Equal(-1, Items[0].SellIn);
             Assert.Equal(0, Items[0].Quality);*/
+        }
+
+        [Fact]
+        public Task GoldenMasterOnMain_WithNominalItem_ShouldSucced()
+        {
+            StringBuilder builder = new();
+            StringWriter sw = new StringWriter(builder);
+            Console.SetOut(sw);
+            Program.Main(new String[] { });
+            var result = builder.ToString();
+            
+            return Verify(result);
         }
     }
 }
