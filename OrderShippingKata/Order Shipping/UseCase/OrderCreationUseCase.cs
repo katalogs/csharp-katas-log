@@ -8,13 +8,17 @@ namespace OrderShipping.UseCase
         private readonly IOrderRepository _orderRepository;
         private readonly IProductCatalog _productCatalog;
 
+
+
         public OrderCreationUseCase(
-            IOrderRepository orderRepository,
-            IProductCatalog productCatalog)
+             IOrderRepository orderRepository,
+             IProductCatalog productCatalog)
         {
             _orderRepository = orderRepository;
             _productCatalog = productCatalog;
         }
+
+
 
         public void Run(SellItemsRequest request)
         {
@@ -37,21 +41,12 @@ namespace OrderShipping.UseCase
                 }
                 else
                 {
-                    var unitaryTax = Round((product.Price / 100m) * product.Category.TaxPercentage);
-                    var unitaryTaxedAmount = Round(product.Price + unitaryTax);
-                    var taxedAmount = Round(unitaryTaxedAmount * itemRequest.Quantity);
-                    var taxAmount = Round(unitaryTax * itemRequest.Quantity);
-
-                    var orderItem = new OrderItem
-                    {
-                        Product = product,
-                        Quantity = itemRequest.Quantity,
-                        Tax = taxAmount,
-                        TaxedAmount = taxedAmount
-                    };
+                    // TODO: Ajouter un check sur OrderItem (check product & quantity)
+                    var orderItem = new OrderItem(product, itemRequest.Quantity);
+                    
                     order.Items.Add(orderItem);
-                    order.Total += taxedAmount;
-                    order.Tax += taxAmount;
+                    order.Total += orderItem.TaxedAmount;
+                    order.Tax += orderItem.Tax;
                 }
             }
 
