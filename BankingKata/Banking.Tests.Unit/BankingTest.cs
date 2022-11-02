@@ -10,15 +10,14 @@ namespace Banking.Tests.Unit
             
             //Arrange
             const int money = 10;
-            const int balance = 0;
-            const string accountToSend = "accountToDepose";
-            Account account = new Account(balance);
+            Account account = new Account();
             
             //Act
-            var result = account.SendMoney(money, accountToSend);
+            account.Deposit(money);
             
             //Assert
-            Assert.Equal(result, money);
+            Assert.Equal(account.balance, money);
         }
+
     }
 }

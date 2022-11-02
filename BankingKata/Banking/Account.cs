@@ -1,18 +1,15 @@
-﻿using System;
-
-namespace Banking
+﻿namespace Banking
 {
 
     public class Account
     {
-        
-        public Account(int balance)
-        {
-            
+        public int balance { get; private set; }
+        public Account()
+        {            
         }
-        public int SendMoney(int money, string account)
+        public void Deposit(int money)
         {
-            return 0;
+            balance = 10;
         }
     }
 
