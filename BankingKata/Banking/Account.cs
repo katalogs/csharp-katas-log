@@ -7,7 +7,7 @@
         public Account()
         {            
         }
-        public void Deposit(int money)
+        public void Deposit(int depot)
         {
             balance = 10;
         }
