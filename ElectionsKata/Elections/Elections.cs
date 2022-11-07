@@ -4,11 +4,14 @@ namespace Elections
 {
     public class Elections
     {
-        private readonly List<string> _candidates = new List<string>();
-        private readonly Dictionary<string, List<string>> _list;
         private readonly List<string> _officialCandidates = new List<string>();
+        private readonly List<string> _candidates = new List<string>();
+
+        private readonly Dictionary<string, List<string>> _list;
+
         private readonly Dictionary<string, List<int>> _votesWithDistricts;
         private readonly List<int> _votesWithoutDistricts = new List<int>();
+
         private readonly bool _withDistrict;
 
         public Elections(Dictionary<string, List<string>> list, bool withDistrict)
@@ -38,16 +41,15 @@ namespace Elections
         {
             if (!_withDistrict)
             {
-                if (_candidates.Contains(candidate))
+                if (!_candidates.Contains(candidate))
                 {
-                    var index = _candidates.IndexOf(candidate);
-                    _votesWithoutDistricts[index] = _votesWithoutDistricts[index] + 1;
-                }
-                else
-                {
+                    _votesWithoutDistricts.Add(0);
                     _candidates.Add(candidate);
-                    _votesWithoutDistricts.Add(1);
                 }
+                
+                var index = _candidates.IndexOf(candidate);
+                _votesWithoutDistricts[index] = _votesWithoutDistricts[index] + 1;
+                
             }
             else
             {
