@@ -1,8 +1,15 @@
 
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Argon;
 
 using GildedRoseKata;
 using System.Text;
+using System.Threading.Tasks;
+using VerifyTests;
+using VerifyXunit;
+using Xunit;
 
 namespace GildedRoseTests
 {
