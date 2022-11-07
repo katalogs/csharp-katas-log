@@ -1,4 +1,6 @@
-﻿namespace OrderShipping.Domain
+﻿using OrderShipping.UseCase;
+
+namespace OrderShipping.Domain
 {
     public class OrderItem
     {
@@ -9,7 +11,7 @@
 
         public OrderItem(Product product, int quantity)
         {
-            Product = product;
+            Product = product ?? throw new UnknownProductException();
             Quantity = quantity;
         }
 
