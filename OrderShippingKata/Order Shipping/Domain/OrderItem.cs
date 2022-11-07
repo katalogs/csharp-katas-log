@@ -1,4 +1,5 @@
-﻿using OrderShipping.UseCase;
+﻿using Ardalis.GuardClauses;
+using OrderShipping.UseCase;
 
 namespace OrderShipping.Domain
 {
@@ -12,7 +13,7 @@ namespace OrderShipping.Domain
         public OrderItem(Product product, int quantity)
         {
             Product = product ?? throw new UnknownProductException();
-            Quantity = quantity;
+            Quantity = Guard.Against.NegativeOrZero(quantity);
         }
 
         private static decimal Round(decimal amount)
