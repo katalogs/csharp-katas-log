@@ -26,20 +26,16 @@ namespace OrderShipping.UseCase
             {
                 Status = OrderStatus.Created,
                 Items = new List<OrderItem>(),
-                Currency = "EUR",
-                Total = 0m,
-                Tax = 0m
+                Currency = "EUR"
             };
 
             foreach (var itemRequest in request.Requests)
             {
                 var product = _productCatalog.GetByName(itemRequest.ProductName);
-                // TODO: Ajouter un check sur OrderItem (check product & quantity)
                 var orderItem = new OrderItem(product, itemRequest.Quantity);
 
-                order.Items.Add(orderItem);
-                order.Total += orderItem.TaxedAmount;
-                order.Tax += orderItem.Tax;
+                order.AddOrderItem(orderItem);
+         
             }
 
             _orderRepository.Save(order);
