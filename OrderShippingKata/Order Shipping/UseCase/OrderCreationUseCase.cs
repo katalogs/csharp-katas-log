@@ -34,20 +34,12 @@ namespace OrderShipping.UseCase
             foreach (var itemRequest in request.Requests)
             {
                 var product = _productCatalog.GetByName(itemRequest.ProductName);
+                // TODO: Ajouter un check sur OrderItem (check product & quantity)
+                var orderItem = new OrderItem(product, itemRequest.Quantity);
 
-                if (product == null)
-                {
-                    throw new UnknownProductException();
-                }
-                else
-                {
-                    // TODO: Ajouter un check sur OrderItem (check product & quantity)
-                    var orderItem = new OrderItem(product, itemRequest.Quantity);
-                    
-                    order.Items.Add(orderItem);
-                    order.Total += orderItem.TaxedAmount;
-                    order.Tax += orderItem.Tax;
-                }
+                order.Items.Add(orderItem);
+                order.Total += orderItem.TaxedAmount;
+                order.Tax += orderItem.Tax;
             }
 
             _orderRepository.Save(order);
