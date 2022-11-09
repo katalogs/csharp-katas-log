@@ -1,15 +1,24 @@
 ﻿namespace Banking
 {
-
     public class Account
     {
-        public int balance { get; private set; }
+        /// <summary>
+        /// Blance in centimes
+        /// </summary>
+        public long Balance { get; private set; }
+
+
         public Account()
         {            
         }
-        public void Deposit(int depot)
+
+        /// <summary>
+        /// Deposit money in account with centimes
+        /// </summary>
+        /// <param name="depot">The depot</param>
+        public void Deposit(long depot)
         {
-            balance = 10;
+            Balance = depot;
         }
     }
 

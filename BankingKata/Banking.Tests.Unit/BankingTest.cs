@@ -1,23 +1,22 @@
 using Xunit;
-
 namespace Banking.Tests.Unit
 {
-
     public class BankingTest
     {
-        [Fact]
-        public void Deposite_10_Euro_Should_Add_10_To_Balance(){
-            
+        [Theory]
+        [InlineData(10)]
+        [InlineData(20)]
+        public void Deposite_Euro_Should_Add_Euro_To_Balance(long money)
+        {
             //Arrange
-            const int money = 10;
             Account account = new Account();
-            
+            long moneyInCentime = money * 100;
+
             //Act
-            account.Deposit(money);
+            account.Deposit(moneyInCentime);
             
             //Assert
-            Assert.Equal(account.balance, money);
+            Assert.Equal(account.Balance, moneyInCentime);
         }
-
     }
 }
