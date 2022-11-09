@@ -28,7 +28,7 @@
         /// <param name="withdraw"></param>
         public void Withdraw(long withdraw)
         {
-            throw new System.NotImplementedException();
+            Balance -= withdraw;
         }
     }
 
