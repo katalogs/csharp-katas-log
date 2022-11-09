@@ -1,13 +1,13 @@
-﻿namespace Banking
+﻿using Banking.Tests.Unit;
+
+namespace Banking
 {
     public class Account
     {
-        
         /// <summary>
         /// Blance in centimes
         /// </summary>
         public long Balance { get; private set; }
-
 
         public Account()
         {            
@@ -28,6 +28,11 @@
         /// <param name="withdraw"></param>
         public void Withdraw(long withdraw)
         {
+            if (Balance - withdraw < -400)
+            {
+                throw new BalanceCannotBeNegativeException();
+            }
+
             Balance -= withdraw;
         }
     }
