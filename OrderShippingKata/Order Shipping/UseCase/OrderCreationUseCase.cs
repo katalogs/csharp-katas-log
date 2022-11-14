@@ -35,10 +35,5 @@ namespace OrderShipping.UseCase
 
             _orderRepository.Save(order);
         }
-
-        private static decimal Round(decimal amount)
-        {
-            return decimal.Round(amount, 2, System.MidpointRounding.ToPositiveInfinity);
-        }
     }
 }
