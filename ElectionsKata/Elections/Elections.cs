@@ -90,7 +90,7 @@ namespace Elections
 
                 for (var i = 0; i < _votesWithoutDistricts.Count; i++)
                 {
-                    var candidateResult = (float) _votesWithoutDistricts[i] * 100 / nbValidVotes;
+                    var candidateResult = CalculatePercentage(_votesWithoutDistricts[i], nbValidVotes);
                     var candidate = _candidatesAndOthers[i];
 
                     if (_officialCandidates.Contains(candidate))
@@ -133,8 +133,7 @@ namespace Elections
                     for (var i = 0; i < districtVotes.Count; i++)
                     {
                         float candidateResult = 0;
-                        if (nbValidVotes != 0)
-                            candidateResult = (float) districtVotes[i] * 100 / nbValidVotes;
+                        if (nbValidVotes != 0) candidateResult = CalculatePercentage(districtVotes[i], nbValidVotes);
                         var candidate = _candidatesAndOthers[i];
                         if (_officialCandidates.Contains(candidate))
                         {
@@ -159,23 +158,29 @@ namespace Elections
 
                 for (var i = 0; i < officialCandidatesResult.Count; i++)
                 {
-                    var ratioCandidate = (float) officialCandidatesResult[_candidatesAndOthers[i]] /
-                        officialCandidatesResult.Count * 100;
+                    var ratioCandidate = CalculatePercentage(officialCandidatesResult[_candidatesAndOthers[i]],
+                        officialCandidatesResult.Count);
+
                     results[_candidatesAndOthers[i]] = FormatResult(ratioCandidate);
                 }
             }
 
-            var blankResult = (float) blankVotes * 100 / nbVotes;
+            var blankResult = CalculatePercentage(blankVotes, nbVotes);
             results["Blank"] = FormatResult(blankResult);
 
-            var nullResult = (float) nullVotes * 100 / nbVotes;
+            var nullResult = CalculatePercentage(nullVotes, nbVotes);
             results["Null"] = FormatResult(nullResult);
 
             var nbElectors = _electoralList.Sum(kv => kv.Value.Count);
-            var abstentionResult = 100 - (float) nbVotes * 100 / nbElectors;
+            var abstentionResult = 100 - CalculatePercentage(nbVotes, nbElectors);
             results["Abstention"] = FormatResult(abstentionResult);
 
             return results;
+        }
+
+        private static float CalculatePercentage(int partVotes, int totalVotes)
+        {
+            return (float) partVotes * 100 / totalVotes;
         }
 
         private static string FormatResult(float blankResult)
