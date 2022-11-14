@@ -1,4 +1,6 @@
-﻿namespace OrderShipping.Domain
+﻿using OrderShipping.UseCase;
+
+namespace OrderShipping.Domain
 {
     public class Order
     {
@@ -22,6 +24,32 @@
             Items.Add(orderItem);
             Total += orderItem.TaxedAmount;
             Tax += orderItem.Tax;
+        }
+
+        internal void Approve()
+        {
+            if (Status == OrderStatus.Shipped)
+            {
+                throw new ShippedOrdersCannotBeChangedException();
+            }
+            else if (Status == OrderStatus.Rejected)
+            {
+                throw new RejectedOrderCannotBeApprovedException();
+            }
+            Status = OrderStatus.Approved;
+        }
+
+        internal void Reject()
+        {
+            if (Status == OrderStatus.Shipped)
+            {
+                throw new ShippedOrdersCannotBeChangedException();
+            }
+            else if (Status == OrderStatus.Approved)
+            {
+                throw new ApprovedOrderCannotBeRejectedException();
+            }
+            Status = OrderStatus.Rejected;
         }
     }
 }
