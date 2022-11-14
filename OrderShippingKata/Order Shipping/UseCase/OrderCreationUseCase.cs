@@ -22,12 +22,7 @@ namespace OrderShipping.UseCase
 
         public void Run(SellItemsRequest request)
         {
-            var order = new Order
-            {
-                Status = OrderStatus.Created,
-                Items = new List<OrderItem>(),
-                Currency = "EUR"
-            };
+            var order = new Order();
 
             foreach (var itemRequest in request.Requests)
             {
