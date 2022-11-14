@@ -16,45 +16,31 @@ namespace GildedRoseKata
         {
             foreach (Item item in _items)
             {
-                if (item.Name == "Aged Brie")
+                switch (item.Name)
                 {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality++;
-                    }
+                    case "Aged Brie":
+                        IncrementQuality(item);
 
-                    item.SellIn--;
+                        item.SellIn--;
 
-                    if (item.SellIn < 0)
-                    {
-                        if (item.Quality < 50)
+                        if (item.SellIn < 0)
                         {
-                            item.Quality++;
+                            IncrementQuality(item);
                         }
-                    }
-                }
-                else
-                {
-                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
+                        break;
+                    case "Backstage passes to a TAFKAL80ETC concert":
                         if (item.Quality < 50)
                         {
                             item.Quality++;
 
                             if (item.SellIn < 11)
                             {
-                                if (item.Quality < 50)
-                                {
-                                    item.Quality++;
-                                }
+                                IncrementQuality(item);
                             }
 
                             if (item.SellIn < 6)
                             {
-                                if (item.Quality < 50)
-                                {
-                                    item.Quality++;
-                                }
+                                IncrementQuality(item);
                             }
                         }
 
@@ -64,33 +50,36 @@ namespace GildedRoseKata
                         {
                             item.Quality = 0;
                         }
-                    }
-                    else
-                    {
-                        if(item.Name == "Sulfuras, Hand of Ragnaros")
-                        {
-                            
-                        }
-                        else
-                        {
-                            if (item.Quality > 0)
-                            {
-                                item.Quality--;
-                            }
+                        break;
+                    case "Sulfuras, Hand of Ragnaros":
+                        break;
+                    default:
+                        DecreaseQuality(item);
 
-                            item.SellIn--;
+                        item.SellIn--;
 
-                            if (item.SellIn < 0)
-                            {
-                                if (item.Quality > 0)
-                                {
-                                    item.Quality--;
-                                }
-                            }
+                        if (item.SellIn < 0)
+                        {
+                            DecreaseQuality(item);
                         }
-                        
-                    }
+                        break;
                 }
+            }
+        }
+
+        private static void IncrementQuality(Item item)
+        {
+            if (item.Quality < 50)
+            {
+                item.Quality++;
+            }
+        }
+
+        private static void DecreaseQuality(Item item)
+        {
+            if (item.Quality > 0)
+            {
+                item.Quality--;
             }
         }
     }
