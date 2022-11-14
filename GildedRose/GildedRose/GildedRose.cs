@@ -23,7 +23,7 @@ namespace GildedRoseKata
 
                         item.SellIn--;
 
-                        if (item.SellIn < 0)
+                        if (IsExpired(item))
                         {
                             IncrementQuality(item);
                         }
@@ -46,7 +46,7 @@ namespace GildedRoseKata
 
                         item.SellIn--;
 
-                        if (item.SellIn < 0)
+                        if (IsExpired(item))
                         {
                             item.Quality = 0;
                         }
@@ -58,7 +58,7 @@ namespace GildedRoseKata
 
                         item.SellIn--;
 
-                        if (item.SellIn < 0)
+                        if (IsExpired(item))
                         {
                             DecreaseQuality(item);
                         }
@@ -82,5 +82,6 @@ namespace GildedRoseKata
                 item.Quality--;
             }
         }
+        private static bool IsExpired(Item item)=> item.SellIn< 0;
     }
 }
