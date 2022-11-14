@@ -67,29 +67,28 @@ namespace GildedRoseKata
                     }
                     else
                     {
-                        if (item.Quality > 0)
+                        if(item.Name == "Sulfuras, Hand of Ragnaros")
                         {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality--;
-                            }
+                            
                         }
-
-                        if (item.Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            item.SellIn--;
-                        }
-
-                        if (item.SellIn < 0)
+                        else
                         {
                             if (item.Quality > 0)
                             {
-                                if (item.Name != "Sulfuras, Hand of Ragnaros")
+                                item.Quality--;
+                            }
+
+                            item.SellIn--;
+
+                            if (item.SellIn < 0)
+                            {
+                                if (item.Quality > 0)
                                 {
                                     item.Quality--;
                                 }
                             }
                         }
+                        
                     }
                 }
             }
