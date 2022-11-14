@@ -22,15 +22,22 @@ namespace OrderShipping.UseCase
 
         public void Run(SellItemsRequest request)
         {
-            List<OrderItem> items = new();
+            var order = new Order
+            {
+                Status = OrderStatus.Created,
+                Items = new List<OrderItem>(),
+                Currency = "EUR"
+            };
+
             foreach (var itemRequest in request.Requests)
             {
                 var product = _productCatalog.GetByName(itemRequest.ProductName);
                 var orderItem = new OrderItem(product, itemRequest.Quantity);
 
-                items.Add(orderItem);      
+                order.AddOrderItem(orderItem);
+         
             }
-            var order = new Order(items);
+
             _orderRepository.Save(order);
         }
 
