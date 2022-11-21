@@ -15,9 +15,9 @@ public class ElectionsTests
     {
         var list = new Dictionary<string, List<string>>
         {
-            ["District 1"] = new List<string> {"Bob", "Anna", "Jess", "July"},
-            ["District 2"] = new List<string> {"Jerry", "Simon"},
-            ["District 3"] = new List<string> {"Johnny", "Matt", "Carole"}
+            ["District 1"] = new() {"Bob", "Anna", "Jess", "July"},
+            ["District 2"] = new() {"Jerry", "Simon"},
+            ["District 3"] = new() {"Johnny", "Matt", "Carole"}
         };
 
         var elections = new Elections(list, false);
@@ -44,9 +44,9 @@ public class ElectionsTests
         {
             var list = new Dictionary<string, List<string>>
             {
-                ["District 1"] = new List<string> {"Bob", "Anna", "Jess", "July"},
-                ["District 2"] = new List<string> {"Jerry", "Simon"},
-                ["District 3"] = new List<string> {"Johnny", "Matt", "Carole"}
+                ["District 1"] = new() {"Bob", "Anna", "Jess", "July"},
+                ["District 2"] = new() {"Jerry", "Simon"},
+                ["District 3"] = new() {"Johnny", "Matt", "Carole"}
             };
             var elections = new Elections(list, true);
             elections.AddCandidate("Michel");
