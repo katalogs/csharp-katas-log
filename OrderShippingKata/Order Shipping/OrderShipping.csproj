@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
+    <Folder Include="Domain\Entities\" />
     <Folder Include="Service\" />
   </ItemGroup>
 

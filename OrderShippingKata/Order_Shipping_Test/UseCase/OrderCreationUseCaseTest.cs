@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OrderShipping.Domain;
+using OrderShipping.Domain.Exception;
 using OrderShipping.Repository;
 using OrderShipping.UseCase;
 using OrderShippingTest.Doubles;
