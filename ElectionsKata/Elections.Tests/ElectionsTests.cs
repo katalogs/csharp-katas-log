@@ -20,7 +20,7 @@ public class ElectionsTests
             ["District 3"] = new() {"Johnny", "Matt", "Carole"}
         };
 
-        var elections = new Elections(list, false);
+        var elections = new NationalElections(list);
         elections.AddCandidate("Michel");
         elections.AddCandidate("Jerry");
         elections.AddCandidate("Johnny");
@@ -48,7 +48,7 @@ public class ElectionsTests
                 ["District 2"] = new() {"Jerry", "Simon"},
                 ["District 3"] = new() {"Johnny", "Matt", "Carole"}
             };
-            var elections = new Elections(list, true);
+            var elections = new LocalElections(list);
             elections.AddCandidate("Michel");
             elections.AddCandidate("Jerry");
             elections.AddCandidate("Johnny");

@@ -2,188 +2,38 @@
 
 namespace Elections
 {
-    public class Elections
+    public abstract class Elections
     {
-        private readonly List<string> _officialCandidates = new List<string>();
-        private readonly List<string> _candidatesAndOthers = new List<string>();
+        protected readonly List<string> OfficialCandidates = new();
 
-        private readonly Dictionary<string, List<string>> _electoralList;
+        protected readonly List<string> CandidatesAndOthers = new();
 
-        private readonly Dictionary<string, List<int>> _votesWithDistricts;
-        private readonly List<int> _votesWithoutDistricts = new List<int>();
+        protected readonly Dictionary<string, List<string>> ElectoralList;
 
-        private readonly bool _withDistrict;
 
-        public Elections(Dictionary<string, List<string>> electoralList, bool withDistrict)
+        protected Elections(Dictionary<string, List<string>> electoralList)
         {
-            _electoralList = electoralList;
-            _withDistrict = withDistrict;
-
-            _votesWithDistricts = new Dictionary<string, List<int>>
-            {
-                {"District 1", new List<int>()},
-                {"District 2", new List<int>()},
-                {"District 3", new List<int>()}
-            };
+            ElectoralList = electoralList;
         }
 
-        public void AddCandidate(string candidate)
+        public virtual void AddCandidate(string candidate)
         {
-            _officialCandidates.Add(candidate);
-            _candidatesAndOthers.Add(candidate);
-            _votesWithoutDistricts.Add(0);
-            _votesWithDistricts["District 1"].Add(0);
-            _votesWithDistricts["District 2"].Add(0);
-            _votesWithDistricts["District 3"].Add(0);
+            OfficialCandidates.Add(candidate);
+            CandidatesAndOthers.Add(candidate);
+            
         }
 
-        public void VoteFor(string elector, string candidate, string electorDistrict)
-        {
-            if (!_withDistrict)
-            {
-                if (!_candidatesAndOthers.Contains(candidate))
-                {
-                    _votesWithoutDistricts.Add(0);
-                    _candidatesAndOthers.Add(candidate);
-                }
-                
-                var index = _candidatesAndOthers.IndexOf(candidate);
-                _votesWithoutDistricts[index] = _votesWithoutDistricts[index] + 1;
-                
-            }
-            else
-            {
-                if (_votesWithDistricts.ContainsKey(electorDistrict))
-                {
-                    var districtVotes = _votesWithDistricts[electorDistrict];
-                    if (_candidatesAndOthers.Contains(candidate))
-                    {
-                        var index = _candidatesAndOthers.IndexOf(candidate);
-                        districtVotes[index] = districtVotes[index] + 1;
-                    }
-                    else
-                    {
-                        _candidatesAndOthers.Add(candidate);
-                        foreach (var (_, votes) in _votesWithDistricts) votes.Add(0);
-                        districtVotes[_candidatesAndOthers.Count - 1] = districtVotes[_candidatesAndOthers.Count - 1] + 1;
-                    }
-                }
-            }
-        }
+        public abstract void VoteFor(string elector, string candidate, string electorDistrict);
+        
 
-        public Dictionary<string, string> Results()
-        {
-            var results = new Dictionary<string, string>();
-            var nbVotes = 0;
-            var nullVotes = 0;
-            var blankVotes = 0;
-            var nbValidVotes = 0;
+        public abstract Dictionary<string, string> Results();
 
-            if (!_withDistrict)
-            {
-                nbVotes = _votesWithoutDistricts.Select(i => i).Sum();
-                for (var i = 0; i < _officialCandidates.Count; i++)
-                {
-                    var index = _candidatesAndOthers.IndexOf(_officialCandidates[i]);
-                    nbValidVotes += _votesWithoutDistricts[index];
-                }
-
-                for (var i = 0; i < _votesWithoutDistricts.Count; i++)
-                {
-                    var candidateResult = CalculatePercentage(_votesWithoutDistricts[i], nbValidVotes);
-                    var candidate = _candidatesAndOthers[i];
-
-                    if (_officialCandidates.Contains(candidate))
-                    {
-                        results[candidate] = FormatResult(candidateResult);
-                    }
-                    else
-                    {
-                        if (_candidatesAndOthers[i] == string.Empty)
-                            blankVotes += _votesWithoutDistricts[i];
-                        else
-                            nullVotes += _votesWithoutDistricts[i];
-                    }
-                }
-            }
-            else
-            {
-                foreach (var entry in _votesWithDistricts)
-                {
-                    var districtVotes = entry.Value;
-                    nbVotes += districtVotes.Select(i => i).Sum();
-                }
-
-                for (var i = 0; i < _officialCandidates.Count; i++)
-                {
-                    var index = _candidatesAndOthers.IndexOf(_officialCandidates[i]);
-                    foreach (var entry in _votesWithDistricts)
-                    {
-                        var districtVotes = entry.Value;
-                        nbValidVotes += districtVotes[index];
-                    }
-                }
-
-                var officialCandidatesResult = new Dictionary<string, int>();
-                for (var i = 0; i < _officialCandidates.Count; i++) officialCandidatesResult[_candidatesAndOthers[i]] = 0;
-                foreach (var entry in _votesWithDistricts)
-                {
-                    var districtResult = new List<float>();
-                    var districtVotes = entry.Value;
-                    for (var i = 0; i < districtVotes.Count; i++)
-                    {
-                        float candidateResult = 0;
-                        if (nbValidVotes != 0) candidateResult = CalculatePercentage(districtVotes[i], nbValidVotes);
-                        var candidate = _candidatesAndOthers[i];
-                        if (_officialCandidates.Contains(candidate))
-                        {
-                            districtResult.Add(candidateResult);
-                        }
-                        else
-                        {
-                            if (_candidatesAndOthers[i] == string.Empty)
-                                blankVotes += districtVotes[i];
-                            else
-                                nullVotes += districtVotes[i];
-                        }
-                    }
-
-                    var districtWinnerIndex = 0;
-                    for (var i = 1; i < districtResult.Count; i++)
-                        if (districtResult[districtWinnerIndex] < districtResult[i])
-                            districtWinnerIndex = i;
-                    officialCandidatesResult[_candidatesAndOthers[districtWinnerIndex]] =
-                        officialCandidatesResult[_candidatesAndOthers[districtWinnerIndex]] + 1;
-                }
-
-                for (var i = 0; i < officialCandidatesResult.Count; i++)
-                {
-                    var ratioCandidate = CalculatePercentage(officialCandidatesResult[_candidatesAndOthers[i]],
-                        officialCandidatesResult.Count);
-
-                    results[_candidatesAndOthers[i]] = FormatResult(ratioCandidate);
-                }
-            }
-
-            var blankResult = CalculatePercentage(blankVotes, nbVotes);
-            results["Blank"] = FormatResult(blankResult);
-
-            var nullResult = CalculatePercentage(nullVotes, nbVotes);
-            results["Null"] = FormatResult(nullResult);
-
-            var nbElectors = _electoralList.Sum(kv => kv.Value.Count);
-            var abstentionResult = 100 - CalculatePercentage(nbVotes, nbElectors);
-            results["Abstention"] = FormatResult(abstentionResult);
-
-            return results;
-        }
-
-        private static float CalculatePercentage(int partVotes, int totalVotes)
+        protected static float CalculatePercentage(int partVotes, int totalVotes)
         {
             return (float) partVotes * 100 / totalVotes;
         }
 
-        private static string FormatResult(float blankResult)
+        protected static string FormatResult(float blankResult)
         {
             return string.Format(new CultureInfo("fr-fr"), "{0:0.00}%", blankResult);
         }
