@@ -29,19 +29,17 @@ namespace GildedRoseKata
                         }
                         break;
                     case "Backstage passes to a TAFKAL80ETC concert":
-                        if (item.Quality < 50)
+                        
+                        IncrementQuality(item);
+
+                        if (item.SellIn < 11)
                         {
-                            item.Quality++;
+                            IncrementQuality(item);
+                        }
 
-                            if (item.SellIn < 11)
-                            {
-                                IncrementQuality(item);
-                            }
-
-                            if (item.SellIn < 6)
-                            {
-                                IncrementQuality(item);
-                            }
+                        if (item.SellIn < 6)
+                        {
+                            IncrementQuality(item);
                         }
 
                         item.SellIn--;
@@ -82,6 +80,6 @@ namespace GildedRoseKata
                 item.Quality--;
             }
         }
-        private static bool IsExpired(Item item)=> item.SellIn< 0;
+        private static bool IsExpired(Item item)=> item.SellIn < 0;
     }
 }
