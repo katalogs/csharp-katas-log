@@ -3,12 +3,56 @@
     public class Item
     {
         public string Name { get; set; }
+
         public int SellIn { get; set; }
+
         public int Quality { get; set; }
 
         public override string ToString()
         {
-            return this.Name + ", " + this.SellIn + ", " + this.Quality;
+            return Name + ", " + SellIn + ", " + Quality;
+        }
+
+        public virtual void UpdateQuality()
+        {
+            switch (Name)
+            {
+                case "Backstage passes to a TAFKAL80ETC concert":
+
+                    IncrementQuality();
+
+                    if (SellIn < 11)
+                    {
+                        IncrementQuality();
+                    }
+
+                    if (SellIn < 6)
+                    {
+                        IncrementQuality();
+                    }
+
+                    DecreaseSellIn();
+
+                    if (IsExpired())
+                    {
+                        DropQuality();
+                    }
+
+                    break;
+                case "Sulfuras, Hand of Ragnaros":
+                    break;
+                default:
+                    DecreaseQuality();
+
+                    DecreaseSellIn();
+
+                    if (IsExpired())
+                    {
+                        DecreaseQuality();
+                    }
+
+                    break;
+            }
         }
 
         internal void DecreaseQuality()
@@ -27,10 +71,10 @@
             }
         }
 
-        internal bool IsExpired() => SellIn < 0;
+        internal bool IsExpired() => this.SellIn < 0;
 
-        internal void DecreaseSellIn() => SellIn--;
+        internal void DecreaseSellIn() => this.SellIn--;
 
-        internal void DropQuality() => Quality=0;
+        internal void DropQuality() => this.Quality=0;
     }
 }
