@@ -21,11 +21,12 @@ namespace OrderShipping.UseCase
         {
             var order = _orderRepository.GetById(request.OrderId);
 
-            order.Ship();
 
+            order.CheckShippability();
             _shipmentService.Ship(order);
-
+            order.Ship();
             _orderRepository.Save(order);
+
         }
     }
 }

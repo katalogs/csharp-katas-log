@@ -39,7 +39,14 @@ namespace OrderShipping.Domain
             Status = OrderStatus.Approved;
         }
 
+
         internal void Ship()
+        {
+            CheckShippability();
+            Status = OrderStatus.Shipped;
+        }
+
+        internal void CheckShippability()
         {
             if (Status == OrderStatus.Created || Status == OrderStatus.Rejected)
             {
@@ -50,7 +57,6 @@ namespace OrderShipping.Domain
             {
                 throw new OrderCannotBeShippedTwiceException();
             }
-            Status = OrderStatus.Shipped;
         }
 
         internal void Reject()
