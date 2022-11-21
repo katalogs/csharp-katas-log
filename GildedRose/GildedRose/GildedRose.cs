@@ -19,67 +19,50 @@ namespace GildedRoseKata
                 switch (item.Name)
                 {
                     case "Aged Brie":
-                        IncrementQuality(item);
+                        item.IncrementQuality();
 
-                        item.SellIn--;
+                        item.DecreaseSellIn();
 
-                        if (IsExpired(item))
+                        if (item.IsExpired())
                         {
-                            IncrementQuality(item);
+                            item.IncrementQuality();
                         }
                         break;
                     case "Backstage passes to a TAFKAL80ETC concert":
-                        
-                        IncrementQuality(item);
+
+                        item.IncrementQuality();
 
                         if (item.SellIn < 11)
                         {
-                            IncrementQuality(item);
+                            item.IncrementQuality();
                         }
 
                         if (item.SellIn < 6)
                         {
-                            IncrementQuality(item);
+                            item.IncrementQuality();
                         }
 
-                        item.SellIn--;
+                        item.DecreaseSellIn();
 
-                        if (IsExpired(item))
+                        if (item.IsExpired())
                         {
-                            item.Quality = 0;
+                            item.DropQuality();
                         }
                         break;
                     case "Sulfuras, Hand of Ragnaros":
                         break;
                     default:
-                        DecreaseQuality(item);
+                        item.DecreaseQuality();
 
-                        item.SellIn--;
+                        item.DecreaseSellIn();
 
-                        if (IsExpired(item))
+                        if (item.IsExpired())
                         {
-                            DecreaseQuality(item);
+                            item.DecreaseQuality();
                         }
                         break;
                 }
             }
         }
-
-        private static void IncrementQuality(Item item)
-        {
-            if (item.Quality < 50)
-            {
-                item.Quality++;
-            }
-        }
-
-        private static void DecreaseQuality(Item item)
-        {
-            if (item.Quality > 0)
-            {
-                item.Quality--;
-            }
-        }
-        private static bool IsExpired(Item item)=> item.SellIn < 0;
     }
 }
