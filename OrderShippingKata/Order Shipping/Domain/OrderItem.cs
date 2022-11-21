@@ -1,5 +1,5 @@
 ﻿using Ardalis.GuardClauses;
-using OrderShipping.UseCase;
+using OrderShipping.Domain.Exception;
 
 namespace OrderShipping.Domain
 {

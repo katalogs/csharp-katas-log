@@ -1,5 +1,6 @@
 ﻿using System;
 using OrderShipping.Domain;
+using OrderShipping.Domain.Exception;
 using OrderShipping.UseCase;
 using OrderShippingTest.Doubles;
 using Xunit;
