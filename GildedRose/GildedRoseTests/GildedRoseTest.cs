@@ -25,7 +25,7 @@ namespace GildedRoseTests
         [Fact]
         public Task UpdateQuality_WithNominalItem_ShouldHaveCorrectValue()
         {
-            IList<Item> Items = new List<Item> {new() {Name = "foo", SellIn = 0, Quality = 0}};
+            IList<Item> Items = new List<Item> {new Item("foo", 0, 0)};
             var gildedRose = new GildedRose(Items);
             gildedRose.UpdateQuality();
             return Verify(Items);           

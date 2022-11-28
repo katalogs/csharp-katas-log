@@ -2,11 +2,8 @@
 
 internal class Legendary : Item
 {
-    public Legendary(int sellIn, int quality, string name)
+    public Legendary(int sellIn, int quality, string name) : base(name, sellIn, quality)
     {
-        Name = name;
-        SellIn = sellIn;
-        Quality = quality;
     }
 
     public override void UpdateQuality()

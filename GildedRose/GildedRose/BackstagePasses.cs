@@ -2,11 +2,8 @@
 
 internal class BackstagePasses : Item
 {
-    public BackstagePasses(int sellIn, int quality, string band)
+    public BackstagePasses(int sellIn, int quality, string band) : base("Backstage passes to a " + band + " concert", sellIn, quality)
     {
-        Name = "Backstage passes to a "+ band + " concert";
-        SellIn = sellIn;
-        Quality = quality;
     }
 
     public override void UpdateQuality()

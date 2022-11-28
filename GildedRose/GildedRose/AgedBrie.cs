@@ -8,11 +8,8 @@ namespace GildedRoseKata;
 
 internal class AgedBrie : Item
 {
-    public AgedBrie(int sellIn, int quality)
+    public AgedBrie(int sellIn, int quality) : base("Aged Brie", sellIn, quality)
     {
-        Name = "Aged Brie";
-        SellIn = sellIn;
-        Quality = quality;
     }
 
     public override void UpdateQuality()

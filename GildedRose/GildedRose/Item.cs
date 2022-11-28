@@ -8,6 +8,13 @@
 
         public int Quality { get; set; }
 
+        public Item(string name, int sellIn, int quality)
+        {
+            Name = name;
+            SellIn = sellIn;
+            Quality = quality;
+        }
+
         public override string ToString()
         {
             return Name + ", " + SellIn + ", " + Quality;
@@ -15,19 +22,13 @@
 
         public virtual void UpdateQuality()
         {
-            switch (Name)
+            DecreaseQuality();
+
+            DecreaseSellIn();
+
+            if (IsExpired())
             {
-                default:
-                    DecreaseQuality();
-
-                    DecreaseSellIn();
-
-                    if (IsExpired())
-                    {
-                        DecreaseQuality();
-                    }
-
-                    break;
+                DecreaseQuality();
             }
         }
 
