@@ -2,7 +2,7 @@
 
 internal class Legendary : Item
 {
-    public Legendary(int sellIn, int quality, string name) : base(name, sellIn, quality)
+    public Legendary(string name,int sellIn, int quality) : base(name, sellIn, quality)
     {
     }
 

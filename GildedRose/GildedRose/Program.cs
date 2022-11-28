@@ -13,11 +13,11 @@ namespace GildedRoseKata
                 new Item ("+5 Dexterity Vest", 10, 20),
                 new AgedBrie(2, 0),
                 new Item ("Elixir of the Mongoose", 5, 7),
-                new Legendary(0, 80,"Sulfuras, Hand of Ragnaros"),
-                new Legendary(-1,80,"Sulfuras, Hand of Ragnaros"),
-                new BackstagePasses(15, 20,"TAFKAL80ETC"),
-                new BackstagePasses(10, 49,"TAFKAL80ETC"),
-                new BackstagePasses(5, 49,"TAFKAL80ETC"),               
+                new Legendary("Sulfuras, Hand of Ragnaros",0, 80),
+                new Legendary("Sulfuras, Hand of Ragnaros",-1,80),
+                new BackstagePasses("TAFKAL80ETC",15, 20),
+                new BackstagePasses("TAFKAL80ETC",10, 49),
+                new BackstagePasses("TAFKAL80ETC",5, 49),               
                 // this conjured item does not work properly yet
                 new Item ("Conjured Mana Cake", 3, 6)
             };

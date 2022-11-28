@@ -2,7 +2,7 @@
 
 internal class BackstagePasses : Item
 {
-    public BackstagePasses(int sellIn, int quality, string band) : base("Backstage passes to a " + band + " concert", sellIn, quality)
+    public BackstagePasses(string band, int sellIn, int quality) : base("Backstage passes to a " + band + " concert", sellIn, quality)
     {
     }
 
