@@ -2,9 +2,9 @@
 
 internal class BackstagePasses : Item
 {
-    public BackstagePasses(int sellIn, int quality)
+    public BackstagePasses(int sellIn, int quality, string band)
     {
-        Name = "Backstage passes to a TAFKAL80ETC concert";
+        Name = "Backstage passes to a "+ band + " concert";
         SellIn = sellIn;
         Quality = quality;
     }

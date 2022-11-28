@@ -17,9 +17,6 @@
         {
             switch (Name)
             {
-                
-                case "Sulfuras, Hand of Ragnaros":
-                    break;
                 default:
                     DecreaseQuality();
 
