@@ -61,7 +61,24 @@ namespace NombresEnFrancaisTests
         [Theory]
         [InlineData(10, "dix")]
         [InlineData(20, "vingt")]
+        [InlineData(30, "trente")]
+        [InlineData(40, "quarante")]
+        [InlineData(50, "cinquante")]
+        [InlineData(60, "soixante")]
         public void GetTensInFrench_WhenTens_ReturnsAsString(int number, string expected)
+        {
+            string result = NumberInFrench.GetNumberInFrench(number);
+
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(21, "vingt-et-un")]
+        [InlineData(31, "trente-et-un")]
+        [InlineData(41, "quarante-et-un")]
+        [InlineData(51, "cinquante-et-un")]
+        [InlineData(61, "soixante-et-un")]
+        public void Get_EveryNumber_AboveEleven_BelowSeventy_FinishingByOne_WithEtAsSeparator(int number, string expected)
         {
             string result = NumberInFrench.GetNumberInFrench(number);
 
@@ -73,7 +90,11 @@ namespace NombresEnFrancaisTests
         [InlineData(23, "vingt-trois")]
         [InlineData(24, "vingt-quatre")]
         [InlineData(25, "vingt-cinq")]
-        public void Get_SecondTensInFrench_NominalCase_ReturnsAsString(int number, string expected)
+        [InlineData(36, "trente-six")]
+        [InlineData(47, "quarante-sept")]
+        [InlineData(58, "cinquante-huit")]
+        [InlineData(69, "soixante-neuf")]
+        public void Get_EveryNumber_AboveTwentyOne_AndBelowSeventy_InFrench_NominalCase_ReturnsTensAndUnitAsString(int number, string expected)
         {
             string result = NumberInFrench.GetNumberInFrench(number);
 

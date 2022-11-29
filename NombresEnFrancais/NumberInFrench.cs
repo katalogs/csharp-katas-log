@@ -2,6 +2,8 @@
 {
     public static class NumberInFrench
     {
+        const string Separator = "-";
+
         public static string GetNumberInFrench(int number)
         {
             var numberMapping = new Dictionary<int, string>
@@ -23,14 +25,28 @@
                 { 14, "quatorze"},
                 { 15, "quinze"},
                 { 16, "seize"},
-                { 20, "vingt"}
+                { 20, "vingt"},
+                { 30, "trente"},
+                { 40, "quarante"},
+                { 50, "cinquante"},
+                { 60, "soixante"}
             };
 
-            if (!numberMapping.ContainsKey(number))
+            if (numberMapping.ContainsKey(number))
             {
-                return numberMapping[number / 10 * 10] + "-" + numberMapping[number % 10];
+                return numberMapping[number];
             }
-            return numberMapping[number];
+
+            var lastDigit = number % 10;
+
+            return numberMapping[number / 10 * 10] + GetSeparator(lastDigit) + numberMapping[lastDigit];
+        }
+
+        private static string GetSeparator(int lastDigit)
+        {
+            return lastDigit == 1
+                ? $"{Separator}et{Separator}"
+                : Separator;
         }
     }
 }
