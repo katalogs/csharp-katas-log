@@ -100,5 +100,27 @@ namespace NombresEnFrancaisTests
 
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(70, "soixante-dix")]
+        public void Get70InFrench_ReturnsAsString(int number, string expected)
+        {
+            string result = NumberInFrench.GetNumberInFrench(number);
+
+            Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(72, "soixante-douze")]
+        [InlineData(73, "soixante-treize")]
+        [InlineData(74, "soixante-quatorze")]
+        [InlineData(75, "soixante-quinze")]
+        [InlineData(76, "soixante-seize")]
+        public void GetNumberInFrench_Between72And76_ReturnsAsString(int number, string expected)
+        {
+            string result = NumberInFrench.GetNumberInFrench(number);
+
+            Assert.Equal(expected, result);
+        }
     }
 }
