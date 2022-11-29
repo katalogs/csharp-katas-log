@@ -41,10 +41,10 @@
 
             if (number >= 70)
             {
-                return numberMapping[60] + GetSeparator(lastDigit) + numberMapping[number - 60];
+                return numberMapping[60] + GetSeparator(lastDigit) + GetNumberInFrench(number - 60);
             }
 
-            return numberMapping[number / 10 * 10] + GetSeparator(lastDigit) + numberMapping[lastDigit];
+            return numberMapping[number / 10 * 10] + GetSeparator(lastDigit) + GetNumberInFrench(lastDigit);
         }
 
         private static string GetSeparator(int lastDigit)
