@@ -41,7 +41,7 @@
 
             if (number >= 70)
             {
-                return numberMapping[60] + Separator + numberMapping[number - 60];
+                return numberMapping[60] + GetSeparator(lastDigit) + numberMapping[number - 60];
             }
 
             return numberMapping[number / 10 * 10] + GetSeparator(lastDigit) + numberMapping[lastDigit];
