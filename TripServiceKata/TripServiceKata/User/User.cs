@@ -10,7 +10,7 @@ namespace TripServiceKata.User
         public List<User> GetFriends()
         {
             return friends;
-        }
+        } 
 
         public void AddFriend(User user)
         {
@@ -25,7 +25,7 @@ namespace TripServiceKata.User
         public List<Trip.Trip> Trips()
         {
             return trips;
-        }
+        } 
 
         public bool IsFriendWith(User user) =>
             friends.Contains(user);
