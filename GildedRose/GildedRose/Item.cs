@@ -32,7 +32,7 @@
             }
         }
 
-        internal void DecreaseQuality()
+        internal virtual void DecreaseQuality()
         {
             if (Quality > 0)
             {
