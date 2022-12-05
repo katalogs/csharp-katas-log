@@ -4,9 +4,9 @@ namespace Elections
 {
     public class NationalElections : Elections
     {
-        private readonly List<int> _votesWithoutDistricts = new List<int>();
+        private readonly List<int> _votesWithoutDistricts = new();
 
-        private readonly List<string> _balotBox = new List<string>();
+        private readonly List<string> _balotBox = new();
 
         public NationalElections(Dictionary<string, List<string>> electoralList): base(electoralList)
         {
@@ -32,7 +32,7 @@ namespace Elections
             }
 
             var index = CandidatesAndOthers.IndexOf(ballot);
-            _votesWithoutDistricts[index] = _votesWithoutDistricts[index] + 1;
+            _votesWithoutDistricts[index] += 1;
         }
 
         public override Dictionary<string, string> Results()
@@ -43,7 +43,7 @@ namespace Elections
             var blankVotes = 0;
             var nbValidVotes = 0;
 
-            //_balotBox.ForEach();
+            _balotBox.ForEach(PreTreatment);
 
             nbVotes = _votesWithoutDistricts.Select(i => i).Sum();
             for (var i = 0; i < OfficialCandidates.Count; i++)
