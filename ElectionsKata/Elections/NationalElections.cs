@@ -6,6 +6,8 @@ namespace Elections
     {
         private readonly List<int> _votesWithoutDistricts = new List<int>();
 
+        private readonly List<string> _balotBox = new List<string>();
+
         public NationalElections(Dictionary<string, List<string>> electoralList): base(electoralList)
         {
         }
@@ -18,13 +20,18 @@ namespace Elections
 
         public override void VoteFor(string elector, string candidate, string electorDistrict)
         {
-            if (!CandidatesAndOthers.Contains(candidate))
+            _balotBox.Add(candidate);
+        }
+
+        private void PreTreatment(string ballot)
+        {
+            if (!CandidatesAndOthers.Contains(ballot))
             {
                 _votesWithoutDistricts.Add(0);
-                CandidatesAndOthers.Add(candidate);
+                CandidatesAndOthers.Add(ballot);
             }
 
-            var index = CandidatesAndOthers.IndexOf(candidate);
+            var index = CandidatesAndOthers.IndexOf(ballot);
             _votesWithoutDistricts[index] = _votesWithoutDistricts[index] + 1;
         }
 
@@ -35,6 +42,8 @@ namespace Elections
             var nullVotes = 0;
             var blankVotes = 0;
             var nbValidVotes = 0;
+
+            //_balotBox.ForEach();
 
             nbVotes = _votesWithoutDistricts.Select(i => i).Sum();
             for (var i = 0; i < OfficialCandidates.Count; i++)
