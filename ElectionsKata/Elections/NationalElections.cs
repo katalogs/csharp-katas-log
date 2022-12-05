@@ -6,7 +6,7 @@ namespace Elections
     {
         private readonly List<int> _votesWithoutDistricts = new();
 
-        private readonly List<string> _balotBox = new();
+        private readonly List<string> _ballotBox = new();
 
         public NationalElections(Dictionary<string, List<string>> electoralList): base(electoralList)
         {
@@ -20,7 +20,7 @@ namespace Elections
 
         public override void VoteFor(string elector, string candidate, string electorDistrict)
         {
-            _balotBox.Add(candidate);
+            _ballotBox.Add(candidate);
         }
 
         private void PreTreatment(string ballot)
@@ -38,14 +38,23 @@ namespace Elections
         public override Dictionary<string, string> Results()
         {
             var results = new Dictionary<string, string>();
-            var nbVotes = 0;
+            var nbVotes = _ballotBox.Count;
             var nullVotes = 0;
-            var blankVotes = 0;
+            var blankVotes = _ballotBox.Count(ballot => ballot == String.Empty);
             var nbValidVotes = 0;
 
-            _balotBox.ForEach(PreTreatment);
+            _ballotBox.ForEach(ballot =>
+            {
+                if (!CandidatesAndOthers.Contains(ballot))
+                {
+                    _votesWithoutDistricts.Add(0);
+                    CandidatesAndOthers.Add(ballot);
+                }
 
-            nbVotes = _votesWithoutDistricts.Select(i => i).Sum();
+                var index = CandidatesAndOthers.IndexOf(ballot);
+                _votesWithoutDistricts[index] += 1;
+            });
+
             for (var i = 0; i < OfficialCandidates.Count; i++)
             {
                 var index = CandidatesAndOthers.IndexOf(OfficialCandidates[i]);
@@ -63,9 +72,7 @@ namespace Elections
                 }
                 else
                 {
-                    if (CandidatesAndOthers[i] == string.Empty)
-                        blankVotes += _votesWithoutDistricts[i];
-                    else
+                    if (CandidatesAndOthers[i] != string.Empty)
                         nullVotes += _votesWithoutDistricts[i];
                 }
             }
