@@ -39,9 +39,9 @@ namespace Elections
         {
             var results = new Dictionary<string, string>();
             var nbVotes = _ballotBox.Count;
-            var nullVotes = 0;
             var blankVotes = _ballotBox.Count(ballot => ballot == String.Empty);
-            var nbValidVotes = 0;
+            var nbValidVotes = _ballotBox.Count(ballot => OfficialCandidates.Contains(ballot));
+            var nullVotes = _ballotBox.Count(ballot => !OfficialCandidates.Contains(ballot) && ballot != string.Empty);
 
             _ballotBox.ForEach(ballot =>
             {
@@ -55,12 +55,6 @@ namespace Elections
                 _votesWithoutDistricts[index] += 1;
             });
 
-            for (var i = 0; i < OfficialCandidates.Count; i++)
-            {
-                var index = CandidatesAndOthers.IndexOf(OfficialCandidates[i]);
-                nbValidVotes += _votesWithoutDistricts[index];
-            }
-
             for (var i = 0; i < _votesWithoutDistricts.Count; i++)
             {
                 var candidateResult = CalculatePercentage(_votesWithoutDistricts[i], nbValidVotes);
@@ -69,11 +63,6 @@ namespace Elections
                 if (OfficialCandidates.Contains(candidate))
                 {
                     results[candidate] = FormatResult(candidateResult);
-                }
-                else
-                {
-                    if (CandidatesAndOthers[i] != string.Empty)
-                        nullVotes += _votesWithoutDistricts[i];
                 }
             }
 
