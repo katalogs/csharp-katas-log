@@ -159,5 +159,30 @@ namespace NombresEnFrancaisTests
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void Get90InFrench_ReturnsAsString()
+        {
+            string result = NumberInFrench.GetNumberInFrench(90);
+
+            Assert.Equal("quatre-vingt-dix", result);
+        }
+
+        [Theory]
+        [InlineData(91, "quatre-vingt-onze")]
+        [InlineData(92, "quatre-vingt-douze")]
+        [InlineData(93, "quatre-vingt-treize")]
+        [InlineData(94, "quatre-vingt-quatorze")]
+        [InlineData(95, "quatre-vingt-quinze")]
+        [InlineData(96, "quatre-vingt-seize")]
+        [InlineData(97, "quatre-vingt-dix-sept")]
+        [InlineData(98, "quatre-vingt-dix-huit")]
+        [InlineData(99, "quatre-vingt-dix-neuf")]
+        public void GetInFrench_Between91And99_ReturnsAsString(int number, string expected)
+        {
+            string result = NumberInFrench.GetNumberInFrench(number);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

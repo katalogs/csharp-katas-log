@@ -31,7 +31,8 @@
                 { 50, "cinquante"},
                 { 60, "soixante"},
                 { 80, "quatre-vingt"},
-                { 81, "quatre-vingt-un"}
+                { 81, "quatre-vingt-un"},
+                { 91, "quatre-vingt-onze"}
             };
 
             if (numberMapping.ContainsKey(number))
@@ -41,7 +42,7 @@
 
             var lastDigit = number % 10;
             var tens = number / 10 * 10;
-            if (tens == 70)
+            if (!numberMapping.ContainsKey(tens))
             {
                 tens -= 10;
             }
