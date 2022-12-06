@@ -29,17 +29,19 @@
                 { 30, "trente"},
                 { 40, "quarante"},
                 { 50, "cinquante"},
-                { 60, "soixante"}
+                { 60, "soixante"},
+                { 80, "quatre-vingt"},
+                { 81, "quatre-vingt-un"}
             };
 
             if (numberMapping.ContainsKey(number))
             {
-                return numberMapping[number];
+                return numberMapping[number] + (number == 80 ?  "s" : string.Empty);
             }
 
             var lastDigit = number % 10;
             var tens = number / 10 * 10;
-            if (number >= 70)
+            if (tens == 70)
             {
                 tens -= 10;
             }

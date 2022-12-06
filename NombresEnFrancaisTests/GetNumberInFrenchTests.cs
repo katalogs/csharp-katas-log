@@ -126,5 +126,38 @@ namespace NombresEnFrancaisTests
 
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(80, "quatre-vingts")]
+        public void Get80InFrench_ReturnsAsString_With_S(int number, string expected)
+        {
+            string result = NumberInFrench.GetNumberInFrench(number);
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void Get81InFrench_ReturnsAsString_Without_Et()
+        {
+            string result = NumberInFrench.GetNumberInFrench(81);
+
+            Assert.Equal("quatre-vingt-un", result);
+        }
+
+        [Theory]
+        [InlineData(82, "quatre-vingt-deux")]
+        [InlineData(83, "quatre-vingt-trois")]
+        [InlineData(84, "quatre-vingt-quatre")]
+        [InlineData(85, "quatre-vingt-cinq")]
+        [InlineData(86, "quatre-vingt-six")]
+        [InlineData(87, "quatre-vingt-sept")]
+        [InlineData(88, "quatre-vingt-huit")]
+        [InlineData(89, "quatre-vingt-neuf")]
+        public void GetInFrench_Between82And89_ReturnsAsString(int number, string expected)
+        {
+            string result = NumberInFrench.GetNumberInFrench(number);
+
+            Assert.Equal(expected, result);
+        }
     }
 }
