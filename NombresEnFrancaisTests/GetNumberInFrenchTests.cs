@@ -120,7 +120,7 @@ namespace NombresEnFrancaisTests
         [InlineData(77, "soixante-dix-sept")]
         [InlineData(78, "soixante-dix-huit")]
         [InlineData(79, "soixante-dix-neuf")]
-        public void GetNumberInFrench_Between71And79_ReturnsAsString(int number, string expected)
+        public void GetNumberInFrench_Between71And79_ReturnsTensMinusTenAndRemainAsString(int number, string expected)
         {
             string result = NumberInFrench.GetNumberInFrench(number);
 

@@ -38,13 +38,13 @@
             }
 
             var lastDigit = number % 10;
-
+            var tens = number / 10 * 10;
             if (number >= 70)
             {
-                return numberMapping[60] + GetSeparator(lastDigit) + GetNumberInFrench(number - 60);
+                tens -= 10;
             }
 
-            return numberMapping[number / 10 * 10] + GetSeparator(lastDigit) + GetNumberInFrench(lastDigit);
+            return numberMapping[tens] + GetSeparator(lastDigit) + GetNumberInFrench(number - tens);
         }
 
         private static string GetSeparator(int lastDigit)
