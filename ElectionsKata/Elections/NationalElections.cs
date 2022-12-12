@@ -23,48 +23,18 @@ namespace Elections
             _ballotBox.Add(candidate);
         }
 
-        private void PreTreatment(string ballot)
-        {
-            if (!CandidatesAndOthers.Contains(ballot))
-            {
-                _votesWithoutDistricts.Add(0);
-                CandidatesAndOthers.Add(ballot);
-            }
-
-            var index = CandidatesAndOthers.IndexOf(ballot);
-            _votesWithoutDistricts[index] += 1;
-        }
-
         public override Dictionary<string, string> Results()
         {
-            var results = new Dictionary<string, string>();
             var nbVotes = _ballotBox.Count;
             var blankVotes = _ballotBox.Count(ballot => ballot == String.Empty);
             var nbValidVotes = _ballotBox.Count(ballot => OfficialCandidates.Contains(ballot));
             var nullVotes = _ballotBox.Count(ballot => !OfficialCandidates.Contains(ballot) && ballot != string.Empty);
 
-            _ballotBox.ForEach(ballot =>
-            {
-                if (!CandidatesAndOthers.Contains(ballot))
-                {
-                    _votesWithoutDistricts.Add(0);
-                    CandidatesAndOthers.Add(ballot);
-                }
-
-                var index = CandidatesAndOthers.IndexOf(ballot);
-                _votesWithoutDistricts[index] += 1;
-            });
-
-            for (var i = 0; i < _votesWithoutDistricts.Count; i++)
-            {
-                var candidateResult = CalculatePercentage(_votesWithoutDistricts[i], nbValidVotes);
-                var candidate = CandidatesAndOthers[i];
-
-                if (OfficialCandidates.Contains(candidate))
-                {
-                    results[candidate] = FormatResult(candidateResult);
-                }
-            }
+            var results = OfficialCandidates
+                .ToDictionary(officialCandidateName => officialCandidateName,
+                    officialCandidateName => _ballotBox.Count(ballot => ballot == officialCandidateName))
+                .ToDictionary(g => g.Key, g => CalculatePercentage(g.Value, nbValidVotes))
+                .ToDictionary(g => g.Key, g => FormatResult(g.Value));
 
             var blankResult = CalculatePercentage(blankVotes, nbVotes);
             results["Blank"] = FormatResult(blankResult);
