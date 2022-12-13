@@ -1,17 +1,36 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using Argon;
+
 using GildedRoseKata;
+using System.Text;
+using System.Threading.Tasks;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 
-namespace GildedRoseTests;
-
-public class GildedRoseTest
+namespace GildedRoseTests
 {
-    [Fact]
-    public void foo()
+    [UsesVerify]
+    public class GildedRoseTest
     {
-        IList<Item> Items = new List<Item> {new() {Name = "foo", SellIn = 0, Quality = 0}};
-        var gildedRose = new GildedRose(Items);
-        gildedRose.UpdateQuality();
-        Assert.Equal("fixme", Items[0].Name);
+        public GildedRoseTest()
+        {
+            VerifierSettings.AddExtraSettings(serializerSettings =>
+                serializerSettings.DefaultValueHandling = DefaultValueHandling.Include);
+        }
+
+        [Fact]
+        public Task GoldenMasterOnMain_WithNominalItem_ShouldSucced()
+        {
+            StringBuilder builder = new();
+            StringWriter sw = new StringWriter(builder);
+            Console.SetOut(sw);
+            Program.Main(new String[] { });
+            var result = builder.ToString();
+
+            return Verify(result);
+        }
     }
 }
