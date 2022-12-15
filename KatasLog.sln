@@ -61,9 +61,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderShipping", "OrderShipp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderShippingTest", "OrderShippingKata\Order_Shipping_Test\OrderShippingTest.csproj", "{A6B18B20-7514-4D99-A742-2E10C2BB4469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter", "Converter\Converter.csproj", "{DFA6F320-4985-4801-926C-EEBFF49C4C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Converter", "Converter\Converter.csproj", "{DFA6F320-4985-4801-926C-EEBFF49C4C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converter.Tests", "Converter.Tests\Converter.Tests.csproj", "{4C12DD65-96D1-423C-9E96-AD906C59BF3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Converter.Tests", "Converter.Tests\Converter.Tests.csproj", "{4C12DD65-96D1-423C-9E96-AD906C59BF3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupermarketReceipt", "SupermarketReceipt-Refactoring-Kata-main\csharp\SupermarketReceipt\SupermarketReceipt.csproj", "{63AD379C-F661-49BD-972B-D20ADFBDAE7C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SupermarketReceipt.Test", "SupermarketReceipt-Refactoring-Kata-main\csharp\SupermarketReceipt.Test\SupermarketReceipt.Test.csproj", "{B132F0CD-595A-44C7-8D63-3585E86F6A05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +199,14 @@ Global
 		{4C12DD65-96D1-423C-9E96-AD906C59BF3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C12DD65-96D1-423C-9E96-AD906C59BF3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C12DD65-96D1-423C-9E96-AD906C59BF3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63AD379C-F661-49BD-972B-D20ADFBDAE7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63AD379C-F661-49BD-972B-D20ADFBDAE7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63AD379C-F661-49BD-972B-D20ADFBDAE7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63AD379C-F661-49BD-972B-D20ADFBDAE7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B132F0CD-595A-44C7-8D63-3585E86F6A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B132F0CD-595A-44C7-8D63-3585E86F6A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B132F0CD-595A-44C7-8D63-3585E86F6A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B132F0CD-595A-44C7-8D63-3585E86F6A05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,11 @@
+﻿{
+  "stryker-config": {
+    "reporters": [
+      "progress",
+      "html"
+    ],
+    "project": "SupermarketReceipt.csproj",
+    "mutate": [ "!**/Program.cs" ],
+    "ignore-methods": [ "ConfigureAwait" ]
+  }
+}

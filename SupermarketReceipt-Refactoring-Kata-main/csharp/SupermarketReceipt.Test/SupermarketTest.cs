@@ -109,6 +109,38 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
+        public Task xForY_discount_withOne()
+        {
+            _theCart.AddItem(_cherryTomatoes);
+            _teller.AddSpecialOffer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99);
+            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
+
+        [Fact]
+        public Task xForY_discount_withThree()
+        {
+            _theCart.AddItem(_cherryTomatoes);
+            _theCart.AddItem(_cherryTomatoes);
+            _theCart.AddItem(_cherryTomatoes);
+            _teller.AddSpecialOffer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99);
+            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
+
+        [Fact]
+        public Task xForY_discount_withFour()
+        {
+            _theCart.AddItem(_cherryTomatoes);
+            _theCart.AddItem(_cherryTomatoes);
+            _theCart.AddItem(_cherryTomatoes);
+            _theCart.AddItem(_cherryTomatoes);
+            _teller.AddSpecialOffer(SpecialOfferType.TwoForAmount, _cherryTomatoes, .99);
+            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
+
+        [Fact]
         public Task FiveForY_discount()
         {
             _theCart.AddItemQuantity(_apples, 5);
