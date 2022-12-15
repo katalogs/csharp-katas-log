@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Domain
 {
     public class Receipt
     {
@@ -40,10 +40,10 @@ namespace SupermarketReceipt
     {
         public ReceiptItem(Product p, double quantity, double price, double totalPrice)
         {
-            Product = p;
-            Quantity = quantity;
-            Price = price;
-            TotalPrice = totalPrice;
+            this.Product = p;
+            this.Quantity = quantity;
+            this.Price = price;
+            this.TotalPrice = totalPrice;
         }
 
         public Product Product { get; }

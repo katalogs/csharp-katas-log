@@ -1,4 +1,4 @@
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Domain
 {
     public enum SpecialOfferType
     {
@@ -14,8 +14,8 @@ namespace SupermarketReceipt
 
         public Offer(SpecialOfferType offerType, Product product, double argument)
         {
-            OfferType = offerType;
-            Argument = argument;
+            this.OfferType = offerType;
+            this.Argument = argument;
             _product = product;
         }
 

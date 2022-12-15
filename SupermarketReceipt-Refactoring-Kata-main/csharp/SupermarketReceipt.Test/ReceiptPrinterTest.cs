@@ -1,5 +1,7 @@
 
 using System.Threading.Tasks;
+using SupermarketReceipt.Domain;
+using SupermarketReceipt.Presentation;
 using VerifyXunit;
 using Xunit;
 

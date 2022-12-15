@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Domain
 {
     public class Product
     {
         public Product(string name, ProductUnit unit)
         {
-            Name = name;
-            Unit = unit;
+            this.Name = name;
+            this.Unit = unit;
         }
 
         public string Name { get; }
@@ -17,15 +17,15 @@ namespace SupermarketReceipt
         {
             var product = obj as Product;
             return product != null &&
-                   Name == product.Name &&
-                   Unit == product.Unit;
+                   this.Name == product.Name &&
+                   this.Unit == product.Unit;
         }
 
         public override int GetHashCode()
         {
             var hashCode = -1996304355;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
-            hashCode = hashCode * -1521134295 + Unit.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(this.Name);
+            hashCode = hashCode * -1521134295 + this.Unit.GetHashCode();
             return hashCode;
         }
     }
@@ -34,8 +34,8 @@ namespace SupermarketReceipt
     {
         public ProductQuantity(Product product, double weight)
         {
-            Product = product;
-            Quantity = weight;
+            this.Product = product;
+            this.Quantity = weight;
         }
 
         public Product Product { get; }

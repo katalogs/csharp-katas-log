@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using SupermarketReceipt.Domain;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Repositories
 {
-    public class FakeCatalog : SupermarketCatalog
+    public class FakeCatalog : ISupermarketCatalog
     {
         private readonly IDictionary<string, double> _prices = new Dictionary<string, double>();
         private readonly IDictionary<string, Product> _products = new Dictionary<string, Product>();

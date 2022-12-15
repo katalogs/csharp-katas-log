@@ -1,7 +1,8 @@
 using System.Globalization;
 using System.Text;
+using SupermarketReceipt.Domain;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Presentation
 {
     public class ReceiptPrinter
     {

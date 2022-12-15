@@ -1,5 +1,8 @@
 
 using System.Threading.Tasks;
+using SupermarketReceipt.Domain;
+using SupermarketReceipt.Presentation;
+using SupermarketReceipt.Repositories;
 using VerifyXunit;
 using Xunit;
 
@@ -8,7 +11,7 @@ namespace SupermarketReceipt.Test
     [UsesVerify]
     public class SupermarketTest
     {
-        private SupermarketCatalog _catalog;
+        private ISupermarketCatalog _catalog;
         private Teller _teller;
         private ShoppingCart _theCart;
         private Product _toothbrush;

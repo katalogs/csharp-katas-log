@@ -1,6 +1,6 @@
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Domain
 {
-    public interface SupermarketCatalog
+    public interface ISupermarketCatalog
     {
         void AddProduct(Product product, double price);
 
