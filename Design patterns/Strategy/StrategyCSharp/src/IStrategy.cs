@@ -2,6 +2,6 @@
 {
     public interface IStrategy
     {
-        string Describe();
+        public string Describe();
     }
 }

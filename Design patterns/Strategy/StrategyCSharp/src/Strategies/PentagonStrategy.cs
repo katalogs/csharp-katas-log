@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StrategyCSharp.src
 {
-    public class Strategy : IStrategy
+    internal class PentagonStrategy : IStrategy
     {
         public string Describe()
         {
-            return "";
+            return "Pentagon";
         }
     }
 }
