@@ -1,30 +1,21 @@
 using Moq;
+using StrategyCSharp.src;
 
 namespace StrategyCSharp
 {
     public class Widget
     {
         private Type _type = Type.Triangle;
+        private IStrategy _strategy = new TriangleStrategy();
+
+        public void SetStrategy(IStrategy strategy)
+        {
+            _strategy = strategy;
+        }
 
         public string Describe()
         {
-            if (_type == Type.Triangle)
-            {
-                return "Triangle";
-            }
-            else if (_type == Type.Square)
-            {
-                return "Square";
-            }
-            else if (_type == Type.Pentagon)
-            {
-                return "Pentagon";
-            }
-            else if (_type == Type.Hexagon)
-            {
-                return "Hexagon";
-            }
-            return "";
+            return _strategy.Describe();
         }
 
         public void SetType(Type type)

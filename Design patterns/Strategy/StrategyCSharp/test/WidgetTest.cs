@@ -1,5 +1,6 @@
 using Moq;
 using NUnit.Framework;
+using StrategyCSharp.src;
 
 namespace StrategyCSharp.test
 {
@@ -31,7 +32,7 @@ namespace StrategyCSharp.test
         {
             var w = new Widget();
             Assert.AreEqual("Triangle", w.Describe());
-            w.SetType(Type.Square);
+            w.SetStrategy(new SquareStrategy());
 
             Assert.AreEqual("Square", w.Describe());
         }
