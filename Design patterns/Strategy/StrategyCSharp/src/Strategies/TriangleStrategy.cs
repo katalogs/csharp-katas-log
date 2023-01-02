@@ -12,5 +12,12 @@ namespace StrategyCSharp.src
         {
             return "Triangle";
         }
+
+        public void Draw(ICanvas canvas)
+        {
+            canvas.DrawVertex(new Point(0, 0));
+            canvas.DrawVertex(new Point(2, 0));
+            canvas.DrawVertex(new Point(1, 2));
+        }
     }
 }

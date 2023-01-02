@@ -70,7 +70,7 @@ namespace StrategyCSharp.test
         public void ASquareWidgetDescribesItselfAsASquare()
         {
             var w = new Widget();
-            w.SetType(Type.Square);
+            w.SetStrategy(new SquareStrategy());
 
             Assert.AreEqual("Square", w.Describe());
         }
@@ -92,7 +92,7 @@ namespace StrategyCSharp.test
         public void APentagonWidgetDescribesItselfAsAPentagon()
         {
             var w = new Widget();
-            w.SetType(Type.Pentagon);
+            w.SetStrategy(new PentagonStrategy());
 
             Assert.AreEqual("Pentagon", w.Describe());
         }
@@ -114,7 +114,7 @@ namespace StrategyCSharp.test
         public void AHexagonWidgetDescribesItselfAsAHexagon()
         {
             var w = new Widget();
-            w.SetType(Type.Hexagon);
+            w.SetStrategy(new HexagonStrategy());
 
             Assert.AreEqual("Hexagon", w.Describe());
         }
