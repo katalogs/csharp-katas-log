@@ -1,14 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace GildedRoseKata
+﻿namespace GildedRoseKata
 {
     public class GildedRose
     {
         internal const string AgedBrie = "Aged Brie";
         internal const string TAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert";
         internal const string SulfurasHandRagnaros = "Sulfuras, Hand of Ragnaros";
-        private const int QualityThreasholdMax = 50;
-        private const int QualityThreasholdMin = 0;
         IList<Item> Items;
 
         public GildedRose(IList<Item> Items)
@@ -22,17 +18,14 @@ namespace GildedRoseKata
             {
                 if (item.Name != AgedBrie && item.Name != TAFKAL80ETC)
                 {
-                    if (item.Quality > QualityThreasholdMin)
+                    if (item.Name != SulfurasHandRagnaros)
                     {
-                        if (item.Name != SulfurasHandRagnaros)
-                        {
-                            item.Quality--;
-                        }
+                        item.DecrementQuality();
                     }
                 }
                 else
                 {
-                    if (item.Quality < QualityThreasholdMax)
+                    if (item.Quality < Item.QualityThreasholdMax)
                     {
                         item.Quality++;
 
@@ -40,7 +33,7 @@ namespace GildedRoseKata
                         {
                             if (item.SellIn < 11)
                             {
-                                if (item.Quality < QualityThreasholdMax)
+                                if (item.Quality < Item.QualityThreasholdMax)
                                 {
                                     item.Quality++;
                                 }
@@ -48,7 +41,7 @@ namespace GildedRoseKata
 
                             if (item.SellIn < 6)
                             {
-                                if (item.Quality < QualityThreasholdMax)
+                                if (item.Quality < Item.QualityThreasholdMax)
                                 {
                                     item.Quality++;
                                 }
@@ -68,28 +61,25 @@ namespace GildedRoseKata
                     {
                         if (item.Name != TAFKAL80ETC)
                         {
-                            if (item.Quality > QualityThreasholdMin)
+                            if (item.Name != SulfurasHandRagnaros)
                             {
-                                if (item.Name != SulfurasHandRagnaros)
-                                {
-                                    item.Quality--;
-                                }
+                                item.DecrementQuality();
                             }
                         }
                         else
                         {
-                            item.Quality = QualityThreasholdMin;
+                            item.Quality = Item.QualityThreasholdMin;
                         }
                     }
                     else
                     {
-                        if (item.Quality < QualityThreasholdMax)
+                        if (item.Quality < Item.QualityThreasholdMax)
                         {
                             item.Quality++;
                         }
                     }
                 }
             }
-        }
+        }        
     }
 }
