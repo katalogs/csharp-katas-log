@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 
 namespace Banking
 {
@@ -14,5 +13,7 @@ namespace Banking
 
             Name = name;
         }
+
+        public IEnumerable Accounts { get; set; }
     }
 }

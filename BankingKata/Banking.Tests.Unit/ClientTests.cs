@@ -15,8 +15,7 @@ namespace Banking.Tests.Unit
             Assert.NotNull(client);
             Assert.Equal(name, client.Name);
         }
-        
-        
+
         [Fact]
         public void Should_not_have_an_empty_name_in_client_should_throw_NotEmptyNameException()
         {
@@ -26,7 +25,7 @@ namespace Banking.Tests.Unit
             //Assert
             Assert.Throws<NotEmptyNameException>(() => new Client(name));
         }
-        
+
         [Fact]
         public void Should_not_have_an_null_name_in_client_should_throw_NotEmptyNameException()
         {
@@ -34,6 +33,20 @@ namespace Banking.Tests.Unit
             //Act
             //Assert
             Assert.Throws<NotEmptyNameException>(() => new Client(null));
+        }
+
+        [Fact]
+        public void test()
+        {
+            //Arrange
+            string name = "Alexis";
+
+            //Act
+            Client client = new Client(name);
+
+            //Assert
+            Assert.NotNull(client);
+            Assert.Empty(client.Accounts);
         }
     }
 }
