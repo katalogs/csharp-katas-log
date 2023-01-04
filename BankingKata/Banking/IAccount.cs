@@ -1,6 +1,6 @@
 ﻿namespace Banking
 {
-    public class Account
+    public interface IAccount
     {
     }
 }

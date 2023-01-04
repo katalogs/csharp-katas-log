@@ -58,7 +58,7 @@ namespace Banking.Tests.Unit
 
             //Act
             Client client = new Client(name);
-            Account account = new Account();
+            IAccount account = new StandardAccount();
             client.AddAccount(account);
 
             //Assert
@@ -66,5 +66,7 @@ namespace Banking.Tests.Unit
             Assert.NotEmpty(client.Accounts);
             Assert.Equal(1, client.Accounts.Count);
         }
+        
+        
     }
 }

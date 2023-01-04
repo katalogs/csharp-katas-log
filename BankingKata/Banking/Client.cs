@@ -14,14 +14,14 @@ namespace Banking
                 throw new NotEmptyNameException();
 
             Name = name;
-            Accounts = new List<Account>();
+            Accounts = new List<IAccount>();
         }
 
-        public IEnumerable Accounts { get; set; }
+        public IList<IAccount> Accounts { get; private set; }
 
-        public void AddAccount(Account account)
+        public void AddAccount(IAccount account)
         {
-            throw new NotImplementedException();
+            Accounts.Add(account);
         }
     }
 }
