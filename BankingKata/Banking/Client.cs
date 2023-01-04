@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Banking
 {
@@ -12,8 +14,14 @@ namespace Banking
                 throw new NotEmptyNameException();
 
             Name = name;
+            Accounts = new List<Account>();
         }
 
         public IEnumerable Accounts { get; set; }
+
+        public void AddAccount(Account account)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
