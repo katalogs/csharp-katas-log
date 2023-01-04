@@ -83,5 +83,28 @@ namespace Banking.Tests.Unit
             Assert.NotEmpty(client.Accounts);
             Assert.Equal(2, client.Accounts.Count);
         }
+
+        [Fact]
+        public void When_Client_Makes_Deposit_Account_Should_Have_Correct_Balance()
+        {
+            //Arrange
+            string name = "Alexis";
+
+            //Act
+            Client client = new Client(name);
+            client.AddAccount(new StandardAccount());
+
+            client.Deposit(account.Id, 200);
+
+
+
+            //Assert
+            Assert.NotNull(client);
+            Assert.NotEmpty(client.Accounts);
+            Assert.Equal(1, client.Accounts.Count);
+
+        }
+
+
     }
 }

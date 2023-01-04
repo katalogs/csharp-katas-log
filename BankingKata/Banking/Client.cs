@@ -23,5 +23,10 @@ namespace Banking
         {
             Accounts.Add(account);
         }
+
+        public void Deposit(object id, int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
