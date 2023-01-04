@@ -67,6 +67,21 @@ namespace Banking.Tests.Unit
             Assert.Equal(1, client.Accounts.Count);
         }
         
-        
+        [Fact]
+        public void When_We_Add_An_Account_To_Client_The_Client_Should_Have_Many_Account()
+        {
+            //Arrange
+            string name = "Alexis";
+
+            //Act
+            Client client = new Client(name);
+            client.AddAccount(new StandardAccount());
+            client.AddAccount(new WalletAccount());
+
+            //Assert
+            Assert.NotNull(client);
+            Assert.NotEmpty(client.Accounts);
+            Assert.Equal(2, client.Accounts.Count);
+        }
     }
 }
