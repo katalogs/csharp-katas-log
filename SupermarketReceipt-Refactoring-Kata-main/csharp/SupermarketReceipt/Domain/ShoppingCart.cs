@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace SupermarketReceipt.Domain
@@ -43,56 +44,49 @@ namespace SupermarketReceipt.Domain
                 {
                     var offer = offers[p];
                     var unitPrice = catalog.GetUnitPrice(p);
-                    Discount discount = null;
-                    var nbOfProductNecessaryForOffer = offer.OfferType switch
-                    {
-                        SpecialOfferType.ThreeForTwo => 3,
-                        SpecialOfferType.TwoForAmount => 2,
-                        SpecialOfferType.FiveForAmount => 5,
-                        _ => 1
-                    };
 
                     if (offer.IsApplicable(quantityAsInt))
                     {
-                        int nbOfPacks = quantityAsInt / nbOfProductNecessaryForOffer;
-                        switch (offer.OfferType)
-                        {
-                            case SpecialOfferType.ThreeForTwo:
-                            {
-                                var discountAmount = quantity * unitPrice - (nbOfPacks * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
-                                discount = new Discount(p, "3 for 2", -discountAmount);
-
-                                break;
-                            }
-                            case SpecialOfferType.TenPercentDiscount:
-                                discount = new Discount(p,
-                                    offer.Argument + "% off",
-                                    -quantity * unitPrice * offer.Argument / 100.0);
-
-                                break;
-                            case SpecialOfferType.TwoForAmount:
-                            {
-                                var total = offer.Argument * nbOfPacks + quantityAsInt % 2 * unitPrice;
-                                var discountN = unitPrice * quantity - total;
-                                discount = new Discount(p, "2 for " + offer.Argument, -discountN);
-
-                                break;
-                            }
-                            case SpecialOfferType.FiveForAmount:
-                            {
-                                var discountTotal = unitPrice * quantity -
-                                                    (offer.Argument * nbOfPacks + quantityAsInt % 5 * unitPrice);
-                                discount = new Discount(p,
-                                    nbOfProductNecessaryForOffer + " for " + offer.Argument,
-                                    -discountTotal);
-
-                                break;
-                            }
-                        }
+                        receipt.AddDiscount(CreateDiscount(quantityAsInt, offer, quantity, unitPrice, p));
                     }
-
-                    if (discount != null) receipt.AddDiscount(discount);
                 }
+            }
+        }
+
+        private static Discount CreateDiscount(int quantityAsInt, Offer offer, double quantity, double unitPrice, Product p)
+        {
+            var ofProductNecessaryForOffer = offer.GetNbOfProductNecessaryForOffer();
+            int nbOfPacks = quantityAsInt / ofProductNecessaryForOffer;
+            switch (offer.OfferType)
+            {
+                case SpecialOfferType.ThreeForTwo:
+                {
+                    var discountAmount = quantity * unitPrice - (nbOfPacks * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
+                    return  new Discount(p, "3 for 2", -discountAmount);
+                }
+                case SpecialOfferType.TenPercentDiscount:
+                    return new Discount(p,
+                        offer.Argument + "% off",
+                        -quantity * unitPrice * offer.Argument / 100.0);
+                    
+                case SpecialOfferType.TwoForAmount:
+                {
+                    var total = offer.Argument * nbOfPacks + quantityAsInt % 2 * unitPrice;
+                    var discountN = unitPrice * quantity - total;
+                    return new Discount(p, "2 for " + offer.Argument, -discountN);
+
+                    
+                }
+                case SpecialOfferType.FiveForAmount:
+                {
+                    var discountTotal = unitPrice * quantity -
+                                        (offer.Argument * nbOfPacks + quantityAsInt % 5 * unitPrice);
+                    return new Discount(p,
+                        ofProductNecessaryForOffer + " for " + offer.Argument,
+                        -discountTotal);
+                }
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

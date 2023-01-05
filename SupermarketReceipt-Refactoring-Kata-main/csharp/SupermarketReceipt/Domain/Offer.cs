@@ -24,6 +24,13 @@ namespace SupermarketReceipt.Domain
 
         public bool IsApplicable(int quantityAsInt)
         {
+            var nbOfProductNecessaryForOffer = GetNbOfProductNecessaryForOffer();
+
+            return quantityAsInt >= nbOfProductNecessaryForOffer;
+        }
+
+        public int GetNbOfProductNecessaryForOffer()
+        {
             var nbOfProductNecessaryForOffer = this.OfferType switch
             {
                 SpecialOfferType.ThreeForTwo => 3,
@@ -31,8 +38,7 @@ namespace SupermarketReceipt.Domain
                 SpecialOfferType.FiveForAmount => 5,
                 _ => 1
             };
-
-            return quantityAsInt >= nbOfProductNecessaryForOffer;
+            return nbOfProductNecessaryForOffer;
         }
     }
 }
