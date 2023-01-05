@@ -47,48 +47,12 @@ namespace SupermarketReceipt.Domain
 
                     if (offer.IsApplicable(quantityAsInt))
                     {
-                        receipt.AddDiscount(CreateDiscount(quantityAsInt, offer, quantity, unitPrice, p));
+                        receipt.AddDiscount(offer.CreateDiscount(quantityAsInt, quantity, unitPrice, p));
                     }
                 }
             }
         }
 
-        private static Discount CreateDiscount(int quantityAsInt, Offer offer, double quantity, double unitPrice, Product p)
-        {
-            var ofProductNecessaryForOffer = offer.GetNbOfProductNecessaryForOffer();
-            int nbOfPacks = quantityAsInt / ofProductNecessaryForOffer;
-            switch (offer.OfferType)
-            {
-                case SpecialOfferType.ThreeForTwo:
-                {
-                    var discountAmount = quantity * unitPrice - (nbOfPacks * 2 * unitPrice + quantityAsInt % 3 * unitPrice);
-                    return  new Discount(p, "3 for 2", -discountAmount);
-                }
-                case SpecialOfferType.TenPercentDiscount:
-                    return new Discount(p,
-                        offer.Argument + "% off",
-                        -quantity * unitPrice * offer.Argument / 100.0);
-                    
-                case SpecialOfferType.TwoForAmount:
-                {
-                    var total = offer.Argument * nbOfPacks + quantityAsInt % 2 * unitPrice;
-                    var discountN = unitPrice * quantity - total;
-                    return new Discount(p, "2 for " + offer.Argument, -discountN);
-
-                    
-                }
-                case SpecialOfferType.FiveForAmount:
-                {
-                    var discountTotal = unitPrice * quantity -
-                                        (offer.Argument * nbOfPacks + quantityAsInt % 5 * unitPrice);
-                    return new Discount(p,
-                        ofProductNecessaryForOffer + " for " + offer.Argument,
-                        -discountTotal);
-                }
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
     }
 
 }
