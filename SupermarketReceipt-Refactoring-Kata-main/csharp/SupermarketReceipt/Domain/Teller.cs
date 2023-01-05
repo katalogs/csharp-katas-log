@@ -14,13 +14,12 @@ namespace SupermarketReceipt.Domain
 
         public void AddSpecialOffer(SpecialOfferType offerType, Product product, double argument)
         {
-            if(offerType is SpecialOfferType.ThreeForTwo)
-                _offers[product] = new ThreeForTwoOffer(product, argument);
-
-            else
+            _offers[product] = offerType switch
             {
-                _offers[product] = new Offer(offerType, product, argument);
-            }
+                SpecialOfferType.ThreeForTwo => new ThreeForTwoOffer(product, argument),
+                SpecialOfferType.TenPercentDiscount => new TenPercentDiscountOffer(product, argument),
+                _ => new Offer(offerType, product, argument)
+            };
         }
 
         public Receipt ChecksOutArticlesFrom(ShoppingCart theCart)
