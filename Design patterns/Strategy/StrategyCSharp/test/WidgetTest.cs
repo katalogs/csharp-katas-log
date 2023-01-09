@@ -41,14 +41,14 @@ namespace StrategyCSharp.test
         public void AWidgetCanSetToBeATriangle()
         {
             var w = new Widget();
-            w.SetType(Type.Triangle);
+            w.SetStrategy(new TriangleStrategy());
         }
 
         [Test]
         public void ATriangularWidgetDescribesItselfAsATriangle()
         {
             var w = new Widget();
-            w.SetType(Type.Triangle);
+            w.SetStrategy(new TriangleStrategy());
 
             Assert.AreEqual("Triangle", w.Describe());
         }
@@ -56,14 +56,14 @@ namespace StrategyCSharp.test
         [Test]
         public void ATriangularWidgetDrawsAsATriangle()
         {
-            VerifyCorrectNumberOfVertices(Type.Triangle, 3);
+            VerifyCorrectNumberOfVertices(new TriangleStrategy(), 3);
         }
 
         [Test]
         public void AWidgetCanSetToBeASquare()
         {
             var w = new Widget();
-            w.SetType(Type.Square);
+            w.SetStrategy(new SquareStrategy());
         }
 
         [Test]
@@ -78,14 +78,14 @@ namespace StrategyCSharp.test
         [Test]
         public void ASquareWidgetDrawsAsASquare()
         {
-            VerifyCorrectNumberOfVertices(Type.Square, 4);
+            VerifyCorrectNumberOfVertices(new SquareStrategy(), 4);
         }
 
         [Test]
         public void AWidgetCanSetToBeAPentagon()
         {
             var w = new Widget();
-            w.SetType(Type.Pentagon);
+            w.SetStrategy(new PentagonStrategy());
         }
 
         [Test]
@@ -100,14 +100,14 @@ namespace StrategyCSharp.test
         [Test]
         public void APentagonWidgetDrawsAsAPentagon()
         {
-            VerifyCorrectNumberOfVertices(Type.Pentagon, 5);
+            VerifyCorrectNumberOfVertices(new PentagonStrategy(), 5);
         }
 
         [Test]
         public void AWidgetCanSetToBeAHexagon()
         {
             var w = new Widget();
-            w.SetType(Type.Hexagon);
+            w.SetStrategy(new HexagonStrategy());
         }
 
         [Test]
@@ -122,13 +122,13 @@ namespace StrategyCSharp.test
         [Test]
         public void AHexagonWidgetDrawsAsAHexagon()
         {
-            VerifyCorrectNumberOfVertices(Type.Hexagon, 6);
+            VerifyCorrectNumberOfVertices(new HexagonStrategy(), 6);
         }
 
-        private static void VerifyCorrectNumberOfVertices(Type type, int vertices)
+        private static void VerifyCorrectNumberOfVertices(IStrategy strategy, int vertices)
         {
             var w = new Widget();
-            w.SetType(type);
+            w.SetStrategy(strategy);
 
             var c = new Mock<ICanvas>();
 
