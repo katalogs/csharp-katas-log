@@ -2,7 +2,7 @@
 
 namespace Order_Shipping
 {
-    internal class ApprouvedState : IState
+    internal class ApprovedState : IState
     {
         public void Approve()
         {

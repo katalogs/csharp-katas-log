@@ -16,6 +16,7 @@ namespace OrderShipping.Domain
 
         public Order()
         {
+            State = new CreatedState();
             Status = OrderStatus.Created;
             Items = new List<OrderItem>();
             Currency = "EUR";
@@ -30,15 +31,17 @@ namespace OrderShipping.Domain
 
         internal void Approve()
         {
-            if (Status == OrderStatus.Shipped)
-            {
-                throw new ShippedOrdersCannotBeChangedException();
-            }
-            else if (Status == OrderStatus.Rejected)
-            {
-                throw new RejectedOrderCannotBeApprovedException();
-            }
-            Status = OrderStatus.Approved;
+            State.Approve();
+
+            //if (Status == OrderStatus.Shipped)
+            //{
+            //    throw new ShippedOrdersCannotBeChangedException();
+            //}
+            //else if (Status == OrderStatus.Rejected)
+            //{
+            //    throw new RejectedOrderCannotBeApprovedException();
+            //}
+            //Status = OrderStatus.Approved;
         }
 
 
