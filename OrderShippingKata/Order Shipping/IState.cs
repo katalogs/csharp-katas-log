@@ -1,6 +1,6 @@
 ﻿namespace Order_Shipping
 {
-    internal interface IState
+    public interface IState
     {
         void Approve();
         void Ship();

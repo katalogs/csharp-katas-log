@@ -1,4 +1,5 @@
-﻿using OrderShipping.Domain.Exception;
+﻿using Order_Shipping;
+using OrderShipping.Domain.Exception;
 
 namespace OrderShipping.Domain
 {
@@ -10,6 +11,7 @@ namespace OrderShipping.Domain
         public IList<OrderItem> Items { get; set; }
         public decimal Tax { get; private set; }
         public OrderStatus Status { get; set; }
+        public IState State { get; set; }
         public int Id { get; set; }
 
         public Order()
