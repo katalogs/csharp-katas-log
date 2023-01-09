@@ -2,8 +2,8 @@
 {
     public interface IState
     {
-        void Approve();
-        void Ship();
-        void Reject();
+        IState Approve();
+        IState Ship();
+        IState Reject();
     }
 }

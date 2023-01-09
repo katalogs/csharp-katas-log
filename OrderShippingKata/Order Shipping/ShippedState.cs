@@ -4,17 +4,17 @@ namespace Order_Shipping
 {
     internal class ShippedState : IState
     {
-        public void Approve()
+        public IState Approve()
         {
             throw new ShippedOrdersCannotBeChangedException();
         }
 
-        public void Reject()
+        public IState Reject()
         {
             throw new ShippedOrdersCannotBeChangedException();
         }
 
-        public void Ship()
+        public IState Ship()
         {
             throw new OrderCannotBeShippedTwiceException();
         }

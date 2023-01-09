@@ -31,7 +31,7 @@ namespace OrderShipping.Domain
 
         internal void Approve()
         {
-            State.Approve();
+            State = State.Approve();
 
             //if (Status == OrderStatus.Shipped)
             //{

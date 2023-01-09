@@ -2,20 +2,21 @@
 
 namespace Order_Shipping
 {
-    internal class ApprovedState : IState
+    public class ApprovedState : IState
     {
-        public void Approve()
+        public IState Approve()
         {
+            return this;
         }
 
-        public void Reject()
+        public IState Reject()
         {
             throw new RejectedOrderCannotBeApprovedException();
         }
 
-        public void Ship()
+        public IState Ship()
         {
-            // Passage à Shipped
+            return new ShippedState();
         }
     }
 }

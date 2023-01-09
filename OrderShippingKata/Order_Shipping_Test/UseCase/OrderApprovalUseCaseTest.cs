@@ -1,4 +1,5 @@
 ﻿using System;
+using Order_Shipping;
 using OrderShipping.Domain;
 using OrderShipping.Domain.Exception;
 using OrderShipping.UseCase;
@@ -38,7 +39,7 @@ public class OrderApprovalUseCaseTest
         _useCase.Run(request);
 
         var savedOrder = _orderRepository.GetSavedOrder();
-        Assert.Equal(OrderStatus.Approved, savedOrder.Status);
+        Assert.True(savedOrder.State.GetType() == typeof(ApprovedState));
     }
 
     [Fact]
@@ -70,7 +71,8 @@ public class OrderApprovalUseCaseTest
         var initialOrder = new Order
         {
             Status = OrderStatus.Rejected,
-            Id = 1
+            Id = 1,
+            State = new RejectedState()
         };
         _orderRepository.AddOrder(initialOrder);
 

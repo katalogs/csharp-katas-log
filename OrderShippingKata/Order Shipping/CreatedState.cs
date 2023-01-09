@@ -4,17 +4,17 @@ namespace Order_Shipping
 {
     internal class CreatedState : IState
     {
-        public void Approve()
+        public IState Approve()
         {
-            // Passage à Approved
+            return new ApprovedState();
         }
 
-        public void Reject()
+        public IState Reject()
         {
-            // Passage à Rejected
+            return new RejectedState();
         }
 
-        public void Ship()
+        public IState Ship()
         {
             throw new OrderCannotBeShippedException();
         }
