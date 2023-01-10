@@ -10,8 +10,8 @@
                 new Item("+5 Dexterity Vest") { SellIn = 10, Quality = 20},
                 new Item(Item.AgedBrie) { SellIn = 2, Quality = 0},
                 new Item("Elixir of the Mongoose") { SellIn = 5, Quality = 7},
-                new LegendaryItem(Item.SulfurasHandRagnaros) { SellIn = 0, Quality = 80},
-                new LegendaryItem(Item.SulfurasHandRagnaros) { SellIn = -1, Quality = 80},
+                new LegendaryItem(LegendaryItem.SulfurasHandRagnaros) { SellIn = 0, Quality = 80},
+                new LegendaryItem(LegendaryItem.SulfurasHandRagnaros) { SellIn = -1, Quality = 80},
                 new Item(Item.TAFKAL80ETC)
                 {
                     SellIn = 15,

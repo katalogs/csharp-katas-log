@@ -7,7 +7,6 @@
 
         public const string AgedBrie = "Aged Brie";
         public const string TAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert";
-        public const string SulfurasHandRagnaros = "Sulfuras, Hand of Ragnaros";
 
         public Item(string name)
         {
@@ -54,8 +53,6 @@
                 case TAFKAL80ETC:
                     SetMinimalQuality();
                     break;
-                case SulfurasHandRagnaros:
-                    break;
                 default:
                     DecrementQuality();
                     break;
@@ -64,14 +61,7 @@
 
         public void ManageSellIn()
         {
-            switch (Name)
-            {
-                case SulfurasHandRagnaros:
-                    break;
-                default:
-                    SellIn--;
-                    break;
-            }
+            SellIn--;
         }
 
         public void ManageQuality()
@@ -94,15 +84,13 @@
                         IncrementQuality();
                     }
                     break;
-                case SulfurasHandRagnaros:
-                    break;
                 default:
                     DecrementQuality();
                     break;
             }
         }
 
-        public void Update()
+        public virtual void Update()
         {
             ManageQuality();
 
