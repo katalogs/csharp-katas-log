@@ -48,23 +48,19 @@
 
                 if (item.SellIn < 0)
                 {
-                    if (item.Name != AgedBrie)
+                    switch (item.Name)
                     {
-                        if (item.Name != TAFKAL80ETC)
-                        {
-                            if (item.Name != SulfurasHandRagnaros)
-                            {
-                                item.DecrementQuality();
-                            }
-                        }
-                        else
-                        {
+                        case AgedBrie:
+                            item.IncrementQuality();
+                            break;
+                        case TAFKAL80ETC:
                             item.SetMinimalQuality();
-                        }
-                    }
-                    else
-                    {
-                        item.IncrementQuality();
+                            break;
+                        case SulfurasHandRagnaros:
+                            break;
+                        default:
+                            item.DecrementQuality();
+                            break;
                     }
                 }
             }
