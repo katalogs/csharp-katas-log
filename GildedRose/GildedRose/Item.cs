@@ -5,7 +5,7 @@
         public const int QualityThreasholdMax = 50;
         public const int QualityThreasholdMin = 0;
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int SellIn { get; set; }
         public int Quality { get; set; }
 
@@ -19,6 +19,14 @@
             if (Quality > QualityThreasholdMin)
             {
                 Quality--;
+            }
+        }
+
+        public void IncrementQuality()
+        {
+            if (Quality < QualityThreasholdMax)
+            {
+                Quality++;
             }
         }
     }

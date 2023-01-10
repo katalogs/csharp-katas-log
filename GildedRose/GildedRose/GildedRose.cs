@@ -25,27 +25,18 @@
                 }
                 else
                 {
-                    if (item.Quality < Item.QualityThreasholdMax)
+                    item.IncrementQuality();
+
+                    if (item.Name == TAFKAL80ETC)
                     {
-                        item.Quality++;
-
-                        if (item.Name == TAFKAL80ETC)
+                        if (item.SellIn < 11)
                         {
-                            if (item.SellIn < 11)
-                            {
-                                if (item.Quality < Item.QualityThreasholdMax)
-                                {
-                                    item.Quality++;
-                                }
-                            }
+                            item.IncrementQuality();
+                        }
 
-                            if (item.SellIn < 6)
-                            {
-                                if (item.Quality < Item.QualityThreasholdMax)
-                                {
-                                    item.Quality++;
-                                }
-                            }
+                        if (item.SellIn < 6)
+                        {
+                            item.IncrementQuality();
                         }
                     }
                 }
@@ -73,13 +64,12 @@
                     }
                     else
                     {
-                        if (item.Quality < Item.QualityThreasholdMax)
-                        {
-                            item.Quality++;
-                        }
+                        item.IncrementQuality();
                     }
                 }
             }
-        }        
+        }
+
+        
     }
 }

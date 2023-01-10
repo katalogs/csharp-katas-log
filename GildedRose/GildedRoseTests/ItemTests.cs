@@ -5,7 +5,6 @@ namespace GildedRoseTests
     [UsesVerify]
     public class ItemTests
     {
-
         [Fact]
         public void Item_ShouldDecrementQuality()
         {
@@ -20,6 +19,22 @@ namespace GildedRoseTests
             var item = new Item { Quality = 0 };
             item.DecrementQuality();
             Assert.Equal(0, item.Quality);
+        }
+
+        [Fact]
+        public void Item_ShouldIncrementQuality()
+        {
+            var item = new Item { Quality = 10 };
+            item.IncrementQuality();
+            Assert.Equal(11, item.Quality);
+        }
+
+        [Fact]
+        public void Item_ShouldNotIncrementQuality_Abovefifty()
+        {
+            var item = new Item { Quality = 50 };
+            item.IncrementQuality();
+            Assert.Equal(50, item.Quality);
         }
     }
 }
