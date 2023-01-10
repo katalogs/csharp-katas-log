@@ -2,8 +2,8 @@
 {
     public class Item
     {
-        private const int QualityThreasholdMax = 50;
-        private const int QualityThreasholdMin = 0;
+        private const int QualityThresholdMax = 50;
+        private const int QualityThresholdMin = 0;
 
         public string? Name { get; set; }
         public int SellIn { get; set; }
@@ -16,7 +16,7 @@
 
         public void DecrementQuality()
         {
-            if (Quality > QualityThreasholdMin)
+            if (Quality > QualityThresholdMin)
             {
                 Quality--;
             }
@@ -24,7 +24,7 @@
 
         public void IncrementQuality()
         {
-            if (Quality < QualityThreasholdMax)
+            if (Quality < QualityThresholdMax)
             {
                 Quality++;
             }
@@ -32,7 +32,7 @@
 
         public void SetMinimalQuality()
         {
-            Quality = QualityThreasholdMin;
+            Quality = QualityThresholdMin;
         }
     }
 }

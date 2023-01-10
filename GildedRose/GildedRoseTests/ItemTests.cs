@@ -36,5 +36,13 @@ namespace GildedRoseTests
             item.IncrementQuality();
             Assert.Equal(50, item.Quality);
         }
+
+        [Fact]
+        public void Item_WhenSetMinimalQuality_ShouldBeZero()
+        {
+            var item = new Item { Quality = 50 };
+            item.SetMinimalQuality();
+            Assert.Equal(0, item.Quality);
+        }
     }
 }
