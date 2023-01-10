@@ -2,8 +2,8 @@
 {
     public class Item
     {
-        public const int QualityThreasholdMax = 50;
-        public const int QualityThreasholdMin = 0;
+        private const int QualityThreasholdMax = 50;
+        private const int QualityThreasholdMin = 0;
 
         public string? Name { get; set; }
         public int SellIn { get; set; }
@@ -28,6 +28,11 @@
             {
                 Quality++;
             }
+        }
+
+        public void SetMinimalQuality()
+        {
+            Quality = QualityThreasholdMin;
         }
     }
 }

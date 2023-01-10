@@ -59,7 +59,7 @@
                         }
                         else
                         {
-                            item.Quality = Item.QualityThreasholdMin;
+                            item.SetMinimalQuality();
                         }
                     }
                     else
@@ -69,7 +69,5 @@
                 }
             }
         }
-
-        
     }
 }
