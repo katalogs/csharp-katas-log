@@ -16,19 +16,14 @@
         {
             foreach (var item in Items)
             {
-                if (item.Name != AgedBrie && item.Name != TAFKAL80ETC)
+                switch (item.Name)
                 {
-                    if (item.Name != SulfurasHandRagnaros)
-                    {
-                        item.DecrementQuality();
-                    }
-                }
-                else
-                {
-                    item.IncrementQuality();
+                    case AgedBrie:
+                        item.IncrementQuality();
+                        break;
+                    case TAFKAL80ETC:
+                        item.IncrementQuality();
 
-                    if (item.Name == TAFKAL80ETC)
-                    {
                         if (item.SellIn < 11)
                         {
                             item.IncrementQuality();
@@ -38,12 +33,21 @@
                         {
                             item.IncrementQuality();
                         }
-                    }
+                        break;
+                    case SulfurasHandRagnaros:
+                        break;
+                    default:
+                        item.DecrementQuality();
+                        break;
                 }
 
-                if (item.Name != SulfurasHandRagnaros)
+                switch (item.Name)
                 {
-                    item.SellIn--;
+                    case SulfurasHandRagnaros:
+                        break;
+                    default:
+                        item.SellIn--;
+                        break;
                 }
 
                 if (item.SellIn < 0)
