@@ -9,6 +9,11 @@
         public const string TAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert";
         public const string SulfurasHandRagnaros = "Sulfuras, Hand of Ragnaros";
 
+        public Item(string name)
+        {
+            Name = name;
+        }
+
         public string? Name { get; set; }
         public int SellIn { get; set; }
         public int Quality { get; set; }
