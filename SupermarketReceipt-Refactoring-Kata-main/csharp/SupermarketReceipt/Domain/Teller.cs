@@ -18,8 +18,8 @@ namespace SupermarketReceipt.Domain
         {
             _offers[product] = offerType switch
             {
-                SpecialOfferType.ThreeForTwo => new ThreeForTwoOffer(product, argument),
-                SpecialOfferType.TenPercentDiscount => new TenPercentDiscountOffer(product, argument),
+                SpecialOfferType.ThreeForTwo => new ThreeForTwoOffer(product),
+                SpecialOfferType.TenPercentDiscount => new TenPercentDiscountOffer(product),
                 SpecialOfferType.FiveForAmount => new FiveForAmountOffer(product, argument),
                 SpecialOfferType.TwoForAmount => new TwoForAmountOffer(product, argument),
                 _ => throw new ArgumentOutOfRangeException()

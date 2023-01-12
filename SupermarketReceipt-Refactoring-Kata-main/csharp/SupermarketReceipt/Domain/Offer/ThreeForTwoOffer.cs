@@ -2,8 +2,8 @@
 {
     public class ThreeForTwoOffer : Offer
     {
-        public ThreeForTwoOffer(Product product, double argument)
-            : base(SpecialOfferType.ThreeForTwo, product, argument) { }
+        public ThreeForTwoOffer(Product product)
+            : base(product) { }
 
         public override Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice)
         {

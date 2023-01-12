@@ -2,11 +2,13 @@
 {
     internal class TenPercentDiscountOffer : Offer
     {
-        public TenPercentDiscountOffer(Product product, double argument)
-            : base(SpecialOfferType.TenPercentDiscount, product, argument) { }
+        private readonly double percent = 10;
+
+        public TenPercentDiscountOffer(Product product)
+            : base(product) { }
 
         public override Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice)
-            => new (this._product, this._argument + "% off", -quantity * unitPrice * this._argument / 100.0);
+            => new (this._product, this.percent + "% off", -quantity * unitPrice * this.percent / 100.0);
 
         protected override int GetNbOfProductNecessaryForOffer() => 1;
     }

@@ -12,22 +12,11 @@ namespace SupermarketReceipt.Domain.Offer
     {
         protected Product _product;
 
-        protected Offer(SpecialOfferType offerType, Product product, double argument)
-        {
-            this._offerType = offerType;
-            this._argument = argument;
-            _product = product;
-        }
-
-        private SpecialOfferType _offerType { get; }
-        protected double _argument { get; }
+        protected Offer(Product product)
+            => _product = product;
 
         public bool IsApplicable(int quantityAsInt)
-        {
-            var nbOfProductNecessaryForOffer = GetNbOfProductNecessaryForOffer();
-
-            return quantityAsInt >= nbOfProductNecessaryForOffer;
-        }
+            => quantityAsInt >= GetNbOfProductNecessaryForOffer();
 
         protected abstract int GetNbOfProductNecessaryForOffer();
 
