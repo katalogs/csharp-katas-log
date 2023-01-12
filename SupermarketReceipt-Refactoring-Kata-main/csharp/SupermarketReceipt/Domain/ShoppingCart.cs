@@ -47,7 +47,7 @@ namespace SupermarketReceipt.Domain
 
                     if (offer.IsApplicable(quantityAsInt))
                     {
-                        receipt.AddDiscount(offer.CreateDiscount(quantityAsInt, quantity, unitPrice, p));
+                        receipt.AddDiscount(offer.CreateDiscount(quantityAsInt, quantity, unitPrice));
                     }
                 }
             }

@@ -5,8 +5,8 @@
         public TenPercentDiscountOffer(Product product, double argument)
             : base(SpecialOfferType.TenPercentDiscount, product, argument) { }
 
-        public override Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice, Product p)
-            => new (p, this.Argument + "% off", -quantity * unitPrice * this.Argument / 100.0);
+        public override Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice)
+            => new (this._product, this._argument + "% off", -quantity * unitPrice * this._argument / 100.0);
 
         public override int GetNbOfProductNecessaryForOffer() => 1;
     }

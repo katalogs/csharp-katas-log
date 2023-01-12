@@ -12,17 +12,17 @@ namespace SupermarketReceipt.Domain.Offer
 
     public class Offer
     {
-        private Product _product;
+        protected Product _product;
 
         public Offer(SpecialOfferType offerType, Product product, double argument)
         {
-            this.OfferType = offerType;
-            this.Argument = argument;
+            this._offerType = offerType;
+            this._argument = argument;
             _product = product;
         }
 
-        public SpecialOfferType OfferType { get; }
-        public double Argument { get; }
+        private SpecialOfferType _offerType { get; }
+        protected double _argument { get; }
 
         public bool IsApplicable(int quantityAsInt)
         {
@@ -31,9 +31,9 @@ namespace SupermarketReceipt.Domain.Offer
             return quantityAsInt >= nbOfProductNecessaryForOffer;
         }
 
-        public virtual int GetNbOfProductNecessaryForOffer()
+        protected virtual int GetNbOfProductNecessaryForOffer()
         {
-            var nbOfProductNecessaryForOffer = this.OfferType switch
+            var nbOfProductNecessaryForOffer = this._offerType switch
             {
                 SpecialOfferType.TwoForAmount => 2,
                 SpecialOfferType.FiveForAmount => 5
@@ -41,16 +41,16 @@ namespace SupermarketReceipt.Domain.Offer
             return nbOfProductNecessaryForOffer;
         }
 
-        public virtual Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice, Product p)
+        public virtual Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice)
         {
             var ofProductNecessaryForOffer = this.GetNbOfProductNecessaryForOffer();
             var nbOfPacks = quantityAsInt / ofProductNecessaryForOffer;
-            switch (this.OfferType)
+            switch (this._offerType)
             {
                 case SpecialOfferType.FiveForAmount or SpecialOfferType.TwoForAmount:
                     {
-                        var discountTotal = unitPrice * quantity - (this.Argument * nbOfPacks + quantityAsInt % GetNbOfProductNecessaryForOffer() * unitPrice);
-                        return new Discount(p, ofProductNecessaryForOffer + " for " + this.Argument, -discountTotal);
+                        var discountTotal = unitPrice * quantity - (this._argument * nbOfPacks + quantityAsInt % GetNbOfProductNecessaryForOffer() * unitPrice);
+                        return new Discount(this._product, ofProductNecessaryForOffer + " for " + this._argument, -discountTotal);
                     }
                 default:
                     throw new ArgumentOutOfRangeException();
