@@ -1,5 +1,3 @@
-using System;
-
 namespace SupermarketReceipt.Domain.Offer
 {
     public enum SpecialOfferType
@@ -10,11 +8,11 @@ namespace SupermarketReceipt.Domain.Offer
         FiveForAmount
     }
 
-    public class Offer
+    public abstract class Offer
     {
         protected Product _product;
 
-        public Offer(SpecialOfferType offerType, Product product, double argument)
+        protected Offer(SpecialOfferType offerType, Product product, double argument)
         {
             this._offerType = offerType;
             this._argument = argument;
@@ -31,30 +29,8 @@ namespace SupermarketReceipt.Domain.Offer
             return quantityAsInt >= nbOfProductNecessaryForOffer;
         }
 
-        protected virtual int GetNbOfProductNecessaryForOffer()
-        {
-            var nbOfProductNecessaryForOffer = this._offerType switch
-            {
-                SpecialOfferType.TwoForAmount => 2,
-                SpecialOfferType.FiveForAmount => 5
-            };
-            return nbOfProductNecessaryForOffer;
-        }
+        protected abstract int GetNbOfProductNecessaryForOffer();
 
-        public virtual Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice)
-        {
-            var ofProductNecessaryForOffer = this.GetNbOfProductNecessaryForOffer();
-            var nbOfPacks = quantityAsInt / ofProductNecessaryForOffer;
-            switch (this._offerType)
-            {
-                case SpecialOfferType.FiveForAmount or SpecialOfferType.TwoForAmount:
-                    {
-                        var discountTotal = unitPrice * quantity - (this._argument * nbOfPacks + quantityAsInt % GetNbOfProductNecessaryForOffer() * unitPrice);
-                        return new Discount(this._product, ofProductNecessaryForOffer + " for " + this._argument, -discountTotal);
-                    }
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        public abstract Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice);
     }
 }

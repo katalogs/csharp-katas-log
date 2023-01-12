@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using SupermarketReceipt.Domain.Offer;
+using System;
+using System.Collections.Generic;
 
 namespace SupermarketReceipt.Domain
 {
@@ -19,7 +20,9 @@ namespace SupermarketReceipt.Domain
             {
                 SpecialOfferType.ThreeForTwo => new ThreeForTwoOffer(product, argument),
                 SpecialOfferType.TenPercentDiscount => new TenPercentDiscountOffer(product, argument),
-                _ => new Offer.Offer(offerType, product, argument)
+                SpecialOfferType.FiveForAmount => new FiveForAmountOffer(product, argument),
+                SpecialOfferType.TwoForAmount => new TwoForAmountOffer(product, argument),
+                _ => throw new ArgumentOutOfRangeException()
             };
         }
 
@@ -41,4 +44,5 @@ namespace SupermarketReceipt.Domain
             return receipt;
         }
     }
+
 }

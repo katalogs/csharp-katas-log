@@ -11,6 +11,6 @@
             return new Discount(this._product, "3 for 2", -discountAmount);
         }
 
-        public override int GetNbOfProductNecessaryForOffer() => 3;
+        protected override int GetNbOfProductNecessaryForOffer() => 3;
     }
 }
