@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using SupermarketReceipt.Domain.Offer;
 
 namespace SupermarketReceipt.Domain
 {
     public class Teller
     {
         private readonly ISupermarketCatalog _catalog;
-        private readonly Dictionary<Product, Offer> _offers = new Dictionary<Product, Offer>();
+        private readonly Dictionary<Product, Offer.Offer> _offers = new Dictionary<Product, Offer.Offer>();
 
         public Teller(ISupermarketCatalog catalog)
         {
@@ -18,7 +19,7 @@ namespace SupermarketReceipt.Domain
             {
                 SpecialOfferType.ThreeForTwo => new ThreeForTwoOffer(product, argument),
                 SpecialOfferType.TenPercentDiscount => new TenPercentDiscountOffer(product, argument),
-                _ => new Offer(offerType, product, argument)
+                _ => new Offer.Offer(offerType, product, argument)
             };
         }
 

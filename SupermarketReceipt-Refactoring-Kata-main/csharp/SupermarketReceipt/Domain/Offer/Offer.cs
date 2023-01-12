@@ -1,6 +1,6 @@
 using System;
 
-namespace SupermarketReceipt.Domain
+namespace SupermarketReceipt.Domain.Offer
 {
     public enum SpecialOfferType
     {

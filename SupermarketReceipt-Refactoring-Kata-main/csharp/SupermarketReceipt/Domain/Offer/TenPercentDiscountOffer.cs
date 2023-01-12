@@ -1,4 +1,4 @@
-﻿namespace SupermarketReceipt.Domain
+﻿namespace SupermarketReceipt.Domain.Offer
 {
     internal class TenPercentDiscountOffer : Offer
     {

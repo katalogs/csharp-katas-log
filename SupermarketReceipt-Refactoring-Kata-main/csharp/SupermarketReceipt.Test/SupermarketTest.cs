@@ -1,6 +1,7 @@
 
 using System.Threading.Tasks;
 using SupermarketReceipt.Domain;
+using SupermarketReceipt.Domain.Offer;
 using SupermarketReceipt.Presentation;
 using SupermarketReceipt.Repositories;
 using VerifyXunit;
