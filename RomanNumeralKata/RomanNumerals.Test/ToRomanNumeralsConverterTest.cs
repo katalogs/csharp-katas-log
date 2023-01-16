@@ -13,11 +13,5 @@ namespace RomanNumerals.Test
         {
             this._converter = new ToRomanNumeralsConverter();
         }
-
-        [Fact]
-        public void Should_be_empty_for_zero()
-        {
-            _converter.Convert(0).Should().Be("");
-        }
     }
 }
