@@ -4,8 +4,7 @@
     {
         private const int QualityThresholdMax = 50;
         private const int QualityThresholdMin = 0;
-
-        public const string AgedBrie = "Aged Brie";
+        
         public const string TAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert";
 
         public Item(string name)
@@ -43,13 +42,10 @@
             Quality = QualityThresholdMin;
         }
 
-        public void ManageQualityWhenExpired()
+        protected virtual void ManageQualityWhenExpired()
         {
             switch (Name)
             {
-                case AgedBrie:
-                    IncrementQuality();
-                    break;
                 case TAFKAL80ETC:
                     SetMinimalQuality();
                     break;
@@ -59,18 +55,15 @@
             }
         }
 
-        public void ManageSellIn()
+        protected void ManageSellIn()
         {
             SellIn--;
         }
 
-        public void ManageQuality()
+        protected virtual void ManageQuality()
         {
             switch (Name)
             {
-                case AgedBrie:
-                    IncrementQuality();
-                    break;
                 case TAFKAL80ETC:
                     IncrementQuality();
 

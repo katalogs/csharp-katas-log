@@ -8,7 +8,7 @@
 
             IList<Item> Items = new List<Item>{
                 new Item("+5 Dexterity Vest") { SellIn = 10, Quality = 20},
-                new Item(Item.AgedBrie) { SellIn = 2, Quality = 0},
+                new Cheese(Cheese.AgedBrie) { SellIn = 2, Quality = 0},
                 new Item("Elixir of the Mongoose") { SellIn = 5, Quality = 7},
                 new LegendaryItem(LegendaryItem.SulfurasHandRagnaros) { SellIn = 0, Quality = 80},
                 new LegendaryItem(LegendaryItem.SulfurasHandRagnaros) { SellIn = -1, Quality = 80},
