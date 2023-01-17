@@ -5,7 +5,6 @@
         private const int QualityThresholdMax = 50;
         private const int QualityThresholdMin = 0;
         
-        public const string TAFKAL80ETC = "Backstage passes to a TAFKAL80ETC concert";
 
         public Item(string name, int sellIn, int quality)
         {
@@ -46,15 +45,7 @@
 
         protected virtual void ManageQualityWhenExpired()
         {
-            switch (Name)
-            {
-                case TAFKAL80ETC:
-                    SetMinimalQuality();
-                    break;
-                default:
-                    DecrementQuality();
-                    break;
-            }
+            DecrementQuality();
         }
 
         protected void ManageSellIn()
@@ -64,25 +55,7 @@
 
         protected virtual void ManageQuality()
         {
-            switch (Name)
-            {
-                case TAFKAL80ETC:
-                    IncrementQuality();
-
-                    if (SellIn < 11)
-                    {
-                        IncrementQuality();
-                    }
-
-                    if (SellIn < 6)
-                    {
-                        IncrementQuality();
-                    }
-                    break;
-                default:
-                    DecrementQuality();
-                    break;
-            }
+            DecrementQuality();
         }
 
         public virtual void Update()

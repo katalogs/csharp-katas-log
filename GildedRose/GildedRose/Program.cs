@@ -12,9 +12,9 @@
                 new Item("Elixir of the Mongoose", 5, 7),
                 new LegendaryItem(LegendaryItem.SulfurasHandRagnaros, 0, 80),
                 new LegendaryItem(LegendaryItem.SulfurasHandRagnaros, -1,  80),
-                new Item(Item.TAFKAL80ETC, 15, 20),
-                new Item(Item.TAFKAL80ETC, 10, 49),
-                new Item(Item.TAFKAL80ETC, 5, 49),
+                new EventTicket(EventTicket.TAFKAL80ETC, 15, 20),
+                new EventTicket(EventTicket.TAFKAL80ETC, 10, 49),
+                new EventTicket(EventTicket.TAFKAL80ETC, 5, 49),
                 // this conjured item does not work properly yet
                 new Item("Conjured Mana Cake", 3, 6)
             };
