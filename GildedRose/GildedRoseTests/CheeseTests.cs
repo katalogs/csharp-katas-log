@@ -7,11 +7,7 @@ namespace GildedRoseTests
         [Fact]
         public void Update_IncreaseQuality_By_One()
         {
-            var cheese = new Cheese("name")
-            {
-                SellIn = 5,
-                Quality = 2
-            };
+            var cheese = new Cheese("name", 5, 2);
 
             cheese.Update();
 
@@ -23,11 +19,7 @@ namespace GildedRoseTests
         [InlineData(-1)]
         public void Update_IncreaseQuality_WhenExpired_Twice(int sellIn)
         {
-            var cheese = new Cheese("name")
-            {
-                SellIn = sellIn,
-                Quality = 2
-            };
+            var cheese = new Cheese("name", sellIn, 2);
 
             cheese.Update();
 

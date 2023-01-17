@@ -7,28 +7,16 @@
             Console.WriteLine("OMGHAI!");
 
             IList<Item> Items = new List<Item>{
-                new Item("+5 Dexterity Vest") { SellIn = 10, Quality = 20},
-                new Cheese(Cheese.AgedBrie) { SellIn = 2, Quality = 0},
-                new Item("Elixir of the Mongoose") { SellIn = 5, Quality = 7},
-                new LegendaryItem(LegendaryItem.SulfurasHandRagnaros) { SellIn = 0, Quality = 80},
-                new LegendaryItem(LegendaryItem.SulfurasHandRagnaros) { SellIn = -1, Quality = 80},
-                new Item(Item.TAFKAL80ETC)
-                {
-                    SellIn = 15,
-                    Quality = 20
-                },
-                new Item(Item.TAFKAL80ETC)
-                {
-                    SellIn = 10,
-                    Quality = 49
-                },
-                new Item(Item.TAFKAL80ETC)
-                {
-                    SellIn = 5,
-                    Quality = 49
-                },
+                new Item("+5 Dexterity Vest", 10, 20),
+                new Cheese(Cheese.AgedBrie, 2, 0),
+                new Item("Elixir of the Mongoose", 5, 7),
+                new LegendaryItem(LegendaryItem.SulfurasHandRagnaros, 0, 80),
+                new LegendaryItem(LegendaryItem.SulfurasHandRagnaros, -1,  80),
+                new Item(Item.TAFKAL80ETC, 15, 20),
+                new Item(Item.TAFKAL80ETC, 10, 49),
+                new Item(Item.TAFKAL80ETC, 5, 49),
                 // this conjured item does not work properly yet
-                new Item("Conjured Mana Cake") { SellIn = 3, Quality = 6}
+                new Item("Conjured Mana Cake", 3, 6)
             };
 
             var app = new GildedRose(Items);

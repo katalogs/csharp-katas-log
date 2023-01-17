@@ -4,7 +4,7 @@
     {
         public const string AgedBrie = "Aged Brie";
 
-        public Cheese(string name) : base(name)
+        public Cheese(string name, int sellIn, int quality) : base(name, sellIn, quality)
         {
         }
 

@@ -7,7 +7,7 @@ namespace GildedRoseTests
         [Fact]
         public void LegendaryItem_WhenUpdated_DoesNothing()
         {
-            var item = new LegendaryItem("toto") { SellIn = 50, Quality = 2 };
+            var item = new LegendaryItem("toto", 50, 2);
 
             item.Update();
 

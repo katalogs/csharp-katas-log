@@ -4,7 +4,9 @@
     {
         public const string SulfurasHandRagnaros = "Sulfuras, Hand of Ragnaros";
 
-        public LegendaryItem(string name) : base(name) {  }
+        public LegendaryItem(string name, int sellIn, int quality) : base(name, sellIn, quality)
+        {
+        }
 
         public override void Update()
         {
