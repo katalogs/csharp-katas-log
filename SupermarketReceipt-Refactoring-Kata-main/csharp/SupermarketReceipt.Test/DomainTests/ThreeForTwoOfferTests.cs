@@ -16,7 +16,7 @@ namespace SupermarketReceipt.Test.DomainTests
         }
 
         [Fact]
-        public void Should_be_applicable_when_1_product()
+        public void Should_be_not_applicable_when_1_product()
         {
             var product = new Product("product1", ProductUnit.Kilo);
             var offer = new ThreeForTwoOffer(product);
