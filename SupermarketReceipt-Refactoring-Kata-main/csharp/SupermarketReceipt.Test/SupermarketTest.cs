@@ -73,8 +73,32 @@ namespace SupermarketReceipt.Test
         }
 
         [Fact]
+        public Task buy_two_discount_not_applicable()
+        {
+            _theCart.AddItem(_toothbrush);
+            _theCart.AddItem(_toothbrush);
+            _teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush));
+            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
+
+        [Fact]
         public Task buy_five_get_one_free()
         {
+            _theCart.AddItem(_toothbrush);
+            _theCart.AddItem(_toothbrush);
+            _theCart.AddItem(_toothbrush);
+            _theCart.AddItem(_toothbrush);
+            _theCart.AddItem(_toothbrush);
+            _teller.AddSpecialOffer(SpecialOfferType.ThreeForTwo, _toothbrush, _catalog.GetUnitPrice(_toothbrush));
+            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
+
+        [Fact]
+        public Task buy_six_get_two_free()
+        {
+            _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
             _theCart.AddItem(_toothbrush);
@@ -98,6 +122,15 @@ namespace SupermarketReceipt.Test
         {
             _theCart.AddItem(_rice);
             _teller.AddSpecialOffer(SpecialOfferType.TenPercentDiscount, _rice, 10.0);
+            Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
+            return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
+        }
+
+        [Fact]
+        public Task percent_discount_not_be_applicable_when_then_one()
+        {
+            _theCart.AddItemQuantity(_apples, .5);
+            _teller.AddSpecialOffer(SpecialOfferType.TenPercentDiscount, _apples, 10.0);
             Receipt receipt = _teller.ChecksOutArticlesFrom(_theCart);
             return Verifier.Verify(new ReceiptPrinter(40).PrintReceipt(receipt));
         }
