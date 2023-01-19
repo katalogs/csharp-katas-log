@@ -39,15 +39,15 @@ namespace SupermarketReceipt.Domain
             foreach (var p in _productQuantities.Keys)
             {
                 var quantity = _productQuantities[p];
-                var quantityAsInt = (int) quantity;
+
                 if (offers.ContainsKey(p))
                 {
                     var offer = offers[p];
                     var unitPrice = catalog.GetUnitPrice(p);
 
-                    if (offer.IsApplicable(quantityAsInt))
+                    if (offer.IsApplicable(quantity))
                     {
-                        receipt.AddDiscount(offer.CreateDiscount(quantityAsInt, quantity, unitPrice));
+                        receipt.AddDiscount(offer.CreateDiscount(quantity, unitPrice));
                     }
                 }
             }

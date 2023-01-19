@@ -7,7 +7,7 @@
         public TenPercentDiscountOffer(Product product)
             : base(product) { }
 
-        public override Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice)
+        public override Discount CreateDiscount(double quantity, double unitPrice)
             => new (this._product, this.percent + "% off", -quantity * unitPrice * this.percent / 100.0);
 
         protected override int GetNbOfProductNecessaryForOffer() => 1;

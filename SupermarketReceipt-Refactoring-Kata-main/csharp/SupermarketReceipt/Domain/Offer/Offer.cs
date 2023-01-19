@@ -15,11 +15,11 @@ namespace SupermarketReceipt.Domain.Offer
         protected Offer(Product product)
             => _product = product;
 
-        public bool IsApplicable(int quantityAsInt)
+        public bool IsApplicable(double quantityAsInt)
             => quantityAsInt >= GetNbOfProductNecessaryForOffer();
 
         protected abstract int GetNbOfProductNecessaryForOffer();
 
-        public abstract Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice);
+        public abstract Discount CreateDiscount(double quantity, double unitPrice);
     }
 }

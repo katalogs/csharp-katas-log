@@ -10,8 +10,9 @@ public abstract class XForAmountOffer : Offer
     }
 
 
-    public override Discount CreateDiscount(int quantityAsInt, double quantity, double unitPrice)
+    public override Discount CreateDiscount(double quantity, double unitPrice)
     {
+        var quantityAsInt = (int)quantity;
         var nbOfPacks = quantityAsInt / GetNbOfProductNecessaryForOffer();
         var discountTotal = unitPrice * quantity - (this.amount * nbOfPacks + quantityAsInt % GetNbOfProductNecessaryForOffer() * unitPrice);
         return new Discount(this._product, GetNbOfProductNecessaryForOffer() + " for " + this.amount, -discountTotal);

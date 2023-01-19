@@ -30,7 +30,7 @@ namespace SupermarketReceipt.Test.DomainTests
             var product = new Product("product1", ProductUnit.Kilo);
             var offer = new ThreeForTwoOffer(product);
 
-            var discount = offer.CreateDiscount(3, 3, 2);
+            var discount = offer.CreateDiscount(3, 2);
 
             Assert.Equal(-2, discount.DiscountAmount);
         }
