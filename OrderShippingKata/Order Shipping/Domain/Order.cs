@@ -1,5 +1,4 @@
 ﻿using Order_Shipping;
-using OrderShipping.Domain.Exception;
 
 namespace OrderShipping.Domain
 {
@@ -10,14 +9,12 @@ namespace OrderShipping.Domain
         public string Currency { get; set; }
         public IList<OrderItem> Items { get; set; }
         public decimal Tax { get; private set; }
-        public OrderStatus Status { get; set; }
         public IState State { get; set; }
         public int Id { get; set; }
 
         public Order()
         {
             State = new CreatedState();
-            Status = OrderStatus.Created;
             Items = new List<OrderItem>();
             Currency = "EUR";
         }
@@ -32,22 +29,11 @@ namespace OrderShipping.Domain
         internal void Approve()
         {
             State = State.Approve();
-
-            //if (Status == OrderStatus.Shipped)
-            //{
-            //    throw new ShippedOrdersCannotBeChangedException();
-            //}
-            //else if (Status == OrderStatus.Rejected)
-            //{
-            //    throw new RejectedOrderCannotBeApprovedException();
-            //}
-            //Status = OrderStatus.Approved;
         }
 
         internal void Ship()
         {
             State = State.Ship();
-            Status = OrderStatus.Shipped;
         }
         internal void CheckShippability()
         {
@@ -57,15 +43,6 @@ namespace OrderShipping.Domain
         internal void Reject()
         {
             State = State.Reject();
-            //if (Status == OrderStatus.Shipped)
-            //{
-            //    throw new ShippedOrdersCannotBeChangedException();
-            //}
-            //else if (Status == OrderStatus.Approved)
-            //{
-            //    throw new ApprovedOrderCannotBeRejectedException();
-            //}
-            Status = OrderStatus.Rejected;
         }
     }
 }

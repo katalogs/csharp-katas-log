@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Order_Shipping;
 using OrderShipping.Domain;
 using OrderShipping.Domain.Exception;
 using OrderShipping.Repository;
@@ -68,7 +69,7 @@ public class OrderCreationUseCaseTest
         _useCase.Run(request);
 
         Order insertedOrder = _orderRepository.GetSavedOrder();
-        Assert.Equal(OrderStatus.Created, insertedOrder.Status);
+        Assert.Equal(typeof(CreatedState), insertedOrder.State.GetType());
         Assert.Equal(23.20m, insertedOrder.Total);
         Assert.Equal(2.13m, insertedOrder.Tax);
         Assert.Equal("EUR", insertedOrder.Currency);

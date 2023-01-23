@@ -25,7 +25,7 @@ public class OrderApprovalUseCaseTest
     {
         var initialOrder = new Order
         {
-            Status = OrderStatus.Created,
+            State= new CreatedState(),
             Id = 1
         };
         _orderRepository.AddOrder(initialOrder);
@@ -47,7 +47,7 @@ public class OrderApprovalUseCaseTest
     {
         var initialOrder = new Order
         {
-            Status = OrderStatus.Created,
+            State = new CreatedState(),
             Id = 1
         };
         _orderRepository.AddOrder(initialOrder);
@@ -61,7 +61,7 @@ public class OrderApprovalUseCaseTest
         _useCase.Run(request);
 
         var savedOrder = _orderRepository.GetSavedOrder();
-        Assert.Equal(OrderStatus.Rejected, savedOrder.Status);
+        Assert.Equal(typeof(RejectedState), savedOrder.State.GetType());
     }
 
 
@@ -70,7 +70,6 @@ public class OrderApprovalUseCaseTest
     {
         var initialOrder = new Order
         {
-            Status = OrderStatus.Rejected,
             Id = 1,
             State = new RejectedState()
         };
@@ -95,7 +94,6 @@ public class OrderApprovalUseCaseTest
         var initialOrder = new Order
         {
             State = new ApprovedState(),
-            Status = OrderStatus.Approved,
             Id = 1
         };
         _orderRepository.AddOrder(initialOrder);
@@ -119,7 +117,6 @@ public class OrderApprovalUseCaseTest
         var initialOrder = new Order
         {
             State = new ShippedState(),
-            Status = OrderStatus.Shipped,
             Id = 1
         };
         _orderRepository.AddOrder(initialOrder);
