@@ -44,13 +44,11 @@ namespace OrderShipping.Domain
             //Status = OrderStatus.Approved;
         }
 
-
         internal void Ship()
         {
-            CheckShippability();
+            State = State.Ship();
             Status = OrderStatus.Shipped;
         }
-
         internal void CheckShippability()
         {
             if (Status == OrderStatus.Created || Status == OrderStatus.Rejected)
@@ -66,14 +64,15 @@ namespace OrderShipping.Domain
 
         internal void Reject()
         {
-            if (Status == OrderStatus.Shipped)
-            {
-                throw new ShippedOrdersCannotBeChangedException();
-            }
-            else if (Status == OrderStatus.Approved)
-            {
-                throw new ApprovedOrderCannotBeRejectedException();
-            }
+            State = State.Reject();
+            //if (Status == OrderStatus.Shipped)
+            //{
+            //    throw new ShippedOrdersCannotBeChangedException();
+            //}
+            //else if (Status == OrderStatus.Approved)
+            //{
+            //    throw new ApprovedOrderCannotBeRejectedException();
+            //}
             Status = OrderStatus.Rejected;
         }
     }

@@ -94,6 +94,7 @@ public class OrderApprovalUseCaseTest
     {
         var initialOrder = new Order
         {
+            State = new ApprovedState(),
             Status = OrderStatus.Approved,
             Id = 1
         };
@@ -117,6 +118,7 @@ public class OrderApprovalUseCaseTest
     {
         var initialOrder = new Order
         {
+            State = new ShippedState(),
             Status = OrderStatus.Shipped,
             Id = 1
         };

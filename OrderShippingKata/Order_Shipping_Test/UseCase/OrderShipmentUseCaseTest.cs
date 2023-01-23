@@ -1,4 +1,5 @@
 ﻿using System;
+using Order_Shipping;
 using OrderShipping.Domain;
 using OrderShipping.Domain.Exception;
 using OrderShipping.UseCase;
@@ -26,6 +27,7 @@ public class OrderShipmentUseCaseTest
     {
         var initialOrder = new Order
         {
+            State = new ApprovedState(),
             Status = OrderStatus.Approved,
             Id = 1
         };

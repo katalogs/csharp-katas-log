@@ -11,7 +11,7 @@ namespace Order_Shipping
 
         public IState Reject()
         {
-            throw new RejectedOrderCannotBeApprovedException();
+            throw new ApprovedOrderCannotBeRejectedException();
         }
 
         public IState Ship()
