@@ -51,15 +51,7 @@ namespace OrderShipping.Domain
         }
         internal void CheckShippability()
         {
-            if (Status == OrderStatus.Created || Status == OrderStatus.Rejected)
-            {
-                throw new OrderCannotBeShippedException();
-            }
-
-            if (Status == OrderStatus.Shipped)
-            {
-                throw new OrderCannotBeShippedTwiceException();
-            }
+            State.Ship();
         }
 
         internal void Reject()

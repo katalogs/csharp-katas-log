@@ -93,6 +93,7 @@ public class OrderShipmentUseCaseTest
     {
         var initialOrder = new Order
         {
+            State = new ShippedState(),
             Status = OrderStatus.Shipped,
             Id = 1
         };
