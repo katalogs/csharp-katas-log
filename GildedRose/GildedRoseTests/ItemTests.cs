@@ -44,5 +44,23 @@ namespace GildedRoseTests
             item.SetMinimalQuality();
             Assert.Equal(0, item.Quality);
         }
+
+        [Fact]
+        public void Item_WhenUpdate_QualityShouldDecrease()
+        {
+            var item = new Item("stuff", 5, 45);
+            item.Update();
+            Assert.Equal(44, item.Quality);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void Item_WhenUpdateAfterExpiration_QualityShouldDecreaseTwice(int sellIn)
+        {
+            var item = new Item("stuff", sellIn, 45);
+            item.Update();
+            Assert.Equal(43, item.Quality);
+        }
     }
 }
