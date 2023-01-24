@@ -5,7 +5,6 @@
         private const int QualityThresholdMax = 50;
         private const int QualityThresholdMin = 0;
         
-
         public Item(string name, int sellIn, int quality)
         {
             Name = name;
