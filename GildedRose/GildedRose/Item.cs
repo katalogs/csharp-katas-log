@@ -21,7 +21,7 @@
             return $"{Name}, {SellIn}, {Quality}";
         }
 
-        public void DecrementQuality()
+        public virtual void DecrementQuality()
         {
             if (Quality > QualityThresholdMin)
             {
