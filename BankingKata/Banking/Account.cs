@@ -6,7 +6,7 @@ namespace Banking
     /// <summary>
     /// The account class
     /// </summary>
-    public abstract class Account
+    public interface Account
     {
         /// <summary>
         /// Gets or sets the value of the id

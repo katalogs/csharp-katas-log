@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Moq;
+using Xunit;
 
 namespace Banking.Tests.Unit
 {
@@ -91,10 +92,11 @@ namespace Banking.Tests.Unit
 
             //Act
             Client client = new Client(name);
-            StandardAccount standardAccount = new StandardAccount();
-            client.AddAccount(standardAccount);
+            Mock<StandardAccount> mockedStandardAccount = new Mock<StandardAccount>();
+            mockedStandardAccount.SetupGet(x => x).Returns(new StandardAccount{ Id = 1 });
 
-            client.Deposit(standardAccount.Id, 200);
+            client.AddAccount(mockedStandardAccount.Object);
+            client.Deposit(mockedStandardAccount.Object.Id, 200);
 
             //Assert
             Assert.NotNull(client);

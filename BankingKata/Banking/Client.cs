@@ -54,6 +54,7 @@ namespace Banking
         {
             var account = Accounts.FirstOrDefault(a => a.Id == id);
             account.Deposit(amount);
+            BalanceTotal += amount;
         }
     }
 }
