@@ -1,9 +1,12 @@
-﻿namespace Banking
+namespace Banking
 {
 
-    public class StandardAccount : IAccount
+    /// <summary>
+    /// The standard account class
+    /// </summary>
+    /// <seealso cref="Account"/>
+    public class StandardAccount : Account
     {
-        public object Id { get; set; }
     }
 
 }

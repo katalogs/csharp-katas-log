@@ -1,7 +1,12 @@
-﻿
 namespace Banking
 {
-    public class WalletAccount : IAccount
+
+    /// <summary>
+    /// The wallet account class
+    /// </summary>
+    /// <seealso cref="Account"/>
+    public class WalletAccount : Account
     {
     }
+
 }

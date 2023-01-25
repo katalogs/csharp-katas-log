@@ -1,5 +1,4 @@
 ﻿using Xunit;
-using System.Linq;
 
 namespace Banking.Tests.Unit
 {
@@ -58,7 +57,7 @@ namespace Banking.Tests.Unit
 
             //Act
             Client client = new Client(name);
-            IAccount account = new StandardAccount();
+            Account account = new StandardAccount();
             client.AddAccount(account);
 
             //Assert
