@@ -18,6 +18,7 @@ namespace Banking
         }
 
         public IList<IAccount> Accounts { get; private set; }
+        public int BalanceTotal { get; set; }
 
         public void AddAccount(IAccount account)
         {

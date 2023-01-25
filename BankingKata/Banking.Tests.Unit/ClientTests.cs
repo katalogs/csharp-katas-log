@@ -92,19 +92,16 @@ namespace Banking.Tests.Unit
 
             //Act
             Client client = new Client(name);
-            client.AddAccount(new StandardAccount());
+            StandardAccount standardAccount = new StandardAccount();
+            client.AddAccount(standardAccount);
 
-            client.Deposit(account.Id, 200);
-
-
+            client.Deposit(standardAccount.Id, 200);
 
             //Assert
             Assert.NotNull(client);
             Assert.NotEmpty(client.Accounts);
             Assert.Equal(1, client.Accounts.Count);
-
+            Assert.Equal(200, client.BalanceTotal);
         }
-
-
     }
 }
