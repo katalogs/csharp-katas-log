@@ -38,34 +38,44 @@ namespace Elections
         {
             if (!_withDistrict)
             {
+                VoteForWithoutDistrict(candidate);
+            }
+            else
+            {
+                VoteForWithtDistrict(candidate, electorDistrict);
+            }
+        }
+
+        private void VoteForWithtDistrict(string candidate, string electorDistrict)
+        {
+            if (_votesWithDistricts.ContainsKey(electorDistrict))
+            {
+                var districtVotes = _votesWithDistricts[electorDistrict];
                 if (_candidates.Contains(candidate))
                 {
                     var index = _candidates.IndexOf(candidate);
-                    _votesWithoutDistricts[index] = _votesWithoutDistricts[index] + 1;
+                    districtVotes[index] = districtVotes[index] + 1;
                 }
                 else
                 {
                     _candidates.Add(candidate);
-                    _votesWithoutDistricts.Add(1);
+                    foreach (var (_, votes) in _votesWithDistricts) votes.Add(0);
+                    districtVotes[_candidates.Count - 1] = districtVotes[_candidates.Count - 1] + 1;
                 }
+            }
+        }
+
+        private void VoteForWithoutDistrict(string candidate)
+        {
+            if (_candidates.Contains(candidate))
+            {
+                var index = _candidates.IndexOf(candidate);
+                _votesWithoutDistricts[index] = _votesWithoutDistricts[index] + 1;
             }
             else
             {
-                if (_votesWithDistricts.ContainsKey(electorDistrict))
-                {
-                    var districtVotes = _votesWithDistricts[electorDistrict];
-                    if (_candidates.Contains(candidate))
-                    {
-                        var index = _candidates.IndexOf(candidate);
-                        districtVotes[index] = districtVotes[index] + 1;
-                    }
-                    else
-                    {
-                        _candidates.Add(candidate);
-                        foreach (var (_, votes) in _votesWithDistricts) votes.Add(0);
-                        districtVotes[_candidates.Count - 1] = districtVotes[_candidates.Count - 1] + 1;
-                    }
-                }
+                _candidates.Add(candidate);
+                _votesWithoutDistricts.Add(1);
             }
         }
 
