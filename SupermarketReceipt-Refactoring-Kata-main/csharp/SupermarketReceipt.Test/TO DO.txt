@@ -1,1 +1,2 @@
  - lib ext pour Option<>
+ - ajout de fonctionnalités
