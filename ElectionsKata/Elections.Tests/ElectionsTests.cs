@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using VerifyXunit;
 using Xunit;
 
 namespace Elections.Tests;
 
+[UsesVerify]
 public class ElectionsTests
 {
+
     [Fact]
-    public void Should_run_without_districts()
+    public Task Should_run_without_districts()
         {
             var list = new Dictionary<string, List<string>>
             {
@@ -33,11 +36,13 @@ public class ElectionsTests
 
 
             // Add approval tests here
+            return Verify(results);
+            
 
         }
 
         [Fact]
-        public void Should_run_with_districts()
+        public Task Should_run_with_districts()
         {
             var list = new Dictionary<string, List<string>>
             {
@@ -63,5 +68,7 @@ public class ElectionsTests
             var results = elections.Results();
 
             // Add approval tests here
-        }
+            return Verify(results);
+
+    }
 }
