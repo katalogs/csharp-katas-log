@@ -1,2 +1,1 @@
-polymorphisme 
-ajouter de l'héritage sur la classe offer (offerType)
+ - lib ext pour Option<>
