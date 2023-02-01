@@ -59,7 +59,7 @@ namespace Banking
                 account.Deposit(amount);
                 BalanceTotal += amount;
             }
-            catch (NegativeDepositException)
+            catch (InvalidDepositException)
             {
                 throw;
             }            

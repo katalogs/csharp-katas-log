@@ -134,8 +134,10 @@ namespace Banking.Tests.Unit
         /// <summary>
         /// Tests that when client makes negative deposit account should throw negative deposit exception
         /// </summary>
-        [Fact]
-        public void When_Client_Makes_Negative_Deposit_Account_Should_Throw_Negative_Deposit_Exception()
+        [Theory]
+        [InlineData(-200)]
+        [InlineData(0)]
+        public void When_Client_Makes_Invalid_Deposit_Account_Should_Throw_Invalid_Deposit_Exception(int amount)
         {
             //Arrange
             string name = "Alexis";
@@ -145,12 +147,34 @@ namespace Banking.Tests.Unit
             Mock<Account> mockedStandardAccount = new Mock<Account>();
             mockedStandardAccount.SetupGet(x => x.Id)
                 .Returns(2);
-            mockedStandardAccount.Setup(_ => _.Deposit(It.IsAny<int>())).Throws(new NegativeDepositException());
+            mockedStandardAccount.Setup(_ => _.Deposit(It.IsAny<int>())).Throws(new InvalidDepositException());
 
             client.AddAccount(mockedStandardAccount.Object);
 
             //Assert
-            Assert.Throws<NegativeDepositException>(() => client.Deposit(mockedStandardAccount.Object.Id, -200));
+            Assert.Throws<InvalidDepositException>(() => client.Deposit(mockedStandardAccount.Object.Id, amount));
         }
+
+        /// <summary>
+        /// Tests that when client makes deposit on invalid account should throw invalid account exception
+        /// </summary>
+        [Fact]
+        public void When_Client_Makes_Deposit_On_Invalid_Account_Should_Throw_Invalid_Account_Exception()
+        {
+            //Arrange
+            string name = "Alexis";
+
+            //Act
+            Client client = new Client(name);
+            Mock<Account> mockedStandardAccount = new Mock<Account>();
+            mockedStandardAccount.SetupGet(x => x.Id)
+                .Returns(2);
+
+            client.AddAccount(mockedStandardAccount.Object);
+
+            //Assert
+            Assert.Throws<InvalidAccountException>(() => client.Deposit(1, 50));
+        }
+
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Banking.Tests.Unit
 {
-    public class NegativeDepositException : Exception
+    public class InvalidDepositException : Exception
     {
     }
 }
