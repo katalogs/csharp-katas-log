@@ -147,7 +147,8 @@ namespace Banking.Tests.Unit
             Mock<Account> mockedStandardAccount = new Mock<Account>();
             mockedStandardAccount.SetupGet(x => x.Id)
                 .Returns(2);
-            mockedStandardAccount.Setup(_ => _.Deposit(It.IsAny<int>())).Throws(new InvalidDepositException());
+            mockedStandardAccount.Setup(_ => _.Deposit(It.IsAny<int>()))
+                .Throws(new InvalidDepositException());
 
             client.AddAccount(mockedStandardAccount.Object);
 
@@ -176,5 +177,38 @@ namespace Banking.Tests.Unit
             Assert.Throws<InvalidAccountException>(() => client.Deposit(1, 50));
         }
 
+        /// <summary>
+        /// Tests that when client makes deposit on two account should have correct balance
+        /// </summary>
+        [Fact]
+        public void When_Client_Makes_Deposit_On_Two_Account_Should_Have_Correct_Balance()
+        {
+            //Arrange
+            string name = "Alexis";
+
+            //Act
+            Client client = new Client(name);
+            Mock<Account> mockedStandardAccount = new Mock<Account>();
+            mockedStandardAccount.SetupGet(x => x.Id)
+                .Returns(2);
+
+            Mock<Account> mockedWalletdAccount = new Mock<Account>();
+            mockedWalletdAccount.SetupGet(x => x.Id)
+                .Returns(4);
+            //Act
+            client.AddAccount(mockedStandardAccount.Object);
+            client.AddAccount(mockedWalletdAccount.Object);
+
+            client.Deposit(mockedStandardAccount.Object.Id, 200);
+            client.Deposit(mockedWalletdAccount.Object.Id, 100);
+            //Assert
+
+            mockedStandardAccount.Verify(_ => _.Deposit(200));
+            mockedWalletdAccount.Verify(_ => _.Deposit(100));
+            Assert.Equal(2, client.Accounts.Count);
+            Assert.Equal(300, client.BalanceTotal);
+        }
+
     }
+
 }

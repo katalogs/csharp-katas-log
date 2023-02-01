@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Banking
 {
+
     /// <summary>
     /// The client class
     /// </summary>
@@ -21,8 +22,7 @@ namespace Banking
         /// <exception cref="NotEmptyNameException"></exception>
         public Client(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new NotEmptyNameException();
+            if (string.IsNullOrWhiteSpace(name)) throw new NotEmptyNameException();
 
             Name = name;
             Accounts = new List<Account>();
@@ -32,6 +32,7 @@ namespace Banking
         /// Gets or sets the value of the accounts
         /// </summary>
         public IList<Account> Accounts { get; private set; }
+
         /// <summary>
         /// Gets or sets the value of the balance total
         /// </summary>
@@ -53,16 +54,15 @@ namespace Banking
         /// <param name="amount">The </param>
         public void Deposit(long id, int amount)
         {
-            try
+            var account = this.Accounts.FirstOrDefault(a => a.Id == id);
+            if (account == null)
             {
-                var account = Accounts.FirstOrDefault(a => a.Id == id);
-                account.Deposit(amount);
-                BalanceTotal += amount;
+                throw new InvalidAccountException();
             }
-            catch (InvalidDepositException)
-            {
-                throw;
-            }            
+
+            account.Deposit(amount);
+            this.BalanceTotal += amount;
         }
     }
+
 }
