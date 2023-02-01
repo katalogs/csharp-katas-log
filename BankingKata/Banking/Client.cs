@@ -1,3 +1,4 @@
+using Banking.Tests.Unit;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -52,9 +53,16 @@ namespace Banking
         /// <param name="amount">The </param>
         public void Deposit(long id, int amount)
         {
-            var account = Accounts.FirstOrDefault(a => a.Id == id);
-            account.Deposit(amount);
-            BalanceTotal += amount;
+            try
+            {
+                var account = Accounts.FirstOrDefault(a => a.Id == id);
+                account.Deposit(amount);
+                BalanceTotal += amount;
+            }
+            catch (NegativeDepositException)
+            {
+                throw;
+            }            
         }
     }
 }

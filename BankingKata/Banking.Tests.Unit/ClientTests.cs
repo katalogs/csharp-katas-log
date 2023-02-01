@@ -145,17 +145,12 @@ namespace Banking.Tests.Unit
             Mock<Account> mockedStandardAccount = new Mock<Account>();
             mockedStandardAccount.SetupGet(x => x.Id)
                 .Returns(2);
+            mockedStandardAccount.Setup(_ => _.Deposit(It.IsAny<int>())).Throws(new NegativeDepositException());
 
             client.AddAccount(mockedStandardAccount.Object);
-            client.Deposit(mockedStandardAccount.Object.Id, -200);
 
             //Assert
-            Assert.NotNull(client);
-            Assert.NotEmpty(client.Accounts);
-            Assert.Equal(2, client.Accounts.Count);
-            Assert.Equal(200, client.BalanceTotal);
+            Assert.Throws<NegativeDepositException>(() => client.Deposit(mockedStandardAccount.Object.Id, -200));
         }
-
     }
-
 }
