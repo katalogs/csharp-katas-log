@@ -7,6 +7,8 @@ namespace Banking
     /// <seealso cref="Account"/>
     public class WalletAccount : Account
     {
+        /// <inheritdoc />
+        public long Id { get; set; }
     }
 
 }
