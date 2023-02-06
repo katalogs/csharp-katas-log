@@ -17,15 +17,31 @@ namespace RomanNumerals
                 {7, "Sept"},
                 {8, "Huit"},
                 {9, "Neuf"},
+                {10, "Dix"},
+                {11, "Onze"},
+                {12, "Douze"},
+                {13, "Treize"},
+                {14, "Quatorze"},
+                {15, "Quinze"},
+                {16, "Seize"},
+                {20, "Vingt"},
+                {30, "Trente"},
+                {40, "Quarante"},
+                {50, "Cinquante"},
+                {60, "Soixante"},
             };
-
-        public ToFrenchConverter()
-        {
-        }
 
         public string Convert(int number)
         {
-            return dictionaryUnit[number];
+            if(dictionaryUnit.ContainsKey(number))
+                return dictionaryUnit[number];
+
+            int unit = number % 10;
+            int dizaine = number - unit;            
+
+            var result = dictionaryUnit[dizaine] + "-" + dictionaryUnit[unit].ToLower();
+
+            return result;
         }
     }
 }
