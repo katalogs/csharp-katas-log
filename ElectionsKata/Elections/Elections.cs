@@ -47,23 +47,34 @@ namespace Elections
             }
         }
 
-        private void VoteForACandidateByDistrict(string candidate, string electorDistrict)
+        private void VoteForACandidateByDistrict(string candidate, string voteDistrict)
         {
-            if (_numberOfVotesForCandidatesByDistricts.ContainsKey(electorDistrict))
+            // vérifier que l'électeur appartien bien au district
+            if (_numberOfVotesForCandidatesByDistricts.ContainsKey(voteDistrict))
             {
-                var districtVotes = _numberOfVotesForCandidatesByDistricts[electorDistrict];
-                if (_allCandidates.Contains(candidate))
+                var numberOfVotesForCandidatesForGivenDistrict = _numberOfVotesForCandidatesByDistricts[voteDistrict];
+                if (HasCandidateAlreadyBeenAdded(candidate))
                 {
-                    var index = _allCandidates.IndexOf(candidate);
-                    districtVotes[index] = districtVotes[index] + 1;
+                    NewMethod(candidate, numberOfVotesForCandidatesForGivenDistrict);
                 }
                 else
                 {
                     _allCandidates.Add(candidate);
                     foreach (var (_, votes) in _numberOfVotesForCandidatesByDistricts) votes.Add(0);
-                    districtVotes[_allCandidates.Count - 1] = districtVotes[_allCandidates.Count - 1] + 1;
+                    numberOfVotesForCandidatesForGivenDistrict[_allCandidates.Count - 1] = numberOfVotesForCandidatesForGivenDistrict[_allCandidates.Count - 1] + 1;
                 }
             }
+        }
+
+        private bool HasCandidateAlreadyBeenAdded(string candidate)
+        {
+            return _allCandidates.Contains(candidate);
+        }
+
+        private void NewMethod(string candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
+        {
+            var index = _allCandidates.IndexOf(candidate);
+            numberOfVotesForCandidatesForGivenDistrict[index] = numberOfVotesForCandidatesForGivenDistrict[index] + 1;
         }
 
         private void VoteForACandidate(string candidate)
