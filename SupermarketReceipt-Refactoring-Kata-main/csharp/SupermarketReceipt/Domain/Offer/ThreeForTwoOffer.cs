@@ -5,7 +5,7 @@
         public ThreeForTwoOffer(Product product)
             : base(product) { }
 
-        public override Discount CreateDiscount(double quantity, double unitPrice)
+        protected override Discount CreateDiscount(double quantity, double unitPrice)
         {
             var quantityAsInt = (int)quantity;
             var discountAmount = quantity * unitPrice - ((quantityAsInt / GetNbOfProductNecessaryForOffer()) * 2 * unitPrice + quantityAsInt % 3 * unitPrice);

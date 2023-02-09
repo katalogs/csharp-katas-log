@@ -15,17 +15,13 @@ namespace SupermarketReceipt.Test.DomainTests
         }
 
         [Fact]
-        public void Should_be_applicable_when_1_product()
-            => Assert.True(_offer.IsApplicable(1));
-
-        [Fact]
         public void Should_not_be_applicable_when_less_than_one_product()
-            => Assert.False(_offer.IsApplicable(0.5));
+            => Assert.Null(_offer.CreateDiscountIfApplicable(0.5, 10));
 
         [Fact]
         public void Should_create_discount_10_percent()
         {
-            var actual = _offer.CreateDiscount(1, 100);
+            var actual = _offer.CreateDiscountIfApplicable(1, 100);
             Assert.Equal(-10, actual.DiscountAmount);
             Assert.Equal("10% off", actual.Description);
         }

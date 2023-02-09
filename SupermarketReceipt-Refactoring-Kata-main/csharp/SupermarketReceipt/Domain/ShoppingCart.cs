@@ -44,10 +44,11 @@ namespace SupermarketReceipt.Domain
                 {
                     var offer = offers[p];
                     var unitPrice = catalog.GetUnitPrice(p);
+                    var discount = offer.CreateDiscountIfApplicable(quantity, unitPrice);
 
-                    if (offer.IsApplicable(quantity))
+                    if (discount != null)
                     {
-                        receipt.AddDiscount(offer.CreateDiscount(quantity, unitPrice));
+                        receipt.AddDiscount(discount);
                     }
                 }
             }

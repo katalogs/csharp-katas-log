@@ -9,8 +9,7 @@ public abstract class XForAmountOffer : Offer
         this.amount = amount;
     }
 
-
-    public override Discount CreateDiscount(double quantity, double unitPrice)
+    protected override Discount CreateDiscount(double quantity, double unitPrice)
     {
         var quantityAsInt = (int)quantity;
         var nbOfPacks = quantityAsInt / GetNbOfProductNecessaryForOffer();

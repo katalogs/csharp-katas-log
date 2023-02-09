@@ -15,33 +15,27 @@ namespace SupermarketReceipt.Test.DomainTests
         }
 
         [Theory]
-        [InlineData(5)]
-        [InlineData(6)]
-        [InlineData(7)]
-        public void Should_be_applicable_when_more_than_5_product(double quantity)
-            => Assert.True(_offer.IsApplicable(quantity));
-
-
-        [Theory]
         [InlineData(2)]
         [InlineData(3)]
         [InlineData(4)]
-        public void Should_be_applicable_when_less_than_5_product(double quantity)
-            => Assert.False(_offer.IsApplicable(quantity));
-
+        public void Should_not_create_discount_when_less_than_5_product(double quantity)
+            => Assert.Null(_offer.CreateDiscountIfApplicable(quantity, 10));
 
         [Fact]
         public void Should_create_discount()
         {
-            var actual = _offer.CreateDiscount(5, 5);
+            var actual = _offer.CreateDiscountIfApplicable(5, 5);
+            Assert.NotNull(actual);
             Assert.Equal(10-5*5 , actual.DiscountAmount);
             Assert.Equal("5 for 10", actual.Description);
+            
         }
 
         [Fact]
         public void Should_create_discount_Twice()
         {
-            var actual = _offer.CreateDiscount(10, 5);
+            var actual = _offer.CreateDiscountIfApplicable(10, 5);
+            Assert.NotNull(actual);
             Assert.Equal((10 - 5 * 5) *2, actual.DiscountAmount);
             Assert.Equal("5 for 10", actual.Description);
         }
@@ -49,7 +43,8 @@ namespace SupermarketReceipt.Test.DomainTests
         [Fact]
         public void Should_create_discount_only_for_5()
         {
-            var actual = _offer.CreateDiscount(7, 5);
+            var actual = _offer.CreateDiscountIfApplicable(7, 5);
+            Assert.NotNull(actual);
             Assert.Equal(10 - 5 * 5, actual.DiscountAmount);
             Assert.Equal("5 for 10", actual.Description);
         }

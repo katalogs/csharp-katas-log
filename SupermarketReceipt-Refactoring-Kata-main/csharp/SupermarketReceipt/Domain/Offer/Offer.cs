@@ -1,25 +1,29 @@
-namespace SupermarketReceipt.Domain.Offer
+namespace SupermarketReceipt.Domain.Offer;
+
+public enum SpecialOfferType
 {
-    public enum SpecialOfferType
-    {
-        ThreeForTwo,
-        TenPercentDiscount,
-        TwoForAmount,
-        FiveForAmount
-    }
+    ThreeForTwo,
+    TenPercentDiscount,
+    TwoForAmount,
+    FiveForAmount
+}
 
-    public abstract class Offer
-    {
-        protected Product _product;
+public abstract class Offer
+{
+    protected Product _product;
 
-        protected Offer(Product product)
-            => _product = product;
+    protected Offer(Product product)
+        => _product = product;
 
-        public bool IsApplicable(double quantityAsInt)
-            => quantityAsInt >= GetNbOfProductNecessaryForOffer();
+    protected bool IsApplicable(double quantityAsInt)
+        => quantityAsInt >= GetNbOfProductNecessaryForOffer();
 
-        protected abstract int GetNbOfProductNecessaryForOffer();
+    protected abstract int GetNbOfProductNecessaryForOffer();
 
-        public abstract Discount CreateDiscount(double quantity, double unitPrice);
-    }
+    protected abstract Discount CreateDiscount(double quantity, double unitPrice);
+
+    public Discount CreateDiscountIfApplicable(double quantity, double unitPrice)
+        => this.IsApplicable(quantity) 
+            ? this.CreateDiscount(quantity, unitPrice) 
+            : null;
 }
