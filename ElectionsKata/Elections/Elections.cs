@@ -5,7 +5,7 @@ namespace Elections
     public class Elections
     {
         private readonly List<string> _candidates = new List<string>();
-        private readonly Dictionary<string, List<string>> _list;
+        private readonly Dictionary<string, List<string>> _electorsListByDistrict;
         private readonly List<string> _officialCandidates = new List<string>();
         private readonly Dictionary<string, List<int>> _votesWithDistricts;
         private readonly List<int> _votesWithoutDistricts = new List<int>();
@@ -13,7 +13,7 @@ namespace Elections
 
         public Elections(Dictionary<string, List<string>> list, bool withDistrict)
         {
-            _list = list;
+            _electorsListByDistrict = list;
             _withDistrict = withDistrict;
 
             _votesWithDistricts = new Dictionary<string, List<int>>
@@ -180,7 +180,7 @@ namespace Elections
             var nullResult = (float) nullVotes * 100 / nbVotes;
             results["Null"] = string.Format(cultureInfo, "{0:0.00}%", nullResult);
 
-            var nbElectors = _list.Sum(kv => kv.Value.Count);
+            var nbElectors = _electorsListByDistrict.Sum(kv => kv.Value.Count);
             var abstentionResult = 100 - (float) nbVotes * 100 / nbElectors;
             results["Abstention"] = string.Format(cultureInfo, "{0:0.00}%", abstentionResult);
 
