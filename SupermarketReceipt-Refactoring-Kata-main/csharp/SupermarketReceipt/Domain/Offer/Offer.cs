@@ -1,3 +1,5 @@
+using LanguageExt;
+
 namespace SupermarketReceipt.Domain.Offer;
 
 public enum SpecialOfferType
@@ -22,8 +24,8 @@ public abstract class Offer
 
     protected abstract Discount CreateDiscount(double quantity, double unitPrice);
 
-    public Discount CreateDiscountIfApplicable(double quantity, double unitPrice)
+    public Option<Discount> CreateDiscountIfApplicable(double quantity, double unitPrice)
         => this.IsApplicable(quantity) 
             ? this.CreateDiscount(quantity, unitPrice) 
-            : null;
+            : Option<Discount>.None;
 }

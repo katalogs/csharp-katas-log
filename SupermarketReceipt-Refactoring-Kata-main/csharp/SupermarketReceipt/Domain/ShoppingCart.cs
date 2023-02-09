@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using LanguageExt;
 
 namespace SupermarketReceipt.Domain
 {
@@ -38,18 +39,11 @@ namespace SupermarketReceipt.Domain
         {
             foreach (var p in _productQuantities.Keys)
             {
-                var quantity = _productQuantities[p];
-
                 if (offers.ContainsKey(p))
                 {
-                    var offer = offers[p];
                     var unitPrice = catalog.GetUnitPrice(p);
-                    var discount = offer.CreateDiscountIfApplicable(quantity, unitPrice);
-
-                    if (discount != null)
-                    {
-                        receipt.AddDiscount(discount);
-                    }
+                    var discount = offers[p].CreateDiscountIfApplicable(_productQuantities[p], unitPrice);
+                    discount.IfSome(receipt.AddDiscount);
                 }
             }
         }
