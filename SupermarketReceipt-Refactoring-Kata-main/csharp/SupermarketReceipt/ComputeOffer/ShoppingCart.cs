@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.ComputeOffer
 {
 
     public class ShoppingCart

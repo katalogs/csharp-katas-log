@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using SupermarketReceipt.ComputeOffer;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.Repository
 {
     public class FakeCatalog : SupermarketCatalog
     {

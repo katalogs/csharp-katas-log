@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace SupermarketReceipt
+namespace SupermarketReceipt.ComputeOffer
 {
     public class Receipt
     {

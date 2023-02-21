@@ -1,5 +1,8 @@
 
 using System.Threading.Tasks;
+using SupermarketReceipt.ComputeOffer;
+using SupermarketReceipt.Print;
+using SupermarketReceipt.Repository;
 using VerifyXunit;
 using Xunit;
 
