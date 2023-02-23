@@ -96,6 +96,11 @@ namespace Elections
 
         }
 
+        private bool IsCandidateOfficial(string candidate)
+        {
+            return _officialCandidates.Contains(candidate);
+        }
+
         public Dictionary<string, string> Results()
         {
             var results = new Dictionary<string, string>();
@@ -112,11 +117,11 @@ namespace Elections
 
                 for (var i = 0; i < _totalNumberOfVotesForCandidates.Count; i++)
                 {
-                    var candidateResult = (float)_totalNumberOfVotesForCandidates[i] * 100 / totalVotesForOfficialCandidates;
                     var candidate = _allCandidates[i];
 
-                    if (_officialCandidates.Contains(candidate))
+                    if (IsCandidateOfficial(candidate))
                     {
+                        var candidateResult = GetCandidateResultPercentage(totalVotesForOfficialCandidates, i);
                         results[candidate] = string.Format(cultureInfo, "{0:0.00}%", candidateResult);
                     }
                     else
@@ -198,6 +203,11 @@ namespace Elections
             results["Abstention"] = string.Format(cultureInfo, "{0:0.00}%", abstentionResult);
 
             return results;
+        }
+
+        private float GetCandidateResultPercentage(int totalVotesForOfficialCandidates, int i)
+        {
+            return (float)_totalNumberOfVotesForCandidates[i] * 100 / totalVotesForOfficialCandidates;
         }
 
         private int CalculateTotalVotesForOfficialCandidates()
