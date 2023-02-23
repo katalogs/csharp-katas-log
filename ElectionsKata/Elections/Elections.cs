@@ -32,6 +32,7 @@ namespace Elections
             _numberOfVotesForCandidatesByDistricts["District 1"].Add(0);
             _numberOfVotesForCandidatesByDistricts["District 2"].Add(0);
             _numberOfVotesForCandidatesByDistricts["District 3"].Add(0);
+
         }
 
         public void VoteFor(string elector, string candidate, string electorDistrict)
@@ -65,6 +66,7 @@ namespace Elections
         {
             _allCandidates.Add(candidate);
             foreach (var votes in _numberOfVotesForCandidatesByDistricts.Values) votes.Add(0);
+            _totalNumberOfVotesForCandidates.Add(0);
         }
 
         private bool HasCandidateAlreadyBeenAdded(string candidate)
@@ -80,21 +82,18 @@ namespace Elections
 
         private void VoteForACandidate(string candidate)
         {
-            if (HasCandidateAlreadyBeenAdded(candidate))
-            {
-                AddVoteForACandidate(candidate);
-            }
-            else
+            if (!HasCandidateAlreadyBeenAdded(candidate))
             {
                 AddUnofficialCandidate(candidate);
-                _totalNumberOfVotesForCandidates.Add(1);
             }
+            AddVoteForACandidate(candidate);
         }
 
         private void AddVoteForACandidate(string candidate)
         {
             var index = _allCandidates.IndexOf(candidate);
             _totalNumberOfVotesForCandidates[index] = _totalNumberOfVotesForCandidates[index] + 1;
+
         }
 
         public Dictionary<string, string> Results()
