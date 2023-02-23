@@ -48,20 +48,6 @@ namespace Elections
             }
         }
 
-        private void VoteForACandidateByDistrict(string candidate, string voteDistrict)
-        {
-            // vérifier que l'électeur appartien bien au district
-            if (_numberOfVotesForCandidatesByDistricts.ContainsKey(voteDistrict))
-            {
-                var numberOfVotesForCandidatesForGivenDistrict = _numberOfVotesForCandidatesByDistricts[voteDistrict];
-                if (!HasCandidateAlreadyBeenAdded(candidate))
-                {
-                    AddUnofficialCandidate(candidate);
-                }
-                AddVoteForCandidateByDistrict(candidate, numberOfVotesForCandidatesForGivenDistrict);
-            }
-        }
-
         private void AddUnofficialCandidate(string candidate)
         {
             _allCandidates.Add(candidate);
@@ -89,6 +75,20 @@ namespace Elections
             AddVoteForACandidate(candidate);
         }
 
+        private void VoteForACandidateByDistrict(string candidate, string voteDistrict)
+        {
+            // vérifier que l'électeur appartient bien au district
+            if (_numberOfVotesForCandidatesByDistricts.ContainsKey(voteDistrict))
+            {
+                var numberOfVotesForCandidatesForGivenDistrict = _numberOfVotesForCandidatesByDistricts[voteDistrict];
+                if (!HasCandidateAlreadyBeenAdded(candidate))
+                {
+                    AddUnofficialCandidate(candidate);
+                }
+                AddVoteForCandidateByDistrict(candidate, numberOfVotesForCandidatesForGivenDistrict);
+            }
+        }
+
         private void AddVoteForACandidate(string candidate)
         {
             var index = _allCandidates.IndexOf(candidate);
@@ -99,24 +99,20 @@ namespace Elections
         public Dictionary<string, string> Results()
         {
             var results = new Dictionary<string, string>();
-            var nbVotes = 0;
+            var totalVotes = 0;
             var nullVotes = 0;
             var blankVotes = 0;
-            var nbValidVotes = 0;
+            var totalVotesForOfficialCandidates = 0;
             var cultureInfo = new CultureInfo("fr-fr");
 
             if (!_isVoteByDistrict)
             {
-                nbVotes = _totalNumberOfVotesForCandidates.Select(i => i).Sum();
-                for (var i = 0; i < _officialCandidates.Count; i++)
-                {
-                    var index = _allCandidates.IndexOf(_officialCandidates[i]);
-                    nbValidVotes += _totalNumberOfVotesForCandidates[index];
-                }
+                totalVotes = _totalNumberOfVotesForCandidates.Sum();
+                totalVotesForOfficialCandidates = CalculateTotalVotesForOfficialCandidates();
 
                 for (var i = 0; i < _totalNumberOfVotesForCandidates.Count; i++)
                 {
-                    var candidateResult = (float)_totalNumberOfVotesForCandidates[i] * 100 / nbValidVotes;
+                    var candidateResult = (float)_totalNumberOfVotesForCandidates[i] * 100 / totalVotesForOfficialCandidates;
                     var candidate = _allCandidates[i];
 
                     if (_officialCandidates.Contains(candidate))
@@ -137,7 +133,7 @@ namespace Elections
                 foreach (var entry in _numberOfVotesForCandidatesByDistricts)
                 {
                     var districtVotes = entry.Value;
-                    nbVotes += districtVotes.Select(i => i).Sum();
+                    totalVotes += districtVotes.Select(i => i).Sum();
                 }
 
                 for (var i = 0; i < _officialCandidates.Count; i++)
@@ -146,7 +142,7 @@ namespace Elections
                     foreach (var entry in _numberOfVotesForCandidatesByDistricts)
                     {
                         var districtVotes = entry.Value;
-                        nbValidVotes += districtVotes[index];
+                        totalVotesForOfficialCandidates += districtVotes[index];
                     }
                 }
 
@@ -159,8 +155,8 @@ namespace Elections
                     for (var i = 0; i < districtVotes.Count; i++)
                     {
                         float candidateResult = 0;
-                        if (nbValidVotes != 0)
-                            candidateResult = (float)districtVotes[i] * 100 / nbValidVotes;
+                        if (totalVotesForOfficialCandidates != 0)
+                            candidateResult = (float)districtVotes[i] * 100 / totalVotesForOfficialCandidates;
                         var candidate = _allCandidates[i];
                         if (_officialCandidates.Contains(candidate))
                         {
@@ -191,17 +187,29 @@ namespace Elections
                 }
             }
 
-            var blankResult = (float)blankVotes * 100 / nbVotes;
+            var blankResult = (float)blankVotes * 100 / totalVotes;
             results["Blank"] = string.Format(cultureInfo, "{0:0.00}%", blankResult);
 
-            var nullResult = (float)nullVotes * 100 / nbVotes;
+            var nullResult = (float)nullVotes * 100 / totalVotes;
             results["Null"] = string.Format(cultureInfo, "{0:0.00}%", nullResult);
 
             var nbElectors = _electorsListByDistrict.Sum(kv => kv.Value.Count);
-            var abstentionResult = 100 - (float)nbVotes * 100 / nbElectors;
+            var abstentionResult = 100 - (float)totalVotes * 100 / nbElectors;
             results["Abstention"] = string.Format(cultureInfo, "{0:0.00}%", abstentionResult);
 
             return results;
+        }
+
+        private int CalculateTotalVotesForOfficialCandidates()
+        {
+            int totalVotesForOfficialCandidates = 0;
+            for (var i = 0; i < _officialCandidates.Count; i++)
+            {
+                var index = _allCandidates.IndexOf(_officialCandidates[i]);
+                totalVotesForOfficialCandidates += _totalNumberOfVotesForCandidates[index];
+            }
+
+            return totalVotesForOfficialCandidates;
         }
     }
 }
