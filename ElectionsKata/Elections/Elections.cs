@@ -55,15 +55,22 @@ namespace Elections
                 var numberOfVotesForCandidatesForGivenDistrict = _numberOfVotesForCandidatesByDistricts[voteDistrict];
                 if (HasCandidateAlreadyBeenAdded(candidate))
                 {
-                    NewMethod(candidate, numberOfVotesForCandidatesForGivenDistrict);
+                    AddVoteForCandidate(candidate, numberOfVotesForCandidatesForGivenDistrict);
                 }
                 else
                 {
-                    _allCandidates.Add(candidate);
-                    foreach (var (_, votes) in _numberOfVotesForCandidatesByDistricts) votes.Add(0);
-                    numberOfVotesForCandidatesForGivenDistrict[_allCandidates.Count - 1] = numberOfVotesForCandidatesForGivenDistrict[_allCandidates.Count - 1] + 1;
+                    AddUnofficialCandidadate(candidate);
+
+                    AddVoteForCandidate(candidate, numberOfVotesForCandidatesForGivenDistrict);
+                    //numberOfVotesForCandidatesForGivenDistrict[_allCandidates.Count - 1] = numberOfVotesForCandidatesForGivenDistrict[_allCandidates.Count - 1] + 1;
                 }
             }
+        }
+
+        private void AddUnofficialCandidadate(string candidate)
+        {
+            _allCandidates.Add(candidate);
+            foreach (var votes in _numberOfVotesForCandidatesByDistricts.Values) votes.Add(0);
         }
 
         private bool HasCandidateAlreadyBeenAdded(string candidate)
@@ -71,7 +78,7 @@ namespace Elections
             return _allCandidates.Contains(candidate);
         }
 
-        private void NewMethod(string candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
+        private void AddVoteForCandidate(string candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
         {
             var index = _allCandidates.IndexOf(candidate);
             numberOfVotesForCandidatesForGivenDistrict[index] = numberOfVotesForCandidatesForGivenDistrict[index] + 1;
