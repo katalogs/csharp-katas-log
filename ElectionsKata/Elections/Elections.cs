@@ -123,14 +123,13 @@ namespace Elections
                     {
                         var candidateResult = GetCandidateResultPercentage(totalVotesForOfficialCandidates, i);
                         results[candidate] = string.Format(cultureInfo, "{0:0.00}%", candidateResult);
+                        continue;
                     }
+
+                    if (IsVoteBlank(i))
+                        blankVotes += _totalNumberOfVotesForCandidates[i];
                     else
-                    {
-                        if (_allCandidates[i] == string.Empty)
-                            blankVotes += _totalNumberOfVotesForCandidates[i];
-                        else
-                            nullVotes += _totalNumberOfVotesForCandidates[i];
-                    }
+                        nullVotes += _totalNumberOfVotesForCandidates[i];
                 }
             }
             else
@@ -169,7 +168,7 @@ namespace Elections
                         }
                         else
                         {
-                            if (_allCandidates[i] == string.Empty)
+                            if (IsVoteBlank(i))
                                 blankVotes += districtVotes[i];
                             else
                                 nullVotes += districtVotes[i];
@@ -203,6 +202,11 @@ namespace Elections
             results["Abstention"] = string.Format(cultureInfo, "{0:0.00}%", abstentionResult);
 
             return results;
+        }
+
+        private bool IsVoteBlank(int i)
+        {
+            return _allCandidates[i] == string.Empty;
         }
 
         private float GetCandidateResultPercentage(int totalVotesForOfficialCandidates, int i)
