@@ -134,10 +134,10 @@ namespace Elections
             }
             else
             {
-                foreach (var entry in _numberOfVotesForCandidatesByDistricts)
+                foreach (var voteForACandidateByDistrict in _numberOfVotesForCandidatesByDistricts)
                 {
-                    var districtVotes = entry.Value;
-                    totalVotes += districtVotes.Select(i => i).Sum();
+                    var districtVotes = voteForACandidateByDistrict.Value;
+                    totalVotes += districtVotes.Sum();
                 }
 
                 for (var i = 0; i < _officialCandidates.Count; i++)
@@ -162,7 +162,7 @@ namespace Elections
                         if (totalVotesForOfficialCandidates != 0)
                             candidateResult = (float)districtVotes[i] * 100 / totalVotesForOfficialCandidates;
                         var candidate = _allCandidates[i];
-                        if (_officialCandidates.Contains(candidate))
+                        if (IsCandidateOfficial(candidate)) 
                         {
                             districtResult.Add(candidateResult);
                         }
