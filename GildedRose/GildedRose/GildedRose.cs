@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GildedRoseKata
+﻿namespace GildedRoseKata
 {
     public class GildedRose
     {

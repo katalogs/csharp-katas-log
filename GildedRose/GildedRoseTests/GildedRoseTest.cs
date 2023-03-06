@@ -1,17 +1,45 @@
 using System.Collections.Generic;
 using GildedRoseKata;
 using Xunit;
+using ApprovalTests;
+using ApprovalTests.Reporters;
+using ApprovalTests.Combinations;
+using System.Linq;
 
 namespace GildedRoseTests;
 
+[UseReporter(typeof(DiffReporter))]
 public class GildedRoseTest
 {
     [Fact]
     public void foo()
     {
-        IList<Item> Items = new List<Item> {new() {Name = "foo", SellIn = 0, Quality = 0}};
+        var name = "foo";
+        var sellIn = 0;
+        var quality = 0;
+
+        string actual = RunApp(name, sellIn, quality);
+
+        Assert.Equal("foo, -1, 0", actual);
+    }
+
+    private static string RunApp(string name, int sellIn, int quality)
+    {
+        IList<Item> Items = new List<Item> { new() { Name = name, SellIn = sellIn, Quality = quality } };
         var gildedRose = new GildedRose(Items);
+
         gildedRose.UpdateQuality();
-        Assert.Equal("fixme", Items[0].Name);
+
+        return Items[0].ToString();
+    }
+
+    [Fact]
+    public void bulk_test()
+    {
+        var names = new[] { "foo", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros",  } ;
+        var sellIns = Enumerable.Range(-5, 20);
+        var qualities = Enumerable.Range(-5, 55);
+
+        CombinationApprovals.VerifyAllCombinations(RunApp, names, sellIns, qualities);
     }
 }
