@@ -4,9 +4,9 @@ namespace Elections
 {
     public class Elections
     {
-        private readonly List<string> _allCandidates = new List<string>();
+        private readonly List<Candidate> _allCandidates = new List<Candidate>();
         private readonly Dictionary<string, List<string>> _electorsListByDistrict;
-        private readonly List<string> _officialCandidates = new List<string>();
+        private readonly List<Candidate> _officialCandidates = new List<Candidate>();
         private readonly Dictionary<string, List<int>> _numberOfVotesForCandidatesByDistricts;
         private readonly List<int> _totalNumberOfVotesForCandidates = new List<int>();
         private readonly bool _isVoteByDistrict;
@@ -24,8 +24,9 @@ namespace Elections
             };
         }
 
-        public void AddCandidate(string candidate)
+        public void AddCandidate(string candidateName)
         {
+            Candidate candidate = new Candidate(candidateName);
             _officialCandidates.Add(candidate);
             _allCandidates.Add(candidate);
             _totalNumberOfVotesForCandidates.Add(0);
@@ -48,16 +49,17 @@ namespace Elections
             }
         }
 
-        private void AddUnofficialCandidate(string candidate)
+        private void AddUnofficialCandidate(string candidateName)
         {
+            Candidate candidate = new Candidate(candidateName);
             _allCandidates.Add(candidate);
             foreach (var votes in _numberOfVotesForCandidatesByDistricts.Values) votes.Add(0);
             _totalNumberOfVotesForCandidates.Add(0);
         }
 
-        private bool HasCandidateAlreadyBeenAdded(string candidate)
+        private bool HasCandidateAlreadyBeenAdded(string candidateName)
         {
-            return _allCandidates.Contains(candidate);
+            return _allCandidates.Exists(candidate=>candidate.Name == candidateName);
         }
 
         private void AddVoteForCandidateByDistrict(string candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
