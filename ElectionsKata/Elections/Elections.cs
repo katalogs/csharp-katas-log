@@ -38,7 +38,7 @@ namespace Elections
 
         public void VoteFor(string elector, string candidateName, string electorDistrict)
         {
-            Candidate candidate = _allCandidates.First(c => c.Name == candidateName);
+            Candidate candidate = _allCandidates.FirstOrDefault(c => c.Name == candidateName) ?? new Candidate(candidateName);
             //add a "a voté" to un allow a candidate to emit more than 1 vote
             if (!_isVoteByDistrict)
             {
@@ -59,7 +59,7 @@ namespace Elections
 
         private bool HasCandidateAlreadyBeenAdded(Candidate newCandidate)
         {
-            return _allCandidates.Exists(candidate=>candidate.Name == newCandidate.Name);
+            return _allCandidates.Any(candidate=>candidate.Name == newCandidate.Name);
         }
 
         private void AddVoteForCandidateByDistrict(Candidate candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
