@@ -38,14 +38,15 @@ namespace Elections
 
         public void VoteFor(string elector, string candidateName, string electorDistrict)
         {
+            Candidate candidate = _allCandidates.First(c => c.Name == candidateName);
             //add a "a voté" to un allow a candidate to emit more than 1 vote
             if (!_isVoteByDistrict)
             {
-                VoteForACandidate(new Candidate(candidateName));
+                VoteForACandidate(candidate);
             }
             else
             {
-                VoteForACandidateByDistrict(new Candidate(candidateName), electorDistrict);
+                VoteForACandidateByDistrict(candidate, electorDistrict);
             }
         }
 
@@ -123,7 +124,7 @@ namespace Elections
                     if (IsCandidateOfficial(candidate))
                     {
                         var candidateResult = GetCandidateResultPercentage(totalVotesForOfficialCandidates, i);
-                        results[candidate] = string.Format(cultureInfo, "{0:0.00}%", candidateResult);
+                        results[candidate.Name] = string.Format(cultureInfo, "{0:0.00}%", candidateResult);
                         continue;
                     }
 
@@ -148,7 +149,7 @@ namespace Elections
                 }
 
                 var officialCandidatesResult = new Dictionary<string, int>();
-                for (var i = 0; i < _officialCandidates.Count; i++) officialCandidatesResult[_allCandidates[i]] = 0;
+                for (var i = 0; i < _officialCandidates.Count; i++) officialCandidatesResult[_allCandidates[i].Name] = 0;
                 foreach (var entry in _numberOfVotesForCandidatesByDistricts)
                 {
                     var districtResult = new List<float>();
@@ -176,15 +177,15 @@ namespace Elections
                     for (var i = 1; i < districtResult.Count; i++)
                         if (districtResult[districtWinnerIndex] < districtResult[i])
                             districtWinnerIndex = i;
-                    officialCandidatesResult[_allCandidates[districtWinnerIndex]] =
-                        officialCandidatesResult[_allCandidates[districtWinnerIndex]] + 1;
+                    officialCandidatesResult[_allCandidates[districtWinnerIndex].Name] =
+                        officialCandidatesResult[_allCandidates[districtWinnerIndex].Name] + 1;
                 }
 
                 for (var i = 0; i < officialCandidatesResult.Count; i++)
                 {
-                    var ratioCandidate = (float)officialCandidatesResult[_allCandidates[i]] /
+                    var ratioCandidate = (float)officialCandidatesResult[_allCandidates[i].Name] /
                         officialCandidatesResult.Count * 100;
-                    results[_allCandidates[i]] = string.Format(cultureInfo, "{0:0.00}%", ratioCandidate);
+                    results[_allCandidates[i].Name] = string.Format(cultureInfo, "{0:0.00}%", ratioCandidate);
                 }
             }
 
@@ -215,7 +216,7 @@ namespace Elections
 
         private bool IsVoteBlank(int i)
         {
-            return _allCandidates[i] == string.Empty;
+            return _allCandidates[i].Name == string.Empty;
         }
 
         private float GetCandidateResultPercentage(int totalVotesForOfficialCandidates, int i)
