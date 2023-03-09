@@ -136,19 +136,15 @@ namespace Elections
             }
             else
             {
-                foreach (var voteForACandidateByDistrict in _numberOfVotesForCandidatesByDistricts)
-                {
-                    var districtVotes = voteForACandidateByDistrict.Value;
-                    totalVotes += districtVotes.Sum();
-                }
+                totalVotes = CalculateTotalVotes();
 
-                for (var i = 0; i < _officialCandidates.Count; i++)
+                foreach(var officialCandidate in _officialCandidates)
                 {
-                    var index = _allCandidates.IndexOf(_officialCandidates[i]);
-                    foreach (var entry in _numberOfVotesForCandidatesByDistricts)
+                    var indexOfOfficialCandidate = _allCandidates.IndexOf(officialCandidate);
+                    foreach (var numberOfVotesForACandidateByDistricts in _numberOfVotesForCandidatesByDistricts)
                     {
-                        var districtVotes = entry.Value;
-                        totalVotesForOfficialCandidates += districtVotes[index];
+                        var districtVotes = numberOfVotesForACandidateByDistricts.Value;
+                        totalVotesForOfficialCandidates += districtVotes[indexOfOfficialCandidate];
                     }
                 }
 
@@ -164,7 +160,7 @@ namespace Elections
                         if (totalVotesForOfficialCandidates != 0)
                             candidateResult = (float)districtVotes[i] * 100 / totalVotesForOfficialCandidates;
                         var candidate = _allCandidates[i];
-                        if (IsCandidateOfficial(candidate)) 
+                        if (IsCandidateOfficial(candidate))
                         {
                             districtResult.Add(candidateResult);
                         }
@@ -204,6 +200,18 @@ namespace Elections
             results["Abstention"] = string.Format(cultureInfo, "{0:0.00}%", abstentionResult);
 
             return results;
+        }
+
+        private int CalculateTotalVotes()
+        {
+            int totalVotes = 0;
+            foreach (var voteForACandidateByDistrict in _numberOfVotesForCandidatesByDistricts)
+            {
+                var districtVotes = voteForACandidateByDistrict.Value;
+                totalVotes += districtVotes.Sum();
+            }
+
+            return totalVotes;
         }
 
         private bool IsVoteBlank(int i)
