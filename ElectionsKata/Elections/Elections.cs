@@ -36,39 +36,38 @@ namespace Elections
 
         }
 
-        public void VoteFor(string elector, string candidate, string electorDistrict)
+        public void VoteFor(string elector, string candidateName, string electorDistrict)
         {
             //add a "a voté" to un allow a candidate to emit more than 1 vote
             if (!_isVoteByDistrict)
             {
-                VoteForACandidate(candidate);
+                VoteForACandidate(new Candidate(candidateName));
             }
             else
             {
-                VoteForACandidateByDistrict(candidate, electorDistrict);
+                VoteForACandidateByDistrict(new Candidate(candidateName), electorDistrict);
             }
         }
 
-        private void AddUnofficialCandidate(string candidateName)
+        private void AddUnofficialCandidate(Candidate candidate)
         {
-            Candidate candidate = new Candidate(candidateName);
             _allCandidates.Add(candidate);
             foreach (var votes in _numberOfVotesForCandidatesByDistricts.Values) votes.Add(0);
             _totalNumberOfVotesForCandidates.Add(0);
         }
 
-        private bool HasCandidateAlreadyBeenAdded(string candidateName)
+        private bool HasCandidateAlreadyBeenAdded(Candidate newCandidate)
         {
-            return _allCandidates.Exists(candidate=>candidate.Name == candidateName);
+            return _allCandidates.Exists(candidate=>candidate.Name == newCandidate.Name);
         }
 
-        private void AddVoteForCandidateByDistrict(string candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
+        private void AddVoteForCandidateByDistrict(Candidate candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
         {
             var index = _allCandidates.IndexOf(candidate);
             numberOfVotesForCandidatesForGivenDistrict[index] = numberOfVotesForCandidatesForGivenDistrict[index] + 1;
         }
 
-        private void VoteForACandidate(string candidate)
+        private void VoteForACandidate(Candidate candidate)
         {
             if (!HasCandidateAlreadyBeenAdded(candidate))
             {
@@ -77,7 +76,7 @@ namespace Elections
             AddVoteForACandidate(candidate);
         }
 
-        private void VoteForACandidateByDistrict(string candidate, string voteDistrict)
+        private void VoteForACandidateByDistrict(Candidate candidate, string voteDistrict)
         {
             // vérifier que l'électeur appartient bien au district
             if (_numberOfVotesForCandidatesByDistricts.ContainsKey(voteDistrict))
@@ -91,16 +90,16 @@ namespace Elections
             }
         }
 
-        private void AddVoteForACandidate(string candidate)
+        private void AddVoteForACandidate(Candidate candidateWithNewVote)
         {
-            var index = _allCandidates.IndexOf(candidate);
+            var index = _allCandidates.IndexOf(candidateWithNewVote);
             _totalNumberOfVotesForCandidates[index] = _totalNumberOfVotesForCandidates[index] + 1;
 
         }
 
-        private bool IsCandidateOfficial(string candidate)
+        private bool IsCandidateOfficial(Candidate candidate)
         {
-            return _officialCandidates.Contains(candidate);
+            return _officialCandidates.Exists(officialCandidate => officialCandidate.Name == candidate.Name);
         }
 
         public Dictionary<string, string> Results()
