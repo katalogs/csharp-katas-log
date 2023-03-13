@@ -6,6 +6,7 @@
         public int SellIn { get; set; }
         public int Quality { get; set; }
 
+        private const int qualityMin = 0;
         private const int qualityMax = 50;
 
         public override string ToString()
@@ -24,6 +25,19 @@
             {
                 Quality++;
             }
+        }
+
+        public void DecreaseQuality()
+        {
+            if (Quality > qualityMin)
+            {
+                Quality--;
+            }
+        }
+
+        public void ResetQuality()
+        {
+            Quality = qualityMin;
         }
     }
 }

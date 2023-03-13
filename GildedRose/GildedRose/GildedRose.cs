@@ -5,7 +5,6 @@
         private const string agedBrie = "Aged Brie";
         private const string sulfuras = "Sulfuras, Hand of Ragnaros";
         private const string backstage = "Backstage passes to a TAFKAL80ETC concert";
-        private const int qualityMin = 0;
         private readonly IList<Item> items;
 
         public GildedRose(IList<Item> Items)
@@ -19,12 +18,9 @@
             {
                 if (item.Name != agedBrie && item.Name != backstage)
                 {
-                    if (item.Quality > qualityMin)
+                    if (item.Name != sulfuras)
                     {
-                        if (item.Name != sulfuras)
-                        {
-                            item.Quality--;
-                        }
+                        item.DecreaseQuality();
                     }
                 }
                 else
@@ -55,17 +51,14 @@
                     {
                         if (item.Name != backstage)
                         {
-                            if (item.Quality > qualityMin)
+                            if (item.Name != sulfuras)
                             {
-                                if (item.Name != sulfuras)
-                                {
-                                    item.Quality--;
-                                }
+                                item.DecreaseQuality();
                             }
                         }
                         else
                         {
-                            item.Quality = qualityMin;
+                            item.ResetQuality();
                         }
                     }
                     else
