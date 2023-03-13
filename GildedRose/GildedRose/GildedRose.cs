@@ -5,21 +5,22 @@
         private const string agedBrie = "Aged Brie";
         private const string sulfuras = "Sulfuras, Hand of Ragnaros";
         private const string backstage = "Backstage passes to a TAFKAL80ETC concert";
-
-        IList<Item> Items;
+        private const int qualityMin = 0;
+        private const int qualityMax = 50;
+        private readonly IList<Item> items;
 
         public GildedRose(IList<Item> Items)
         {
-            this.Items = Items;
+            this.items = Items;
         }
 
         public void UpdateQuality()
         {
-            foreach (Item item in Items)
+            foreach (Item item in items)
             {
                 if (item.Name != agedBrie && item.Name != backstage)
                 {
-                    if (item.Quality > 0)
+                    if (item.Quality > qualityMin)
                     {
                         if (item.Name != sulfuras)
                         {
@@ -29,7 +30,7 @@
                 }
                 else
                 {
-                    if (item.Quality < 50)
+                    if (item.Quality < qualityMax)
                     {
                         item.Quality++;
 
@@ -37,7 +38,7 @@
                         {
                             if (item.SellIn < 11)
                             {
-                                if (item.Quality < 50)
+                                if (item.Quality < qualityMax)
                                 {
                                     item.Quality++;
                                 }
@@ -45,7 +46,7 @@
 
                             if (item.SellIn < 6)
                             {
-                                if (item.Quality < 50)
+                                if (item.Quality < qualityMax)
                                 {
                                     item.Quality++;
                                 }
@@ -59,13 +60,13 @@
                     item.SellIn--;
                 }
 
-                if (item.SellIn < 0)
+                if (item.isExpired())
                 {
                     if (item.Name != agedBrie)
                     {
                         if (item.Name != backstage)
                         {
-                            if (item.Quality > 0)
+                            if (item.Quality > qualityMin)
                             {
                                 if (item.Name != sulfuras)
                                 {
@@ -75,12 +76,12 @@
                         }
                         else
                         {
-                            item.Quality = 0;
+                            item.Quality = qualityMin;
                         }
                     }
                     else
                     {
-                        if (item.Quality < 50)
+                        if (item.Quality < qualityMax)
                         {
                             item.Quality++;
                         }
