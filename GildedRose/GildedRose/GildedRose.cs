@@ -6,7 +6,6 @@
         private const string sulfuras = "Sulfuras, Hand of Ragnaros";
         private const string backstage = "Backstage passes to a TAFKAL80ETC concert";
         private const int qualityMin = 0;
-        private const int qualityMax = 50;
         private readonly IList<Item> items;
 
         public GildedRose(IList<Item> Items)
@@ -30,27 +29,17 @@
                 }
                 else
                 {
-                    if (item.Quality < qualityMax)
+                    item.IncreaseQuality();
+                    if (item.Name == backstage)
                     {
-                        item.Quality++;
-
-                        if (item.Name == backstage)
+                        if (item.SellIn < 11)
                         {
-                            if (item.SellIn < 11)
-                            {
-                                if (item.Quality < qualityMax)
-                                {
-                                    item.Quality++;
-                                }
-                            }
+                            item.IncreaseQuality();
+                        }
 
-                            if (item.SellIn < 6)
-                            {
-                                if (item.Quality < qualityMax)
-                                {
-                                    item.Quality++;
-                                }
-                            }
+                        if (item.SellIn < 6)
+                        {
+                            item.IncreaseQuality();
                         }
                     }
                 }
@@ -60,7 +49,7 @@
                     item.SellIn--;
                 }
 
-                if (item.isExpired())
+                if (item.IsExpired())
                 {
                     if (item.Name != agedBrie)
                     {
@@ -81,10 +70,7 @@
                     }
                     else
                     {
-                        if (item.Quality < qualityMax)
-                        {
-                            item.Quality++;
-                        }
+                        item.IncreaseQuality();
                     }
                 }
             }
