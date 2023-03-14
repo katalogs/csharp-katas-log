@@ -1,18 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SupermarketReceipt.ComputeOffer
 {
 
     public class ShoppingCart
     {
-        private readonly List<ProductQuantity> _items = new List<ProductQuantity>();
+        private readonly List<ShoppingCartItem> _items = new List<ShoppingCartItem>();
 
-        private readonly Dictionary<Product, double> _productQuantities = new Dictionary<Product, double>();
+        //Fix for 500€
+        private readonly List<ShoppingCartItem> _itemsAddHistory = new List<ShoppingCartItem>();
 
-        public List<ProductQuantity> GetItems()
-        {
-            return new List<ProductQuantity>(_items);
-        }
+        public IReadOnlyCollection<ShoppingCartItem> GetItems() => _itemsAddHistory;
 
         public void AddItem(Product product)
         {
@@ -21,29 +20,27 @@ namespace SupermarketReceipt.ComputeOffer
 
         public void AddItemQuantity(Product product, double quantity)
         {
-            _items.Add(new ProductQuantity(product, quantity));
-            if (_productQuantities.ContainsKey(product))
+            _itemsAddHistory.Add(new ShoppingCartItem(product, quantity));
+            if (_items.Any(_ => _.Product == product))
             {
-                var newAmount = _productQuantities[product] + quantity;
-                _productQuantities[product] = newAmount;
+                var itemToUpdate = _items.First(_ => _.Product == product);
+                itemToUpdate.IncreaseQuantity(quantity);
             }
             else
             {
-                _productQuantities.Add(product, quantity);
+                _items.Add(new ShoppingCartItem(product, quantity));
             }
         }
 
         public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
         {
-            foreach (var product in _productQuantities.Keys)
-            {
-                var quantity = _productQuantities[product];
-                
-                if (offers.ContainsKey(product))
+            foreach (var item in _items)
+            {                
+                if (offers.ContainsKey(item.Product))
                 {
-                    var offer = offers[product];
-                    var unitPrice = catalog.GetUnitPrice(product);
-                    Discount discount = offer.CreateDiscount(quantity, unitPrice);
+                    var offer = offers[item.Product];
+                    var unitPrice = catalog.GetUnitPrice(item.Product);
+                    Discount discount = offer.CreateDiscount(item.Quantity, unitPrice);
 
                     if (discount != null) receipt.AddDiscount(discount);
                 }
