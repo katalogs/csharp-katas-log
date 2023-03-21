@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using SupermarketReceipt.ComputeOffer;
 using SupermarketReceipt.Print;
+using SupermarketReceipt.Products;
 using SupermarketReceipt.Repository;
+using SupermarketReceipt.Shop;
 using VerifyXunit;
 using Xunit;
 
@@ -11,7 +13,7 @@ namespace SupermarketReceipt.Test
     [UsesVerify]
     public class SupermarketTest
     {
-        private SupermarketCatalog _catalog;
+        private ISupermarketCatalog _catalog;
         private Teller _teller;
         private ShoppingCart _theCart;
         private Product _toothbrush;
@@ -33,7 +35,6 @@ namespace SupermarketReceipt.Test
             _catalog.AddProduct(_apples, 1.99);
             _cherryTomatoes = new Product("cherry tomato box", ProductUnit.Each);
             _catalog.AddProduct(_cherryTomatoes, 0.69);
-
         }
         
         [Fact]

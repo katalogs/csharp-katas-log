@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using SupermarketReceipt.ComputeOffer;
+using SupermarketReceipt.Print;
+using SupermarketReceipt.Products;
 
-namespace SupermarketReceipt.ComputeOffer
+namespace SupermarketReceipt.Shop
 {
-
     public class ShoppingCart
     {
         private readonly List<ShoppingCartItem> _items = new List<ShoppingCartItem>();
@@ -32,7 +34,7 @@ namespace SupermarketReceipt.ComputeOffer
             }
         }
 
-        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, SupermarketCatalog catalog)
+        public void HandleOffers(Receipt receipt, Dictionary<Product, Offer> offers, ISupermarketCatalog catalog)
         {
             foreach (var item in _items)
             {                

@@ -1,4 +1,5 @@
 using System.Globalization;
+using SupermarketReceipt.Products;
 
 namespace SupermarketReceipt.ComputeOffer
 {

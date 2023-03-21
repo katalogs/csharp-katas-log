@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using SupermarketReceipt.ComputeOffer;
 using SupermarketReceipt.Print;
+using SupermarketReceipt.Products;
+using SupermarketReceipt.Shop;
 using VerifyXunit;
 using Xunit;
 
