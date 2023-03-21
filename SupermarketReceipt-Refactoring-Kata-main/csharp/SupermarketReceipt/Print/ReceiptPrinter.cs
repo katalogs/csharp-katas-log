@@ -7,18 +7,14 @@ namespace SupermarketReceipt.Print
 {
     public class ReceiptPrinter
     {
+        private const int defaultColumnSize = 40;
         private static readonly CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-GB");
 
-        private readonly int _columns;
+        private readonly int _columnSize;
 
-
-        public ReceiptPrinter(int columns)
+        public ReceiptPrinter(int columnSize = defaultColumnSize)
         {
-            _columns = columns;
-        }
-
-        public ReceiptPrinter() : this(40)
-        {
+            _columnSize = columnSize;
         }
 
         public string PrintReceipt(Receipt receipt)
@@ -77,7 +73,7 @@ namespace SupermarketReceipt.Print
         {
             var line = new StringBuilder();
             line.Append(name);
-            int whitespaceSize = this._columns - name.Length - value.Length;
+            int whitespaceSize = this._columnSize - name.Length - value.Length;
             for (int i = 0; i < whitespaceSize; i++) {
                 line.Append(" ");
             }
