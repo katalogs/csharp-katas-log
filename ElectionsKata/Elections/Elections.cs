@@ -5,7 +5,7 @@ namespace Elections
     public class Elections
     {
         private readonly List<Candidate> _allCandidates = new List<Candidate>();
-        private readonly Dictionary<string, List<string>> _electorsListByDistrict;
+        private readonly Dictionary<string, List<Elector>> _electorsListByDistrict;
         private readonly List<Candidate> _officialCandidates = new List<Candidate>();
         private readonly Dictionary<string, List<int>> _numberOfVotesForCandidatesByDistricts;
         private readonly List<int> _totalNumberOfVotesForCandidates = new List<int>();
@@ -13,7 +13,13 @@ namespace Elections
 
         public Elections(Dictionary<string, List<string>> electorsListByDistrict, bool isVoteByDistrict)
         {
-            _electorsListByDistrict = electorsListByDistrict;
+            _electorsListByDistrict = new();
+
+            foreach (var electorByDistrict in electorsListByDistrict)
+            {
+                _electorsListByDistrict.Add(electorByDistrict.Key, electorByDistrict.Value.Select(electorName => new Elector(electorName)).ToList());
+            };
+
             _isVoteByDistrict = isVoteByDistrict;
 
             _numberOfVotesForCandidatesByDistricts = new Dictionary<string, List<int>>
@@ -137,7 +143,7 @@ namespace Elections
             {
                 totalVotes = CalculateTotalVotes();
 
-                foreach(var officialCandidate in _officialCandidates)
+                foreach (var officialCandidate in _officialCandidates)
                 {
                     var indexOfOfficialCandidate = _allCandidates.IndexOf(officialCandidate);
                     foreach (var numberOfVotesForACandidateByDistricts in _numberOfVotesForCandidatesByDistricts)
