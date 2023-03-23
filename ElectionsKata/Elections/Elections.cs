@@ -33,7 +33,6 @@ namespace Elections
             _numberOfVotesForCandidatesByDistricts["District 1"].Add(0);
             _numberOfVotesForCandidatesByDistricts["District 2"].Add(0);
             _numberOfVotesForCandidatesByDistricts["District 3"].Add(0);
-
         }
 
         public void VoteFor(string elector, string candidateName, string electorDistrict)
