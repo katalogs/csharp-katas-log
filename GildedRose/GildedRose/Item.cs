@@ -10,7 +10,6 @@
         private const int qualityMax = 50;
 
         private const string agedBrie = "Aged Brie";
-        private const string sulfuras = "Sulfuras, Hand of Ragnaros";
         private const string backstage = "Backstage passes to a TAFKAL80ETC concert";
 
         public override string ToString()
@@ -44,7 +43,39 @@
             Quality = qualityMin;
         }
 
-        public void ManageQuality()
+        public virtual void ManageQuality()
+        {
+            UpdateBeforeExpired();
+            UpdateSellIn();
+
+            if (IsExpired())
+            {
+                UpdateExpired();
+            }
+        }
+
+        private void UpdateExpired()
+        {
+            switch (Name)
+            {
+                case agedBrie:
+                    IncreaseQuality();
+                    break;
+                case backstage:
+                    ResetQuality();
+                    break;
+                default:
+                    DecreaseQuality();
+                    break;
+            }
+        }
+
+        private void UpdateSellIn()
+        {
+            SellIn--;
+        }
+
+        private void UpdateBeforeExpired()
         {
             switch (Name)
             {
@@ -63,40 +94,9 @@
                         IncreaseQuality();
                     }
                     break;
-                case sulfuras:
-                    break;
                 default:
                     DecreaseQuality();
                     break;
-            }
-
-            switch (Name)
-            {
-                case sulfuras:
-                    break;
-                case agedBrie:
-                case backstage:
-                default:
-                    SellIn--;
-                    break;
-            }
-
-            if (IsExpired())
-            {
-                switch (Name)
-                {
-                    case agedBrie:
-                        IncreaseQuality();
-                        break;
-                    case backstage:
-                        ResetQuality();
-                        break;
-                    case sulfuras:
-                        break;
-                    default:
-                        DecreaseQuality();
-                        break;
-                }
             }
         }
     }

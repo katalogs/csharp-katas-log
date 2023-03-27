@@ -25,12 +25,21 @@ public class GildedRoseTest
 
     private static string RunApp(string name, int sellIn, int quality)
     {
-        IList<Item> Items = new List<Item> { new() { Name = name, SellIn = sellIn, Quality = quality } };
+        IList<Item> Items = new List<Item> { CreateItem(name, sellIn, quality) };
         var gildedRose = new GildedRose(Items);
 
         gildedRose.UpdateQuality();
 
         return Items[0].ToString();
+    }
+
+    private static Item CreateItem(string name, int sellIn, int quality)
+    {
+        if (name == "Sulfuras, Hand of Ragnaros")
+        {
+            return new Sulfuras { SellIn = sellIn, Quality = quality };
+        }
+        return new() { Name = name, SellIn = sellIn, Quality = quality };
     }
 
     [Fact]
