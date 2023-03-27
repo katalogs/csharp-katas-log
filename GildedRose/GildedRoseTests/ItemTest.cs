@@ -38,4 +38,22 @@ public class ItemTest
 
         Assert.Equal(expectedQuality, item.Quality);
     }
+
+    [Theory]
+    [InlineData(1, 0)]
+    [InlineData(0, 0)]
+    [InlineData(-1, -1)]
+    public void DecreaseQuality_whenQualityIsUpperThan0(int quality, int expectedQuality)
+    {
+        var item = new Item
+        {
+            Name = "Mon Object",
+            Quality = quality,
+            SellIn = 10
+        };
+
+        item.DecreaseQuality();
+
+        Assert.Equal(expectedQuality, item.Quality);
+    }
 }

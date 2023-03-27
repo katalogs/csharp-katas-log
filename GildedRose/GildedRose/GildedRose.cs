@@ -16,18 +16,13 @@
         {
             foreach (Item item in items)
             {
-                if (item.Name != agedBrie && item.Name != backstage)
+                switch (item.Name)
                 {
-                    if (item.Name != sulfuras)
-                    {
-                        item.DecreaseQuality();
-                    }
-                }
-                else
-                {
-                    item.IncreaseQuality();
-                    if (item.Name == backstage)
-                    {
+                    case agedBrie:
+                        item.IncreaseQuality();
+                        break;
+                    case backstage:
+                        item.IncreaseQuality();
                         if (item.SellIn < 11)
                         {
                             item.IncreaseQuality();
@@ -37,33 +32,40 @@
                         {
                             item.IncreaseQuality();
                         }
-                    }
+                        break;
+                    case sulfuras:
+                        break;
+                    default:
+                        item.DecreaseQuality();
+                        break;
                 }
 
-                if (item.Name != sulfuras)
+                switch (item.Name)
                 {
-                    item.SellIn--;
+                    case sulfuras:
+                        break;
+                    case agedBrie:
+                    case backstage:
+                    default:
+                        item.SellIn--;
+                        break;
                 }
 
                 if (item.IsExpired())
                 {
-                    if (item.Name != agedBrie)
+                    switch (item.Name)
                     {
-                        if (item.Name != backstage)
-                        {
-                            if (item.Name != sulfuras)
-                            {
-                                item.DecreaseQuality();
-                            }
-                        }
-                        else
-                        {
+                        case agedBrie:
+                            item.IncreaseQuality();
+                            break;
+                        case backstage:
                             item.ResetQuality();
-                        }
-                    }
-                    else
-                    {
-                        item.IncreaseQuality();
+                            break;
+                        case sulfuras:
+                            break;
+                        default:
+                            item.DecreaseQuality();
+                            break;
                     }
                 }
             }
