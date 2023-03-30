@@ -7,7 +7,6 @@ namespace Elections
         private readonly List<Candidate> _allCandidates = new List<Candidate>();
         private readonly List<District> _districts;
         private readonly List<Candidate> _officialCandidates = new List<Candidate>();
-        //private readonly Dictionary<string, List<int>> _numberOfVotesForCandidatesByDistricts;
         private readonly List<int> _totalNumberOfVotesForCandidates = new List<int>();
         private readonly bool _isVoteByDistrict;
 
@@ -66,12 +65,6 @@ namespace Elections
             return _allCandidates.Any(candidate => candidate == newCandidate);
         }
 
-        private void AddVoteForCandidateByDistrict(Candidate candidate, List<int> numberOfVotesForCandidatesForGivenDistrict)
-        {
-            var index = _allCandidates.IndexOf(candidate);
-            numberOfVotesForCandidatesForGivenDistrict[index] = numberOfVotesForCandidatesForGivenDistrict[index] + 1;
-        }
-
         private void VoteForACandidate(Candidate candidate)
         {
             if (!HasCandidateAlreadyBeenAdded(candidate))
@@ -88,12 +81,12 @@ namespace Elections
 
             if (selectedDistric != null)
             {
-                var numberOfVotesForCandidatesForGivenDistrict = _numberOfVotesForCandidatesByDistricts[districtName];
                 if (!HasCandidateAlreadyBeenAdded(candidate))
                 {
                     AddUnofficialCandidate(candidate);
                 }
-                AddVoteForCandidateByDistrict(candidate, numberOfVotesForCandidatesForGivenDistrict);
+
+                selectedDistric.VoteFor(candidate); // TODO add elector to this method to make sure he hasn't already voted
             }
         }
 
@@ -134,7 +127,7 @@ namespace Elections
                         continue;
                     }
 
-                    if (IsVoteBlank(i))
+                    if (candidate.HasEmptyName())
                         blankVotes += _totalNumberOfVotesForCandidates[i];
                     else
                         nullVotes += _totalNumberOfVotesForCandidates[i];
@@ -147,35 +140,33 @@ namespace Elections
                 foreach (var officialCandidate in _officialCandidates)
                 {
                     var indexOfOfficialCandidate = _allCandidates.IndexOf(officialCandidate);
-                    foreach (var numberOfVotesForACandidateByDistricts in _numberOfVotesForCandidatesByDistricts)
+                    foreach (var district in _districts) // TODO ? sum insteaf of foreach
                     {
-                        var districtVotes = numberOfVotesForACandidateByDistricts.Value;
-                        totalVotesForOfficialCandidates += districtVotes[indexOfOfficialCandidate];
+                        totalVotesForOfficialCandidates += district.GetVoteCountForCandidate(officialCandidate);
                     }
                 }
 
                 var officialCandidatesResult = new Dictionary<string, int>();
                 for (var i = 0; i < _officialCandidates.Count; i++) officialCandidatesResult[_allCandidates[i].Name] = 0;
-                foreach (var entry in _numberOfVotesForCandidatesByDistricts)
+                foreach (var district in _districts)
                 {
                     var districtResult = new List<float>();
-                    var districtVotes = entry.Value;
-                    for (var i = 0; i < districtVotes.Count; i++)
+                    var districtVotes = district.GetVotes();
+                    foreach(var candidate in districtVotes.Keys)
                     {
                         float candidateResult = 0;
                         if (totalVotesForOfficialCandidates != 0)
-                            candidateResult = (float)districtVotes[i] * 100 / totalVotesForOfficialCandidates;
-                        var candidate = _allCandidates[i];
+                            candidateResult = (float)districtVotes[candidate] * 100 / totalVotesForOfficialCandidates;
                         if (IsCandidateOfficial(candidate))
                         {
                             districtResult.Add(candidateResult);
                         }
                         else
                         {
-                            if (IsVoteBlank(i))
-                                blankVotes += districtVotes[i];
+                            if (candidate.HasEmptyName())
+                                blankVotes += districtVotes[candidate];
                             else
-                                nullVotes += districtVotes[i];
+                                nullVotes += districtVotes[candidate];
                         }
                     }
 
@@ -211,18 +202,12 @@ namespace Elections
         private int CalculateTotalVotes()
         {
             int totalVotes = 0;
-            foreach (var voteForACandidateByDistrict in _numberOfVotesForCandidatesByDistricts)
+            foreach (var district in _districts)
             {
-                var districtVotes = voteForACandidateByDistrict.Value;
-                totalVotes += districtVotes.Sum();
+                totalVotes += district.GetTotalNumberOfVotes();
             }
 
             return totalVotes;
-        }
-
-        private bool IsVoteBlank(int i)
-        {
-            return _allCandidates[i].Name == string.Empty;
         }
 
         private float GetCandidateResultPercentage(int totalVotesForOfficialCandidates, int i)

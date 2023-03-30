@@ -29,5 +29,25 @@ namespace Elections
         {
             _canditatesScore.Add(candidate, 0);
         }
+
+        public void VoteFor(Candidate candidate)
+        {
+            _canditatesScore[candidate]++ ;
+        }
+
+        public int GetVoteCountForCandidate(Candidate candidate)
+        {
+            return _canditatesScore[candidate] ;
+        }
+
+        public Dictionary<Candidate, int> GetVotes()
+        {
+            return _canditatesScore;
+        }
+
+        public int GetTotalNumberOfVotes()
+        {
+            return _canditatesScore.Values.Sum();
+        }
     }
 }
