@@ -5,7 +5,7 @@ namespace Elections
     public class Elections
     {
         private readonly List<Candidate> _allCandidates = new List<Candidate>();
-        private readonly Dictionary<string, List<Elector>> _electorsListByDistrict;
+        private readonly List<District> _electorsListByDistrict;
         private readonly List<Candidate> _officialCandidates = new List<Candidate>();
         private readonly Dictionary<string, List<int>> _numberOfVotesForCandidatesByDistricts;
         private readonly List<int> _totalNumberOfVotesForCandidates = new List<int>();
@@ -17,7 +17,7 @@ namespace Elections
 
             foreach (var electorByDistrict in electorsListByDistrict)
             {
-                _electorsListByDistrict.Add(electorByDistrict.Key, electorByDistrict.Value.Select(electorName => new Elector(electorName)).ToList());
+                _electorsListByDistrict.Add(new District(electorByDistrict.Key, electorByDistrict.Value.Select(electorName => new Elector(electorName))));
             };
 
             _isVoteByDistrict = isVoteByDistrict;
@@ -44,7 +44,7 @@ namespace Elections
         public void VoteFor(string elector, string candidateName, string electorDistrict)
         {
             Candidate candidate = new Candidate(candidateName);
-            //add a "a voté" to un allow a candidate to emit more than 1 vote
+            //add a "a voté" to allow a candidate to emit more than 1 vote
             if (!_isVoteByDistrict)
             {
                 VoteForACandidate(candidate);
@@ -200,7 +200,7 @@ namespace Elections
             var nullResult = (float)nullVotes * 100 / totalVotes;
             results["Null"] = string.Format(cultureInfo, "{0:0.00}%", nullResult);
 
-            var nbElectors = _electorsListByDistrict.Sum(kv => kv.Value.Count);
+            var nbElectors = _electorsListByDistrict.Sum(district => district.GetElectorsCount());
             var abstentionResult = 100 - (float)totalVotes * 100 / nbElectors;
             results["Abstention"] = string.Format(cultureInfo, "{0:0.00}%", abstentionResult);
 
