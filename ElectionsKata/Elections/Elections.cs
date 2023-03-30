@@ -5,29 +5,22 @@ namespace Elections
     public class Elections
     {
         private readonly List<Candidate> _allCandidates = new List<Candidate>();
-        private readonly List<District> _electorsListByDistrict;
+        private readonly List<District> _districts;
         private readonly List<Candidate> _officialCandidates = new List<Candidate>();
-        private readonly Dictionary<string, List<int>> _numberOfVotesForCandidatesByDistricts;
+        //private readonly Dictionary<string, List<int>> _numberOfVotesForCandidatesByDistricts;
         private readonly List<int> _totalNumberOfVotesForCandidates = new List<int>();
         private readonly bool _isVoteByDistrict;
 
         public Elections(Dictionary<string, List<string>> electorsListByDistrict, bool isVoteByDistrict)
         {
-            _electorsListByDistrict = new();
+            _districts = new();
 
             foreach (var electorByDistrict in electorsListByDistrict)
             {
-                _electorsListByDistrict.Add(new District(electorByDistrict.Key, electorByDistrict.Value.Select(electorName => new Elector(electorName))));
+                _districts.Add(new District(electorByDistrict.Key, electorByDistrict.Value.Select(electorName => new Elector(electorName))));
             };
 
             _isVoteByDistrict = isVoteByDistrict;
-
-            _numberOfVotesForCandidatesByDistricts = new Dictionary<string, List<int>>
-            {
-                {"District 1", new List<int>()},
-                {"District 2", new List<int>()},
-                {"District 3", new List<int>()}
-            };
         }
 
         public void AddCandidate(string candidateName)
@@ -36,9 +29,11 @@ namespace Elections
             _officialCandidates.Add(candidate);
             _allCandidates.Add(candidate);
             _totalNumberOfVotesForCandidates.Add(0);
-            _numberOfVotesForCandidatesByDistricts["District 1"].Add(0);
-            _numberOfVotesForCandidatesByDistricts["District 2"].Add(0);
-            _numberOfVotesForCandidatesByDistricts["District 3"].Add(0);
+
+            foreach(District district in _districts)
+            {
+                district.AddCandidate(candidate);
+            }
         }
 
         public void VoteFor(string elector, string candidateName, string electorDistrict)
@@ -58,7 +53,11 @@ namespace Elections
         private void AddUnofficialCandidate(Candidate candidate)
         {
             _allCandidates.Add(candidate);
-            foreach (var votes in _numberOfVotesForCandidatesByDistricts.Values) votes.Add(0);
+            foreach (District district in _districts)
+            {
+                district.AddCandidate(candidate);
+            }
+
             _totalNumberOfVotesForCandidates.Add(0);
         }
 
@@ -82,12 +81,14 @@ namespace Elections
             AddVoteForACandidate(candidate);
         }
 
-        private void VoteForACandidateByDistrict(Candidate candidate, string voteDistrict)
+        private void VoteForACandidateByDistrict(Candidate candidate, string districtName)
         {
-            // vérifier que l'électeur appartient bien au district
-            if (_numberOfVotesForCandidatesByDistricts.ContainsKey(voteDistrict))
+            // TODO vérifier que l'électeur appartient bien au district
+            District? selectedDistric = _districts.FirstOrDefault(district => district.GetName() == districtName);
+
+            if (selectedDistric != null)
             {
-                var numberOfVotesForCandidatesForGivenDistrict = _numberOfVotesForCandidatesByDistricts[voteDistrict];
+                var numberOfVotesForCandidatesForGivenDistrict = _numberOfVotesForCandidatesByDistricts[districtName];
                 if (!HasCandidateAlreadyBeenAdded(candidate))
                 {
                     AddUnofficialCandidate(candidate);
@@ -200,7 +201,7 @@ namespace Elections
             var nullResult = (float)nullVotes * 100 / totalVotes;
             results["Null"] = string.Format(cultureInfo, "{0:0.00}%", nullResult);
 
-            var nbElectors = _electorsListByDistrict.Sum(district => district.GetElectorsCount());
+            var nbElectors = _districts.Sum(district => district.GetElectorsCount());
             var abstentionResult = 100 - (float)totalVotes * 100 / nbElectors;
             results["Abstention"] = string.Format(cultureInfo, "{0:0.00}%", abstentionResult);
 
