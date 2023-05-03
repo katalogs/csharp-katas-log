@@ -33,13 +33,8 @@ namespace OrderShipping.UseCase
                     var taxedAmount = Round(product.PriceTTC * itemRequest.Quantity);
                     var taxAmount = Round(product.Tax * itemRequest.Quantity);
 
-                    var orderItem = new OrderItem
-                    {
-                        Product = product,
-                        Quantity = itemRequest.Quantity,
-                        Tax = taxAmount,
-                        TaxedAmount = taxedAmount
-                    };
+                    var orderItem = new OrderItem(product, itemRequest.Quantity);
+
                     order.Items.Add(orderItem);
                     order.Total += taxedAmount;
                     order.Tax += taxAmount;
