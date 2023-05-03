@@ -29,24 +29,13 @@ namespace OrderShipping.UseCase
                     throw new UnknownProductException();
                 }
                 else
-                {                   
-                    var taxedAmount = Round(product.PriceTTC * itemRequest.Quantity);
-                    var taxAmount = Round(product.Tax * itemRequest.Quantity);
-
+                {              
                     var orderItem = new OrderItem(product, itemRequest.Quantity);
-
-                    order.Items.Add(orderItem);
-                    order.Total += taxedAmount;
-                    order.Tax += taxAmount;
+                    order.AddItems(orderItem);
                 }
             }
 
             _orderRepository.Save(order);
-        }
-
-        private static decimal Round(decimal amount)
-        {
-            return decimal.Round(amount, 2, System.MidpointRounding.ToPositiveInfinity);
         }
     }
 }
