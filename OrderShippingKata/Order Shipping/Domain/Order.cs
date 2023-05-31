@@ -56,5 +56,20 @@ namespace OrderShipping.Domain
                 throw new ShippedOrdersCannotBeChangedException();
             }
         }
+
+        internal void Ship()
+        {
+            if (Status == OrderStatus.Created || Status == OrderStatus.Rejected)
+            {
+                throw new OrderCannotBeShippedException();
+            }
+
+            if (Status == OrderStatus.Shipped)
+            {
+                throw new OrderCannotBeShippedTwiceException();
+            }
+
+            Status = OrderStatus.Shipped;
+        }
     }
 }
