@@ -15,6 +15,15 @@ namespace OrderShipping.UseCase
         {
             var order = _orderRepository.GetById(request.OrderId);
 
+            if (request.Approved)
+            {
+                order.Approve();
+            }
+            else
+            {
+                order.Reject();
+            }
+            
             if (order.Status == OrderStatus.Shipped)
             {
                 throw new ShippedOrdersCannotBeChangedException();
