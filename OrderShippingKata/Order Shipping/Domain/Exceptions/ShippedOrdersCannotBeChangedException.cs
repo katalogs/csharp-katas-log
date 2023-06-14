@@ -1,4 +1,4 @@
-﻿namespace OrderShipping.UseCase
+﻿namespace Order_Shipping.Domain.Exceptions
 {
     public class ShippedOrdersCannotBeChangedException : ApplicationException
     {

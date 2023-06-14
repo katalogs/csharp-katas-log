@@ -1,4 +1,4 @@
-﻿namespace OrderShipping.UseCase
+﻿namespace Order_Shipping.UseCase
 {
     public class UnknownProductException : ApplicationException
     {
