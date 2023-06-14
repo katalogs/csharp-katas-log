@@ -59,17 +59,20 @@ namespace OrderShipping.Domain
 
         internal void Ship()
         {
+            CheckShipable();
+            Status = OrderStatus.Shipped;
+        }
+
+        public void CheckShipable ()
+        {
             if (Status == OrderStatus.Created || Status == OrderStatus.Rejected)
             {
                 throw new OrderCannotBeShippedException();
             }
-
             if (Status == OrderStatus.Shipped)
             {
                 throw new OrderCannotBeShippedTwiceException();
             }
-
-            Status = OrderStatus.Shipped;
         }
     }
 }
