@@ -18,6 +18,7 @@ namespace OrderShipping.UseCase
 
         public void Run(SellItemsRequest request)
         {
+            /* TO DO : créer un constructeur Order */
             var order = new Order
             {
                 Status = OrderStatus.Created,
@@ -38,19 +39,14 @@ namespace OrderShipping.UseCase
                 else
                 {
                   
-                    var taxedAmount = Round(product.UnitaryTaxedAmount() * itemRequest.Quantity);
-                    var taxAmount = Round(product.UnitaryTax() * itemRequest.Quantity);
-
                     var orderItem = new OrderItem
                     {
                         Product = product,
-                        Quantity = itemRequest.Quantity,
-                        Tax = taxAmount,
-                        TaxedAmount = taxedAmount
+                        Quantity = itemRequest.Quantity
                     };
                     order.Items.Add(orderItem);
-                    order.Total += taxedAmount;
-                    order.Tax += taxAmount;
+                    order.Total += orderItem.TaxedAmount;
+                    order.Tax += orderItem.Tax;
                 }
             }
 
