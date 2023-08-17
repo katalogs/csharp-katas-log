@@ -37,10 +37,9 @@ namespace OrderShipping.UseCase
                 }
                 else
                 {
-                    var unitaryTax = Round((product.Price / 100m) * product.Category.TaxPercentage);
-                    var unitaryTaxedAmount = Round(product.Price + unitaryTax);
-                    var taxedAmount = Round(unitaryTaxedAmount * itemRequest.Quantity);
-                    var taxAmount = Round(unitaryTax * itemRequest.Quantity);
+                  
+                    var taxedAmount = Round(product.UnitaryTaxedAmount() * itemRequest.Quantity);
+                    var taxAmount = Round(product.UnitaryTax() * itemRequest.Quantity);
 
                     var orderItem = new OrderItem
                     {
