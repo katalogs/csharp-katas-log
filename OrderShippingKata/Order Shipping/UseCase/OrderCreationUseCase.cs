@@ -19,15 +19,8 @@ namespace OrderShipping.UseCase
         public void Run(SellItemsRequest request)
         {
             /* TO DO : créer un constructeur Order */
-            var order = new Order
-            {
-                Status = OrderStatus.Created,
-                Items = new List<OrderItem>(),
-                Currency = "EUR",
-                Total = 0m,
-                Tax = 0m
-            };
-
+            Order order = new ();
+            
             foreach (var itemRequest in request.Requests)
             {
                 var product = _productCatalog.GetByName(itemRequest.ProductName);
@@ -38,8 +31,7 @@ namespace OrderShipping.UseCase
                 }
                 else
                 {
-                  
-                    var orderItem = new OrderItem
+                    OrderItem orderItem = new OrderItem
                     {
                         Product = product,
                         Quantity = itemRequest.Quantity
