@@ -18,7 +18,6 @@ namespace OrderShipping.UseCase
 
         public void Run(SellItemsRequest request)
         {
-            /* TO DO : créer un constructeur Order */
             Order order = new ();
             
             foreach (var itemRequest in request.Requests)
@@ -31,23 +30,12 @@ namespace OrderShipping.UseCase
                 }
                 else
                 {
-                    OrderItem orderItem = new OrderItem
-                    {
-                        Product = product,
-                        Quantity = itemRequest.Quantity
-                    };
-                    order.Items.Add(orderItem);
-                    order.Total += orderItem.TaxedAmount;
-                    order.Tax += orderItem.Tax;
+                    order.AddItem(product, itemRequest.Quantity);
+                   
                 }
             }
 
             _orderRepository.Save(order);
-        }
-
-        private static decimal Round(decimal amount)
-        {
-            return decimal.Round(amount, 2, System.MidpointRounding.ToPositiveInfinity);
         }
     }
 }

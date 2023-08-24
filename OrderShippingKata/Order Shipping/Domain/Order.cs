@@ -17,5 +17,17 @@
             Total = 0m;
             Tax = 0m;
         }
+
+        public void AddItem(Product product, int quantity)
+        {
+            OrderItem orderItem = new OrderItem
+            {
+                Product = product,
+                Quantity = quantity
+            };
+            Items.Add(orderItem);
+            Total += orderItem.TaxedAmount;
+            Tax += orderItem.Tax;
+        }
     }
 }
