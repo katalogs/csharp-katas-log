@@ -14,7 +14,10 @@ namespace OrderShipping.UseCase
         {
             var order = _orderRepository.GetById(request.OrderId);
 
-            order.ChangeStatus(request.Approved);
+            if (request.Approved)
+                order.Approved();
+            else
+                order.Rejected();
 
             _orderRepository.Save(order);
         }

@@ -20,24 +20,26 @@ namespace OrderShipping.Domain
             Tax = 0m;
         }
 
-        public void ChangeStatus(bool approved)
+        public void Rejected()
         {
             if (Status == OrderStatus.Shipped)
-            {
                 throw new ShippedOrdersCannotBeChangedException();
-            }
 
-            if (approved && Status == OrderStatus.Rejected)
-            {
-                throw new RejectedOrderCannotBeApprovedException();
-            }
-
-            if (!approved && Status == OrderStatus.Approved)
-            {
+            if (Status == OrderStatus.Approved)
                 throw new ApprovedOrderCannotBeRejectedException();
-            }
 
-            Status = approved ? OrderStatus.Approved : OrderStatus.Rejected;
+            Status = OrderStatus.Rejected;
+        }
+
+        public void Approved()
+        {
+            if (Status == OrderStatus.Shipped)
+                throw new ShippedOrdersCannotBeChangedException();
+
+            if (Status == OrderStatus.Rejected)
+                throw new RejectedOrderCannotBeApprovedException();
+
+            Status = OrderStatus.Approved;
         }
 
         public void AddItem(Product product, int quantity)
