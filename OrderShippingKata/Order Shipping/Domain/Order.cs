@@ -1,4 +1,6 @@
-﻿namespace OrderShipping.Domain
+﻿using OrderShipping.UseCase;
+
+namespace OrderShipping.Domain
 {
     public class Order
     {
@@ -16,6 +18,26 @@
             Currency = "EUR";
             Total = 0m;
             Tax = 0m;
+        }
+
+        public void ChangeStatus(bool approved)
+        {
+            if (Status == OrderStatus.Shipped)
+            {
+                throw new ShippedOrdersCannotBeChangedException();
+            }
+
+            if (approved && Status == OrderStatus.Rejected)
+            {
+                throw new RejectedOrderCannotBeApprovedException();
+            }
+
+            if (!approved && Status == OrderStatus.Approved)
+            {
+                throw new ApprovedOrderCannotBeRejectedException();
+            }
+
+            Status = approved ? OrderStatus.Approved : OrderStatus.Rejected;
         }
 
         public void AddItem(Product product, int quantity)
