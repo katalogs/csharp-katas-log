@@ -22,8 +22,7 @@ namespace OrderShipping.Domain
 
         public void Rejected()
         {
-            if (Status == OrderStatus.Shipped)
-                throw new ShippedOrdersCannotBeChangedException();
+            CannotBeShipped();
 
             if (Status == OrderStatus.Approved)
                 throw new ApprovedOrderCannotBeRejectedException();
@@ -33,13 +32,18 @@ namespace OrderShipping.Domain
 
         public void Approved()
         {
-            if (Status == OrderStatus.Shipped)
-                throw new ShippedOrdersCannotBeChangedException();
+            CannotBeShipped();
 
             if (Status == OrderStatus.Rejected)
                 throw new RejectedOrderCannotBeApprovedException();
 
             Status = OrderStatus.Approved;
+        }
+
+        private void CannotBeShipped()
+        {
+            if (Status == OrderStatus.Shipped)
+                throw new ShippedOrdersCannotBeChangedException();
         }
 
         public void AddItem(Product product, int quantity)
