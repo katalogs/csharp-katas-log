@@ -1,5 +1,7 @@
 ﻿using OrderShipping.Domain;
 using OrderShipping.Repository;
+using OrderShipping.UseCase.Requests;
+using OrderShipping.Domain.Exceptions;
 
 namespace OrderShipping.UseCase
 {

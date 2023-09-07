@@ -1,4 +1,4 @@
-﻿namespace OrderShipping.UseCase
+﻿namespace OrderShipping.UseCase.Requests
 {
     public class OrderApprovalRequest
     {

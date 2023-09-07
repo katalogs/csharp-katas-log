@@ -1,4 +1,5 @@
 ﻿using OrderShipping.Repository;
+using OrderShipping.UseCase.Requests;
 
 namespace OrderShipping.UseCase
 {

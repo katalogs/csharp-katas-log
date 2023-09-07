@@ -5,6 +5,8 @@ using OrderShipping.Repository;
 using OrderShipping.UseCase;
 using OrderShippingTest.Doubles;
 using Xunit;
+using OrderShipping.UseCase.Requests;
+using OrderShipping.Domain.Exceptions;
 
 namespace OrderShippingTest.UseCase;
 

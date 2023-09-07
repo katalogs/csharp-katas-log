@@ -1,4 +1,4 @@
-﻿using OrderShipping.UseCase;
+﻿using OrderShipping.Domain.Exceptions;
 
 namespace OrderShipping.Domain
 {
