@@ -21,15 +21,7 @@ namespace OrderShipping.UseCase
         {
             var order = _orderRepository.GetById(request.OrderId);
 
-            if (order.Status == OrderStatus.Created || order.Status == OrderStatus.Rejected)
-            {
-                throw new OrderCannotBeShippedException();
-            }
-
-            if (order.Status == OrderStatus.Shipped)
-            {
-                throw new OrderCannotBeShippedTwiceException();
-            }
+            order.ValidateIfShippable();
 
             _shipmentService.Ship(order);
 

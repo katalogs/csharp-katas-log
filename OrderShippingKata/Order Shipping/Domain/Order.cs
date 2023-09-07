@@ -40,6 +40,18 @@ namespace OrderShipping.Domain
             Status = OrderStatus.Approved;
         }
 
+        public void ValidateIfShippable()
+        {
+            switch (Status)
+            {
+                case OrderStatus.Created:
+                case OrderStatus.Rejected:
+                    throw new OrderCannotBeShippedException();
+                case OrderStatus.Shipped:
+                    throw new OrderCannotBeShippedTwiceException();
+            }
+        }
+
         private void CannotBeShipped()
         {
             if (Status == OrderStatus.Shipped)
