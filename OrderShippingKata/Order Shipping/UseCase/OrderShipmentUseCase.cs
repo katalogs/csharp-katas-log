@@ -25,7 +25,7 @@ namespace OrderShipping.UseCase
 
             _shipmentService.Ship(order);
 
-            order.Status = OrderStatus.Shipped;
+            order.Ship();
             _orderRepository.Save(order);
         }
     }

@@ -30,6 +30,12 @@ namespace OrderShipping.Domain
             Status = OrderStatus.Rejected;
         }
 
+        public void Ship()
+        {
+            ValidateIfShippable();
+            Status = OrderStatus.Shipped;
+        }
+
         public void Approved()
         {
             CannotBeShipped();
