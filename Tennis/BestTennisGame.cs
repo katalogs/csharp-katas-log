@@ -1,54 +1,31 @@
-﻿namespace Tennis
+﻿using Tennis.Player;
+
+namespace Tennis
 {
     public class BestTennisGame
     {
-        private string server;
-        private string receiver;
-        private int serverScore;
-        private int receiverScore;
+        private Server _server;
+        private Receiver _receiver;
 
-        public BestTennisGame(string server, string receiver)
+        private Score _score;
+
+        public BestTennisGame(Server server, Receiver receiver)
         {
-            this.server = server;
-            this.receiver = receiver;
+            _server = server;
+            _receiver = receiver;
+            _score = new Score();
+
         }
 
         public string GetScore()
         {
-            if (receiverScore == 1 && serverScore == 1)
-            {
-                return $"{Scores.Fifteen}-{Scores.All}";
-            }
-            if (serverScore == 1)
-                return $"{Scores.Fifteen}-{Scores.Love}";
-            if (receiverScore == 1)
-            {
-                return $"{Scores.Love}-{Scores.Fifteen}";
-            }
-            return $"{Scores.Love}-All";
+            return _score.GetScore();
         }
 
-        public void WonPoint(string player)
+        public void WonPoint(IPlayer player)
         {
-            if (player == receiver)
-            {
-                receiverScore = +1;
-            }
-            else
-            {
-                serverScore += 1;
-            }
+            _score = _score.WonPoint(player);
         }
-    }
-
-    public class Scores
-    {
-
-        public const string Love = "Love";
-
-        public const string Fifteen = "Fifteen";
-
-        public const string All = "All";
     }
 
 }
