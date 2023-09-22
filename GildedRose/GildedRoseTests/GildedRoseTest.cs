@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using Argon;
 using GildedRoseKata;
 using Xunit;
@@ -17,11 +18,26 @@ public class GildedRoseTest
     }
 
     [Fact]
-    public Task foo()
+    public Task Foo()
     {
         IList<Item> Items = new List<Item> {new() {Name = "foo", SellIn = 0, Quality = 0}};
         var gildedRose = new GildedRose(Items);
+        
         gildedRose.UpdateQuality();
+        
         return Verify(Items);
+    }
+
+    [Fact]
+    public Task GoldenMasterProgram()
+    {
+        StringBuilder builder = new StringBuilder();
+        TextWriter writer = new StringWriter(builder);
+
+        Console.SetOut(writer);
+
+        Program.Main(new string[] { });
+
+        return Verify(builder.ToString());
     }
 }

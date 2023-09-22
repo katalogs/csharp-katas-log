@@ -1,0 +1,7 @@
+﻿[
+  {
+    Name: bar,
+    SellIn: -1,
+    Quality: 0
+  }
+]
