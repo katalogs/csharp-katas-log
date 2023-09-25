@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Tennis.Player;
 
 namespace Tennis;
@@ -26,16 +27,18 @@ public record Score
 
     public string GetScore()
     {
-        if (_receiverScore == 1 && _serverScore == 1)
+        Dictionary<int, string> scores = new Dictionary<int, string>
         {
-            return $"{Scores.Fifteen}-{Scores.All}";
-        }
-        if (_serverScore == 1)
-            return $"{Scores.Fifteen}-{Scores.Love}";
-        if (_receiverScore == 1)
+            {0, Scores.Love},
+            {1, Scores.Fifteen},
+            {2, Scores.Thirty},
+            {3, Scores.Forty}
+        };
+
+        if (_receiverScore == _serverScore)
         {
-            return $"{Scores.Love}-{Scores.Fifteen}";
+            return $"{scores[_serverScore]}-{Scores.All}";
         }
-        return $"{Scores.Love}-All";
+        return $"{scores[_serverScore]}-{scores[_receiverScore]}";
     }
 }

@@ -51,5 +51,32 @@ namespace Tennis.Tests
 
             game.GetScore().Should().Be("Fifteen-All");
         }
+        
+        [Fact]
+        public void Should_announce_score_with_thirty_love()
+        {
+            var federer = new Server("Federer");
+            var nadal = new Receiver("Nadal");
+            var game = new BestTennisGame(federer, nadal);
+
+            game.WonPoint(federer);
+            game.WonPoint(federer);
+
+            game.GetScore().Should().Be("Thirty-Love");
+        }
+        
+        [Fact]
+        public void Should_announce_score_with_Forty_love()
+        {
+            var federer = new Server("Federer");
+            var nadal = new Receiver("Nadal");
+            var game = new BestTennisGame(federer, nadal);
+
+            game.WonPoint(federer);
+            game.WonPoint(federer);
+            game.WonPoint(federer);
+
+            game.GetScore().Should().Be("Forty-Love");
+        }
     }
 }

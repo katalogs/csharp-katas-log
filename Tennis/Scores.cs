@@ -8,4 +8,8 @@ public class Scores
     public const string Fifteen = "Fifteen";
 
     public const string All = "All";
+
+    public const string Thirty = "Thirty";
+    
+    public const string Forty = "Forty";
 }
