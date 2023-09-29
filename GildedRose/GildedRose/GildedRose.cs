@@ -11,6 +11,7 @@ namespace GildedRoseKata
         }
 
         public const int MaxQuality = 50;
+        public const int MinQuality = 0;
 
         public void UpdateQuality()
         {
@@ -18,31 +19,21 @@ namespace GildedRoseKata
             {
                 if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
+                    DecreaseQuality(Items[i]);
                 }
                 else
                 {
-                    if (Items[i].Quality < MaxQuality)
+                    IncreaseQuality(Items[i]);
+                    if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
                     {
-                        Items[i].Quality = Items[i].Quality + 1;
-
-                        if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                        if (Items[i].SellIn < 11)
                         {
-                            if (Items[i].SellIn < 11)
-                            {
-                                IncreaseQuality(Items[i]);
-                            }
+                            IncreaseQuality(Items[i]);
+                        }
 
-                            if (Items[i].SellIn < 6)
-                            {
-                                IncreaseQuality(Items[i]);
-                            }
+                        if (Items[i].SellIn < 6)
+                        {
+                            IncreaseQuality(Items[i]);
                         }
                     }
                 }
@@ -52,19 +43,13 @@ namespace GildedRoseKata
                     Items[i].SellIn = Items[i].SellIn - 1;
                 }
 
-                if (Items[i].SellIn < 0)
+                if (IsExpired(Items[i]))
                 {
                     if (Items[i].Name != "Aged Brie")
                     {
                         if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                         {
-                            if (Items[i].Quality > 0)
-                            {
-                                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                                {
-                                    Items[i].Quality = Items[i].Quality - 1;
-                                }
-                            }
+                            DecreaseQuality(Items[i]);
                         }
                         else
                         {
@@ -79,11 +64,24 @@ namespace GildedRoseKata
             }
         }
 
+        private bool IsExpired(Item item)
+        {
+            return item.SellIn < 0;
+        }
+
         private void IncreaseQuality(Item item)
         {
             if (item.Quality < MaxQuality)
             {
                 item.Quality = item.Quality + 1;
+            }
+        }
+
+        private void DecreaseQuality(Item item)
+        {
+            if (item.Quality > MinQuality && item.Name != "Sulfuras, Hand of Ragnaros")
+            {
+                    item.Quality = item.Quality - 1;
             }
         }
     }
