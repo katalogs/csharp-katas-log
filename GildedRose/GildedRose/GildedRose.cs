@@ -10,6 +10,8 @@ namespace GildedRoseKata
             this.Items = Items;
         }
 
+        public const int MaxQuality = 50;
+
         public void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
@@ -26,7 +28,7 @@ namespace GildedRoseKata
                 }
                 else
                 {
-                    if (Items[i].Quality < 50)
+                    if (Items[i].Quality < MaxQuality)
                     {
                         Items[i].Quality = Items[i].Quality + 1;
 
@@ -34,18 +36,12 @@ namespace GildedRoseKata
                         {
                             if (Items[i].SellIn < 11)
                             {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
+                                IncreaseQuality(Items[i]);
                             }
 
                             if (Items[i].SellIn < 6)
                             {
-                                if (Items[i].Quality < 50)
-                                {
-                                    Items[i].Quality = Items[i].Quality + 1;
-                                }
+                                IncreaseQuality(Items[i]);
                             }
                         }
                     }
@@ -77,12 +73,17 @@ namespace GildedRoseKata
                     }
                     else
                     {
-                        if (Items[i].Quality < 50)
-                        {
-                            Items[i].Quality = Items[i].Quality + 1;
-                        }
+                        IncreaseQuality(Items[i]);
                     }
                 }
+            }
+        }
+
+        private void IncreaseQuality(Item item)
+        {
+            if (item.Quality < MaxQuality)
+            {
+                item.Quality = item.Quality + 1;
             }
         }
     }
