@@ -7,7 +7,7 @@ namespace Tennis
         private Server _server;
         private Receiver _receiver;
 
-        private Score _score;
+        private IScore _score;
 
         public BestTennisGame(Server server, Receiver receiver)
         {

@@ -78,5 +78,40 @@ namespace Tennis.Tests
 
             game.GetScore().Should().Be("Forty-Love");
         }
+
+        [Fact]
+        public void Should_announce_score_with_deuce_by_receiver()
+        {
+            var federer = new Server("Federer");
+            var nadal = new Receiver("Nadal");
+            var game = new BestTennisGame(federer, nadal);
+
+            game.WonPoint(federer);
+            game.WonPoint(federer);
+            game.WonPoint(federer);
+            game.WonPoint(nadal);
+            game.WonPoint(nadal);
+            game.WonPoint(nadal);
+
+            game.GetScore().Should().Be("Deuce");
+        }
+
+        [Fact]
+        public void Should_announce_score_with_deuce_by_server()
+        {
+            var federer = new Server("Federer");
+            var nadal = new Receiver("Nadal");
+            var game = new BestTennisGame(federer, nadal);
+
+           
+            game.WonPoint(federer);
+            game.WonPoint(federer);
+            game.WonPoint(nadal);
+            game.WonPoint(nadal);
+            game.WonPoint(nadal);
+            game.WonPoint(federer);
+
+            game.GetScore().Should().Be("Deuce");
+        }
     }
 }

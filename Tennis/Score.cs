@@ -3,7 +3,7 @@ using Tennis.Player;
 
 namespace Tennis;
 
-public record Score
+public record Score : IScore
 {
     private readonly int _serverScore;
     private readonly int _receiverScore;
@@ -14,15 +14,34 @@ public record Score
         _receiverScore = receiverScore;
     }
 
-    public Score(): this(serverScore: 0, 0)
+    public Score() : this(serverScore: 0, 0)
     {
     }
 
-    public Score WonPoint(IPlayer player)
+    public IScore WonPoint(IPlayer player)
     {
+        if (PlayerEqualsToDeuce(player))
+            return new Deuce();
+
         return player is Server
-            ? new Score(serverScore: _serverScore + 1, _receiverScore)
-            : new Score(serverScore: _serverScore, _receiverScore + 1);
+            ? ServerWonPoint()
+            : ReceiverWonPoint();
+    }
+
+    private bool PlayerEqualsToDeuce(IPlayer player)
+    {
+        return (_serverScore == 3 && _receiverScore == 2 && player is Receiver)
+            || (_serverScore == 2 && _receiverScore == 3 && player is Server);
+    }
+
+    private Score ReceiverWonPoint()
+    {
+        return new Score(serverScore: _serverScore, _receiverScore + 1);
+    }
+
+    private Score ServerWonPoint()
+    {
+        return new Score(serverScore: _serverScore + 1, _receiverScore);
     }
 
     public string GetScore()
