@@ -6,9 +6,33 @@
         public int SellIn { get; set; }
         public int Quality { get; set; }
 
+        private const int MaxQuality = 50;
+        private const int MinQuality = 0;
+
         public override string ToString()
         {
             return this.Name + ", " + this.SellIn + ", " + this.Quality;
+        }
+
+        public bool IsExpired()
+        {
+            return SellIn < 0;
+        }
+
+        public void IncreaseQuality()
+        {
+            if (Quality < MaxQuality)
+            {
+                Quality ++;
+            }
+        }
+
+        public void DecreaseQuality()
+        {
+            if (Quality > MinQuality)
+            {
+                Quality--;
+            }
         }
     }
 }
