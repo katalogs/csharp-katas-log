@@ -17,22 +17,19 @@ namespace GildedRoseKata
         {
             for (var i = 0; i < Items.Count; i++)
             {
-                if(Items[i].Name == "Aged Brie")
+                switch (Items[i].Name)
                 {
-                    IncreaseQuality(Items[i]);
-
-                    Items[i].SellIn--;
-
-                    if (IsExpired(Items[i]))
-                    {
+                    case "Aged Brie":
                         IncreaseQuality(Items[i]);
-                    }
-                }
-                else
-                {
-                    if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                       
+
+                        Items[i].SellIn--;
+
+                        if (IsExpired(Items[i]))
+                        {
+                            IncreaseQuality(Items[i]);
+                        }
+                        break;
+                    case "Backstage passes to a TAFKAL80ETC concert":
                         IncreaseQuality(Items[i]);
                         if (Items[i].SellIn < 11)
                         {
@@ -43,32 +40,27 @@ namespace GildedRoseKata
                         {
                             IncreaseQuality(Items[i]);
                         }
-                        
+
                         Items[i].SellIn--;
-                        
+
                         if (IsExpired(Items[i]))
                         {
                             Items[i].Quality = 0;
                         }
-                    }
-                    else
-                    {
+                        break;
+                    case "Sulfuras, Hand of Ragnaros":
+                        break;
+                    default:
                         DecreaseQuality(Items[i]);
 
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].SellIn--;
-                        }
+                        Items[i].SellIn--;
 
                         if (IsExpired(Items[i]))
                         {
                             DecreaseQuality(Items[i]);
                         }
-                    }
-                    
+                        break;
                 }
-
-                
             }
         }
 
@@ -87,9 +79,9 @@ namespace GildedRoseKata
 
         private void DecreaseQuality(Item item)
         {
-            if (item.Quality > MinQuality && item.Name != "Sulfuras, Hand of Ragnaros")
+            if (item.Quality > MinQuality)
             {
-                    item.Quality = item.Quality - 1;
+                item.Quality = item.Quality - 1;
             }
         }
     }
