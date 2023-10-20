@@ -35,20 +35,10 @@
             }
         }
 
-        public void UpdateQuality()
+        public virtual void UpdateQuality()
         {
             switch (Name)
             {
-                case "Aged Brie":
-                    IncreaseQuality();
-
-                    SellIn--;
-
-                    if (IsExpired())
-                    {
-                        IncreaseQuality();
-                    }
-                    break;
                 case "Backstage passes to a TAFKAL80ETC concert":
                     IncreaseQuality();
                     if (SellIn < 11)
