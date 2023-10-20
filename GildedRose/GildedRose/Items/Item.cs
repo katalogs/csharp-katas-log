@@ -58,8 +58,6 @@
                         Quality = 0;
                     }
                     break;
-                case "Sulfuras, Hand of Ragnaros":
-                    break;
                 default:
                     DecreaseQuality();
 

@@ -12,8 +12,8 @@ namespace GildedRoseKata
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                 new AgedBrieItem(2, 0),
                 new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80},
+                new LegendaryItem("Sulfuras, Hand of Ragnaros", 0, 80),
+                new LegendaryItem("Sulfuras, Hand of Ragnaros", -1, 80),
                 new Item
                 {
                     Name = "Backstage passes to a TAFKAL80ETC concert",
