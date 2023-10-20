@@ -9,12 +9,11 @@ namespace GildedRose.Items;
 public class BackstagePass : Item
 {
 
-    public BackstagePass (String bandName, int sellIn, int quality)
+    public BackstagePass (String bandName, int sellIn, int quality) :base (String.Format("Backstage passes to a {0} concert", bandName), sellIn, quality)
     {
-        this.Name = String.Format("Backstage passes to a {0} concert", bandName);
-        this.SellIn = sellIn;
-        this.Quality = quality;
+        
     }
+
     public override void UpdateQuality()
     {
         IncreaseQuality();

@@ -3,11 +3,9 @@
     public class AgedBrieItem : Item
     {
 
-        public AgedBrieItem(int sellIn, int quality)
+        public AgedBrieItem(int sellIn, int quality) :base ( "Aged Brie", sellIn, quality)
         {
-            Name = "Aged Brie";
-            SellIn = sellIn;
-            Quality = quality;
+
         }
 
         public override void UpdateQuality()
