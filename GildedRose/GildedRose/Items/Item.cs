@@ -39,25 +39,7 @@
         {
             switch (Name)
             {
-                case "Backstage passes to a TAFKAL80ETC concert":
-                    IncreaseQuality();
-                    if (SellIn < 11)
-                    {
-                        IncreaseQuality();
-                    }
 
-                    if (SellIn < 6)
-                    {
-                        IncreaseQuality();
-                    }
-
-                    SellIn--;
-
-                    if (IsExpired())
-                    {
-                        Quality = 0;
-                    }
-                    break;
                 default:
                     DecreaseQuality();
 
