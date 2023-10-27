@@ -19,7 +19,7 @@ namespace GildedRoseKata
                 new BackstagePass("TAFKAL80ETC", 10, 49),
                 new BackstagePass("TAFKAL80ETC", 5, 49),
                 // this conjured item does not work properly yet
-                new Item ("Conjured Mana Cake", 3,  6)
+                new ConjuredItem ("Conjured Mana Cake", 3,  7)
             };
 
             var app = new GildedRose(Items);

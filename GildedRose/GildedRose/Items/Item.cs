@@ -14,7 +14,7 @@
         public int Quality { get; set; }
 
         private const int MaxQuality = 50;
-        private const int MinQuality = 0;
+        protected const int MinQuality = 0;
 
         public override string ToString()
         {
@@ -34,7 +34,7 @@
             }
         }
 
-        public void DecreaseQuality()
+        public virtual void DecreaseQuality()
         {
             if (Quality > MinQuality)
             {
