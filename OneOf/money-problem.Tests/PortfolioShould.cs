@@ -1,6 +1,6 @@
-using System;
 using FluentAssertions;
 using money_problem.Domain;
+using System;
 using Xunit;
 using static money_problem.Domain.Currency;
 
@@ -16,41 +16,46 @@ namespace money_problem.Tests
         public void Add()
         {
             var portfolio = 5d.Dollars().AddToPortfolio(10d.Dollars());
-            portfolio.Evaluate(_bank, USD)
-                .Should()
-                .Be(15d.Dollars());
+
+            var evaluate = portfolio.Evaluate(_bank, USD);
+
+            evaluate.TryPickT0(out var result , out var _);           
+            result.Should().Be(15d.Dollars());           
         }
 
         [Fact(DisplayName = "5 USD + 10 EUR = 17 USD")]
         public void AddDollarsAndEuros()
         {
             var portfolio = 5d.Dollars().AddToPortfolio(10d.Euros());
-            portfolio.Evaluate(_bank, USD)
-                .Should()
-                .Be(17d.Dollars());
+
+            var evaluate = portfolio.Evaluate(_bank, USD);
+
+            evaluate.TryPickT0(out var result, out var _);
+            result.Should().Be(17d.Dollars());
         }
 
         [Fact(DisplayName = "1 USD + 1100 KRW = 2200 KRW")]
         public void AddDollarsAndKoreanWons()
         {
             var portfolio = 1d.Dollars().AddToPortfolio(1100d.KoreanWons());
-            portfolio.Evaluate(_bank, KRW)
-                .Should()
-                .Be(2200d.KoreanWons());
+
+            var evaluate = portfolio.Evaluate(_bank, KRW);
+
+            evaluate.TryPickT0(out var result, out var _);
+            result.Should().Be(2200d.KoreanWons());
         }
 
-        [Fact(DisplayName = "Throws a MissingExchangeRatesException case of missing exchange rates")]
-        public void AddWithMissingExchangeRatesShouldThrowAMissingExchangeRatesException()
+        [Fact(DisplayName = "Returns a MissingExchangeRatesException case of missing exchange rates")]
+        public void AddWithMissingExchangeRatesShouldReturnAMissingExchangeRatesException()
         {
             var portfolio = 1d.Dollars()
                 .AddToPortfolio(1d.Euros())
                 .AddToPortfolio(1d.KoreanWons());
 
-            Action evaluate = () => portfolio.Evaluate(_bank, KRW);
+            var evaluate = portfolio.Evaluate(_bank, KRW);
 
-            evaluate.Should()
-                .Throw<MissingExchangeRatesException>()
-                .WithMessage("Missing exchange rate(s): [EUR->KRW]");
+            var result = evaluate.Match(money => money.Amount.ToString(), exception => exception.Message);
+            result.Should().Be("Missing exchange rate(s): [EUR->KRW]");
         }
     }
 }
